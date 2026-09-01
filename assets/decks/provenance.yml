@@ -1,0 +1,34 @@
+version: 1
+reviewed_at: "2026-09-01"
+authoring_environment:
+  tool: Banana Slides
+  host: Hermes
+  profile: rescue
+  image_model: gemini-3-pro-image-preview
+  text_model: gemini-3-flash-preview
+  secrets_embedded: false
+assets:
+  - id: aula-00-ambiente-banana
+    project_id: d7e72b9c-2e56-4df6-a997-9612f82b0e8a
+    pptx: assets/decks/aula-00-ambiente-banana.pptx
+    pdf: assets/decks/aula-00-ambiente-banana.pdf
+    source_deck: assets/decks/aula-00-ambiente.pptx
+    editorial_source: roteiros/aula-00-ambiente.md
+    slides: 12
+    composition: full-slide-image
+    presenter_notes_preserved: true
+    visual_review: complete
+    third_party_logos: none
+    license_note: Conteúdo autoral Rescue Point assistido por IA; sujeito aos termos aplicáveis do provedor.
+  - id: episodio-01-baseline-core-1-12-banana
+    project_id: df22e996-f04b-434b-87d7-1c557c2e54ad
+    pptx: assets/decks/episodio-01-baseline-core-1-12-banana.pptx
+    pdf: assets/decks/episodio-01-baseline-core-1-12-banana.pdf
+    source_deck: assets/decks/episodio-01-baseline-core-1-12.pptx
+    editorial_source: roteiros/01-playlist-core-1-12.md
+    slides: 14
+    composition: full-slide-image
+    presenter_notes_preserved: true
+    visual_review: complete
+    third_party_logos: none
+    license_note: Conteúdo autoral Rescue Point assistido por IA; sujeito aos termos aplicáveis do provedor.

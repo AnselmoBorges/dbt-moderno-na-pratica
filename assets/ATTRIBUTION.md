@@ -14,3 +14,4 @@ Capturas futuras devem registrar produto, versão, data, página de origem, titu
 
 Hermes, Gemini, Banana Slides ou Nano Banana podem ser usados privadamente como ferramentas de autoria. Nenhuma chave ou configuração privada é publicada. Todo ativo final precisa de revisão humana técnica, editorial e de licença.
 
+As apresentações visuais da Aula 0 e do Episódio 1 foram produzidas dessa forma e passaram por revisão slide a slide. A procedência, os modelos e os identificadores de projeto estão registrados em `decks/provenance.yml`. As versões publicadas não contêm logos de terceiros nem reproduções de interfaces de produto.

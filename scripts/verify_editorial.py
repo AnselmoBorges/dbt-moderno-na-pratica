@@ -116,7 +116,9 @@ for entry in entries:
 
 deck_specs = {
     "aula-00-ambiente": 12,
+    "aula-00-ambiente-banana": 12,
     "episodio-01-baseline-core-1-12": 14,
+    "episodio-01-baseline-core-1-12-banana": 14,
 }
 for stem, expected_slides in deck_specs.items():
     pptx = ROOT / "assets/decks" / f"{stem}.pptx"
@@ -131,6 +133,11 @@ for stem, expected_slides in deck_specs.items():
         raise SystemExit(f"Deck {stem} sem slides/notas/fontes esperados: slides={len(slides)}, notes={len(notes)}")
     if not pdf.read_bytes().startswith(b"%PDF"):
         raise SystemExit(f"PDF inválido: {pdf.relative_to(ROOT)}")
+
+provenance = (ROOT / "assets/decks/provenance.yml").read_text(encoding="utf-8")
+for stem in ("aula-00-ambiente-banana", "episodio-01-baseline-core-1-12-banana"):
+    if f"id: {stem}" not in provenance or f"pptx: assets/decks/{stem}.pptx" not in provenance:
+        raise SystemExit(f"Deck visual sem procedência registrada: {stem}")
 
 legacy_commands = []
 for path in ROOT.glob("roteiros/*.md"):
@@ -159,4 +166,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 13 diagramas, 2 decks e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 13 diagramas, 4 decks e sanitização válidos.")
