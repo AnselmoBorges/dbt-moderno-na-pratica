@@ -1,0 +1,85 @@
+resources:
+  jobs:
+    dabdbt_job:
+      name: dabdbt_job
+      description: >-
+        POC de Databricks Asset Bundles + dbt + Lakehouse Federation: consome tabelas do Azure SQL expostas como foreign catalog no Unity Catalog, transforma a camada silver com enriquecimento via IBGE e gera o golden record para dashboards versionados.
+
+      schedule:
+        quartz_cron_expression: "0 0 8 ? * WED"
+        timezone_id: "America/Sao_Paulo"
+        pause_status: PAUSED
+
+      email_notifications:
+        on_failure:
+          - data-alerts@example.invalid
+
+      timeout_seconds: 900
+
+      tags:
+        tool: "DBT"
+        data_owner: "Rescue Point"
+        destino: "POC"
+
+      git_source:
+        git_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica.git
+        git_provider: gitHub
+        git_branch: dev
+
+      tasks:
+        - task_key: dbt_seed
+          dbt_task:
+            project_directory: dabdbt
+            commands:
+              - 'dbt seed --target=${bundle.target} --select ibge_municipios --profiles-dir=dbt_profiles'
+            warehouse_id: ${var.sql_warehouse_id}
+            catalog: rescue_${bundle.target}
+            schema: rescue_b
+            source: GIT
+          environment_key: dbt-default
+
+        - task_key: dbt_silver
+          depends_on:
+            - task_key: dbt_seed
+          dbt_task:
+            project_directory: dabdbt
+            commands:
+              - 'dbt run --target=${bundle.target} --select tag:silver --profiles-dir=dbt_profiles'
+            source: GIT
+            warehouse_id: ${var.sql_warehouse_id}
+            catalog: rescue_${bundle.target}
+            schema: rescue_s
+          environment_key: dbt-default
+
+        - task_key: dbt_gold
+          depends_on:
+            - task_key: dbt_silver
+          dbt_task:
+            project_directory: dabdbt
+            commands:
+              - 'dbt run --target=${bundle.target} --select tag:gold --profiles-dir=dbt_profiles'
+            source: GIT
+            warehouse_id: ${var.sql_warehouse_id}
+            catalog: rescue_${bundle.target}
+            schema: rescue_g
+          environment_key: dbt-default
+        - task_key: dbt_docs
+          depends_on:
+            - task_key: dbt_gold
+          dbt_task:
+            project_directory: dabdbt
+            commands:
+              - 'dbt docs generate --target=${bundle.target} --target-path=/Volumes/rescue_${bundle.target}/rescue_b/vol_docs/${bundle.name} --profiles-dir=dbt_profiles'
+            source: GIT
+            warehouse_id: ${var.sql_warehouse_id}
+            catalog: rescue_${bundle.target}
+          environment_key: dbt-default
+
+      queue:
+        enabled: true
+      environments:
+        - environment_key: dbt-default
+          spec:
+            client: "4"
+            dependencies:
+              - dbt-databricks>=1.0.0,<2.0.0

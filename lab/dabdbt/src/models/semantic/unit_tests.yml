@@ -1,0 +1,16 @@
+version: 2
+
+unit_tests:
+  - name: order_fulfillment_uses_positive_delivery_interval
+    description: Protege contra a inversão silenciosa dos argumentos de datediff.
+    model: order_fulfillment_g
+    given:
+      - input: ref('orders_s')
+        rows:
+          - {order_id: test_order, customer_id: test_customer, order_status: delivered, order_purchase_timestamp: '2024-01-01 10:00:00', order_approved_at: '2024-01-01 11:00:00', order_delivered_carrier_date: '2024-01-02 09:00:00', order_delivered_customer_date: '2024-01-05 12:00:00', order_estimated_delivery_date: '2024-01-08 00:00:00'}
+      - input: ref('order_payments_s')
+        rows:
+          - {order_id: test_order, payment_sequential: 1, payment_type: credit_card, payment_installments: 1, payment_value: 100}
+    expect:
+      rows:
+        - {order_id: test_order, customer_id: test_customer, order_status: delivered, delivery_days: 4, approval_to_delivery_days: 4, estimated_delivery_days: 7, total_payment: 100, max_installments: 1}

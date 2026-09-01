@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal de Documentação • Rescue Point</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --rescue-dark: #06142e;
+      --rescue-blue: #1565c0;
+      --rescue-accent: #1ec5ff;
+      --rescue-light: #e2f2ff;
+    }
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(145deg, var(--rescue-dark) 0%, #0f3c8a 55%, var(--rescue-accent) 100%);
+      padding: 32px;
+      color: #fff;
+    }
+    .wrapper {
+      width: 100%;
+      max-width: 440px;
+      background: rgba(6, 20, 46, 0.85);
+      padding: 40px 36px;
+      border-radius: 20px;
+      box-shadow: 0 32px 70px rgba(5, 16, 40, 0.45);
+      backdrop-filter: blur(12px);
+    }
+    .title {
+      margin: 0 0 20px;
+      font-size: 28px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    p.lead {
+      margin: 0 0 28px;
+      color: #cfe6ff;
+      line-height: 1.6;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+    input {
+      width: 100%;
+      padding: 12px 14px;
+      margin-bottom: 18px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(7, 25, 56, 0.65);
+      color: #fff;
+      font-size: 15px;
+      transition: border .2s ease, box-shadow .2s ease;
+    }
+    input::placeholder { color: rgba(233, 244, 255, 0.45); }
+    input:focus {
+      outline: none;
+      border-color: var(--rescue-accent);
+      box-shadow: 0 0 0 2px rgba(30, 197, 255, 0.25);
+    }
+    button {
+      width: 100%;
+      padding: 12px 16px;
+      border: none;
+      border-radius: 10px;
+      background: var(--rescue-accent);
+      color: #052050;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease;
+    }
+    button:hover { background: #18b6f1; }
+    button:active { transform: scale(0.98); }
+    .alert {
+      display: none;
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(255, 91, 91, 0.18);
+      border: 1px solid rgba(255, 91, 91, 0.38);
+      color: #ffd7d7;
+      font-size: 14px;
+    }
+    .menu {
+      display: none;
+      margin-top: 30px;
+      padding: 24px;
+      border-radius: 14px;
+      background: rgba(7, 25, 56, 0.55);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+    .menu h2 {
+      margin: 0 0 16px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--rescue-light);
+    }
+    .menu ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+    .menu a {
+      display: block;
+      padding: 12px 14px;
+      border-radius: 10px;
+      background: rgba(21, 101, 192, 0.2);
+      color: #e6f4ff;
+      text-decoration: none;
+      transition: background .2s ease;
+    }
+    .menu a:hover { background: rgba(30, 197, 255, 0.28); }
+    .footer {
+      margin-top: 26px;
+      font-size: 12px;
+      text-align: center;
+      color: rgba(231, 245, 255, 0.65);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <h1 class="title">Portal de Documentação</h1>
+
+    <p class="lead">
+      Acesse os projetos publicados com dbt. Utilize as credenciais provisórias da Engenharia para liberar o menu de documentação.
+    </p>
+
+    <label for="user">Usuário</label>
+    <input id="user" type="text" placeholder="ex.: engenharia" autocomplete="username" />
+
+    <label for="pass">Senha</label>
+    <input id="pass" type="password" placeholder="••••••••" autocomplete="current-password" />
+
+    <button id="login">Entrar</button>
+    <div class="alert" id="error">Usuário ou senha inválidos. Verifique e tente novamente.</div>
+
+    <div class="menu" id="menu">
+      <h2>Documentação disponível</h2>
+      <ul id="menu-list"></ul>
+    </div>
+
+    <div class="footer" id="footer"></div>
+  </div>
+
+  <script>
+    const loginButton = document.getElementById('login');
+    const errorBox = document.getElementById('error');
+    const menuBox = document.getElementById('menu');
+    const userInput = document.getElementById('user');
+    const passInput = document.getElementById('pass');
+    const footer = document.getElementById('footer');
+    const menuList = document.getElementById('menu-list');
+
+    const projects = [
+      { label: 'Projeto dabdbt', url: 'dabdbt/index.html' },
+    ];
+
+    footer.textContent = `© ${new Date().getFullYear()} Rescue Point • Engenharia de Dados`;
+
+    function authenticate() {
+      const user = userInput.value.trim();
+      const pass = passInput.value;
+
+      if (user === 'engenharia' && pass === 'senha321') {
+        errorBox.style.display = 'none';
+        menuList.innerHTML = '';
+
+        projects.forEach((project) => {
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+          link.href = project.url;
+          link.textContent = project.label;
+          item.appendChild(link);
+          menuList.appendChild(item);
+        });
+
+        menuBox.style.display = 'block';
+        menuBox.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        errorBox.style.display = 'block';
+        menuBox.style.display = 'none';
+      }
+    }
+
+    loginButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      authenticate();
+    });
+
+    passInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        authenticate();
+      }
+    });
+  </script>
+</body>
+</html>

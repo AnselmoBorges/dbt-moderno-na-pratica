@@ -1,0 +1,32 @@
+# Sistema e editores
+.DS_Store
+.idea/
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# dbt
+target/
+logs/
+dbt_packages/
+dbt_modules/
+dbt_internal_packages/
+
+# Dados e segredos locais
+*.duckdb
+*.duckdb.wal
+.user.yml
+.env
+!.env.example
+.databricks/
+
+# Build e arquivos temporários
+build/
+dist/
+scratch/**
+!scratch/README.md

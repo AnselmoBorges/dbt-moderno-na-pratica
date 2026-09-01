@@ -1,0 +1,188 @@
+version: 2
+
+groups:
+  - name: commerce
+    owner:
+      name: Rescue Point Data
+      email: data-owner@example.invalid
+
+models:
+  - name: order_metrics
+    description: API analítica governada para pedidos e receita do domínio de comércio.
+    latest_version: 2
+    config:
+      group: commerce
+      access: public
+      tags: [semantic, gold_api, data_product_commerce]
+      meta:
+        data_classification: internal
+        business_owner: commerce
+        contains_direct_pii: false
+      contract:
+        enforced: true
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: Identificador único do pedido.
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        data_type: varchar
+        description: Identificador do cliente.
+        config:
+          meta:
+            data_classification: confidential_identifier
+        constraints:
+          - type: not_null
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('customers_s')
+                field: customer_id
+      - name: order_status
+        data_type: varchar
+        description: Estado operacional do pedido.
+      - name: order_purchase_date
+        data_type: date
+        description: Data de criação do pedido e dimensão temporal padrão.
+      - name: total_payment
+        data_type: decimal(18,2)
+        description: Valor efetivamente pago no pedido, incluindo pedidos não entregues.
+      - name: delivery_days
+        data_type: integer
+        description: Dias entre compra e entrega; nulo enquanto não houver entrega.
+      - name: is_delivered
+        data_type: boolean
+        description: Indica se o status atual é delivered.
+    versions:
+      - v: 1
+        deprecation_date: 2027-01-31
+      - v: 2
+        columns:
+          - include: all
+          - name: delivered_revenue
+            data_type: decimal(18,2)
+            description: Pagamento reconhecido somente para pedidos entregues.
+          - name: item_revenue
+            data_type: decimal(18,2)
+            description: Soma dos preços dos itens, separada do pagamento para evitar ambiguidade.
+  - name: commerce_orders
+    description: Fachada semântica estável sobre a versão vigente da API de pedidos.
+    config:
+      group: commerce
+      access: public
+      tags: [semantic, governed_interface, agent_readable]
+      meta:
+        data_classification: internal
+        approved_consumers: [bi, api, read_only_agent]
+        contains_direct_pii: false
+    semantic_model:
+      enabled: true
+      name: commerce_orders
+    agg_time_dimension: order_purchase_date
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: Identificador único do pedido.
+        entity:
+          name: order
+          type: primary
+      - name: customer_id
+        data_type: varchar
+        description: Identificador do cliente.
+        config:
+          meta:
+            data_classification: confidential_identifier
+        entity:
+          name: customer
+          type: foreign
+      - name: order_status
+        data_type: varchar
+        description: Estado operacional do pedido.
+        dimension:
+          type: categorical
+      - name: order_purchase_date
+        data_type: date
+        description: Data de criação do pedido.
+        granularity: day
+        dimension:
+          type: time
+      - name: total_payment
+        data_type: decimal(18,2)
+        description: Pagamento total do pedido.
+      - name: delivered_revenue
+        data_type: decimal(18,2)
+        description: Receita reconhecida apenas para pedidos entregues.
+      - name: item_revenue
+        data_type: decimal(18,2)
+        description: Soma dos preços dos itens.
+      - name: delivery_days
+        data_type: integer
+        description: Dias entre compra e entrega.
+      - name: is_delivered
+        data_type: boolean
+        description: Indica se o pedido foi entregue.
+        dimension:
+          type: categorical
+    metrics:
+      - name: orders
+        label: Pedidos
+        description: Quantidade de pedidos distintos.
+        type: simple
+        agg: count_distinct
+        expr: order_id
+      - name: gross_revenue
+        label: Receita bruta de pagamentos
+        description: Soma dos pagamentos, sem aplicar reconhecimento por status.
+        type: simple
+        agg: sum
+        expr: total_payment
+      - name: delivered_revenue
+        label: Receita entregue
+        description: Pagamentos reconhecidos somente em pedidos entregues.
+        type: simple
+        agg: sum
+        expr: delivered_revenue
+      - name: average_delivery_days
+        label: Prazo médio de entrega
+        description: Média de dias apenas entre pedidos com data de entrega.
+        type: simple
+        agg: average
+        expr: delivery_days
+
+  - name: metricflow_time_spine
+    description: Calendário diário estático do laboratório para métricas cumulativas.
+    time_spine:
+      standard_granularity_column: date_day
+    columns:
+      - name: date_day
+        data_type: date
+        granularity: day
+        description: Data canônica do calendário.
+
+metrics:
+  - name: average_order_value
+    label: Ticket médio por pedido
+    description: Receita bruta dividida pela quantidade de pedidos.
+    type: ratio
+    numerator: gross_revenue
+    denominator: orders
+
+exposures:
+  - name: governed_commerce_agent
+    label: Agente governado de comércio
+    type: application
+    maturity: medium
+    url: https://example.invalid/governed-commerce-agent
+    description: Cliente MCP somente leitura que consome métricas e metadados aprovados.
+    depends_on:
+      - ref('commerce_orders')
+      - metric('delivered_revenue')
+      - metric('average_order_value')
+    owner:
+      name: Rescue Point Data
+      email: data-owner@example.invalid

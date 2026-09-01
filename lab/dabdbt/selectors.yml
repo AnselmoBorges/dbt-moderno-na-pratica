@@ -1,0 +1,16 @@
+selectors:
+  - name: ci_impact
+    description: Recursos modificados e descendentes, usando manifest de estado.
+    definition:
+      method: state
+      value: modified
+      children: true
+  - name: governed_gold
+    description: Interface Gold pública, testes e descendentes semânticos.
+    definition:
+      union:
+        - method: tag
+          value: gold
+          children: true
+        - method: path
+          value: src/models/semantic

@@ -1,0 +1,72 @@
+name: 'dabdbt'
+version: '2.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'dabdbt'
+
+# Only stable Core behavior is part of the executable season. Preview flags are
+# documented in the Radar sections, never enabled in this project.
+flags:
+  populate_by_name: true
+
+require-dbt-version: ">=1.12.0,<1.13.0"
+
+# These configurations specify where dbt should look for different types of files.
+# For Databricks asset bundles, we put everything in src, as you may have
+# non-dbt resources in your project.
+model-paths: ["src/models"]
+analysis-paths: ["src/analyses"]
+docs-paths: ["src/docs"]
+test-paths: ["src/tests"]
+seed-paths: ["src/seeds"]
+macro-paths: ["src/macros"]
+snapshot-paths: ["src/snapshots"]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Installing packages into `dbt_packages` avoids mixing installed package
+# contents with dbt's runtime `target/` artifacts (compiled/run). This
+# prevents dbt from misinterpreting `target/compiled` as an installed
+# package root that should contain a `dbt_project.yml`.
+packages-install-path: "dbt_packages"
+log-path: "logs"
+target-path: "target"
+
+# Configuring models
+# Full documentation: https://docs.getdbt.com/docs/configuring-models
+
+# Default layer configs; override inside individual models if needed.
+models:
+  dabdbt:
+    +persist_docs: {relation: true, columns: true}
+    semantic:
+      +schema: semantic
+      +materialized: table
+      +tags: ["semantic", "data_product:commerce"]
+    silver:
+      +schema: s
+      +materialized: table
+      +tags: ["silver", "data_owner:rescue"]
+      +meta:
+        tags: ["source:Azure SQL", "process:dbt", "layer:silver", "data_owner:rescue"]
+      +post-hook:
+        - "{{ apply_uc_tags(this, {'source': 'Azure SQL', 'process': 'dbt', 'layer': 'silver', 'data_owner': 'rescue'}, model.columns, {'source': 'Azure SQL', 'process': 'dbt', 'layer': 'silver', 'data_owner': 'rescue'}) }}"
+    gold:
+      +schema: g
+      +materialized: table
+      +tags: ["gold", "data_owner:rescue"]
+      +meta:
+        tags: ["layer:gold", "data_owner:rescue", "process:dbt"]
+      +post-hook:
+        - "{{ apply_uc_tags(this, {'process': 'dbt', 'layer': 'gold', 'data_owner': 'rescue'}, model.columns, {'process': 'dbt', 'layer': 'gold', 'data_owner': 'rescue'}) }}"
+
+seeds:
+  dabdbt:
+    +schema: b
+    +quote_columns: false
+
+vars:
+  source_olist_database: "sqlolist{{ target.name | default('dev') }}"

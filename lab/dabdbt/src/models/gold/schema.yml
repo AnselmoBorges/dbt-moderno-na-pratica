@@ -1,0 +1,136 @@
+version: 2
+
+models:
+  - name: customer_overview_g
+    description: "{{ doc('gold_customer_overview') }}"
+    columns:
+      - name: customer_id
+        description: Identificador do cliente (chave primária).
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_unique_id
+        description: Identificador global do cliente.
+      - name: customer_city
+        description: Cidade normalizada.
+      - name: customer_state
+        description: UF do cliente.
+      - name: customer_latitude
+        description: Latitude do município (IBGE).
+      - name: customer_longitude
+        description: Longitude do município (IBGE).
+      - name: total_orders
+        description: Quantidade total de pedidos do cliente.
+      - name: total_spent
+        description: Valor total gasto pelo cliente.
+      - name: avg_ticket
+        description: Ticket médio.
+      - name: first_order_at
+        description: Data/hora do primeiro pedido.
+      - name: last_order_at
+        description: Data/hora do último pedido.
+      - name: avg_delivery_days
+        description: Média de dias entre compra e entrega.
+      - name: payment_types
+        description: Conjunto de meios de pagamento utilizados.
+      - name: last_order_status
+        description: Status do último pedido registrado (derivado do pedido mais recente).
+
+  - name: order_fulfillment_g
+    description: "{{ doc('gold_order_fulfillment') }}"
+    columns:
+      - name: order_id
+        description: Identificador do pedido (chave primária).
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Identificador do cliente (chave estrangeira para `gold.customer_overview`).
+      - name: order_status
+        description: Status atual do pedido.
+      - name: order_purchase_timestamp
+        description: Momento da compra.
+      - name: order_approved_at
+        description: Momento de aprovação do pagamento.
+      - name: order_delivered_carrier_date
+        description: Momento de coleta pela transportadora.
+      - name: order_delivered_customer_date
+        description: Momento de entrega ao cliente.
+      - name: order_estimated_delivery_date
+        description: Previsão de entrega no momento da compra.
+      - name: delivery_days
+        description: Dias entre compra e entrega.
+        data_tests:
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
+              config:
+                where: "order_delivered_customer_date is not null"
+      - name: approval_to_delivery_days
+        description: Dias entre aprovação e entrega.
+      - name: estimated_delivery_days
+        description: Dias estimados pelo sistema.
+      - name: total_payment
+        description: Valor total recebido pelo pedido.
+      - name: max_installments
+        description: Número máximo de parcelas.
+
+  - name: item_sales_g
+    description: "{{ doc('gold_item_sales') }}"
+    columns:
+      - name: product_id
+        description: Identificador do produto (chave primária em conjunto com `seller_id`).
+      - name: seller_id
+        description: Identificador do vendedor (composição da chave primária com `product_id`).
+      - name: total_items
+        description: Total de itens vendidos.
+      - name: gross_revenue
+        description: Receita bruta associada ao item.
+      - name: total_freight
+        description: Frete total associado ao item.
+      - name: avg_item_price
+        description: Preço médio por item.
+      - name: delivered_revenue
+        description: Receita proveniente de pedidos entregues.
+
+  - name: payment_performance_g
+    description: "{{ doc('gold_payment_performance') }}"
+    columns:
+      - name: payment_type
+        description: Meio de pagamento (chave primária da agregação).
+      - name: orders
+        description: Quantidade de pedidos vinculados ao meio.
+      - name: total_value
+        description: Valor total transacionado.
+      - name: avg_payment
+        description: Valor médio por transação.
+      - name: installment_value
+        description: Valor somado em compras parceladas.
+      - name: avg_installments
+        description: Média de parcelas utilizadas.
+
+  - name: geo_heatmap_g
+    description: "{{ doc('gold_geo_heatmap') }}"
+    columns:
+      - name: customer_state
+        description: UF do cliente (parte da chave primária agregada).
+      - name: customer_city
+        description: Cidade do cliente (parte da chave primária agregada).
+      - name: customer_latitude
+        description: Latitude do município.
+      - name: customer_longitude
+        description: Longitude do município.
+      - name: total_orders
+        description: Total de pedidos no município.
+      - name: total_revenue
+        description: Receita total no município.
+
+  - name: product_basket_g
+    description: "{{ doc('gold_product_basket') }}"
+    columns:
+      - name: product_id
+        description: Produto principal na cesta (composição da chave primária com `associated_product_id`).
+      - name: associated_product_id
+        description: Produto associado na mesma cesta (composição da chave primária com `product_id`).
+      - name: co_occurrence
+        description: Quantidade de pedidos onde a combinação ocorre.

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="320" height="96" viewBox="0 0 320 96" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="rescueGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06142e"/>
+      <stop offset="50%" stop-color="#1565c0"/>
+      <stop offset="100%" stop-color="#1ec5ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="320" height="96" rx="16" fill="#06142e"/>
+  <text x="48" y="56" font-family="Inter, sans-serif" font-weight="700" font-size="32" fill="url(#rescueGradient)">Rescue Point</text>
+  <circle cx="32" cy="48" r="18" stroke="#1ec5ff" stroke-width="4" fill="none"/>
+  <circle cx="32" cy="48" r="6" fill="#1ec5ff"/>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "run_id": "fixture-raw-v1",
+  "mode": "raw_schema",
+  "fixture": true,
+  "model": "synthetic-no-llm",
+  "pricing": {"input_per_million": 1.0, "output_per_million": 4.0},
+  "items": [
+    {"question_id":"q01","answer":8,"sql":"select count(*) from b.orders","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false},
+    {"question_id":"q02","answer":740,"sql":"select sum(payment_value) from b.order_payments","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false},
+    {"question_id":"q03","answer":740,"sql":"select sum(payment_value) from b.order_payments","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false},
+    {"question_id":"q04","answer":105,"sql":"select sum(payment_value)/count(distinct order_id) from payments join delivered_orders using(order_id)","tokens_input":700,"tokens_output":80,"tool_calls":3,"latency_ms":1100,"invalid_join":false},
+    {"question_id":"q05","answer":-5,"sql":"select avg(datediff(purchased_at, delivered_at)) from orders","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false},
+    {"question_id":"q06","answer":6,"sql":"select count(*) from orders where status='delivered'","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false},
+    {"question_id":"q07","answer":1,"sql":"select count(*) from orders where status='canceled'","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false},
+    {"question_id":"q08","answer":210,"sql":"select sum(payment_value) from payments join orders using(order_id) where month=4","tokens_input":700,"tokens_output":80,"tool_calls":3,"latency_ms":1100,"invalid_join":false},
+    {"question_id":"q09","answer":"RJ","sql":"select state,sum(payment_value) from payments join customers using(customer_id)","tokens_input":700,"tokens_output":80,"tool_calls":4,"latency_ms":1400,"invalid_join":true},
+    {"question_id":"q10","answer":0,"sql":"select gross_revenue-gross_revenue from payments","tokens_input":700,"tokens_output":80,"tool_calls":2,"latency_ms":900,"invalid_join":false}
+  ]
+}

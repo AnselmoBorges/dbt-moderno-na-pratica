@@ -1,0 +1,25 @@
+version: 2
+
+macros:
+  - name: apply_uc_tags
+    description: >
+      Aplica tags no Unity Catalog para tabelas e colunas após a materialização de um modelo.
+      Executa instruções `ALTER TABLE ... SET TAGS` e `ALTER TABLE ... ALTER COLUMN ... SET TAGS`
+      usando o dicionário de metadados passado na configuração do modelo (`table_tags` e `columns`).
+    arguments:
+      - name: relation
+        description: Referência ao objeto (tabela) que receberá as tags.
+      - name: table_tags
+        description: Dicionário de tags a aplicar na tabela (opcional).
+      - name: columns
+        description: Estrutura retornada pelo dbt com metadados das colunas.
+      - name: default_column_tags
+        description: Tags padrão para colunas quando não especificadas via `meta` (opcional).
+
+  - name: normalize_city_ascii
+    description: >
+      Normaliza nomes de municípios removendo acentuação, caracteres especiais e espaços extras.
+      Retorna a string em minúsculas, facilitando o join com o seed `ibge_municipios`.
+    arguments:
+      - name: column_expr
+        description: Expressão da coluna (ou literal) que contém o nome do município.

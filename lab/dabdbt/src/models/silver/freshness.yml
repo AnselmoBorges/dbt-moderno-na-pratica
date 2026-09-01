@@ -1,0 +1,20 @@
+version: 2
+
+sources:
+  - name: lab_quality
+    description: Fonte sintética criada no momento do teste para validar freshness sem depender do calendário.
+    database: "{{ target.database }}"
+    schema: lab_quality
+    tables:
+      - name: load_audit
+        description: Uma linha com o instante de carga controlado pelo teste.
+        config:
+          loaded_at_field: loaded_at
+          freshness:
+            warn_after: {count: 1, period: hour}
+            error_after: {count: 2, period: hour}
+        columns:
+          - name: load_id
+            description: Identificador da carga sintética.
+          - name: loaded_at
+            description: Instante usado pelo comando dbt source freshness.

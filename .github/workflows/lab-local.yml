@@ -1,0 +1,57 @@
+name: Validação do curso
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: curso-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  editorial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python scripts/verify_editorial.py
+
+  core-and-metricflow:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: lab/dabdbt
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -r requirements-local.txt
+      - run: dbt deps --profiles-dir dbt_profiles --target local
+      - run: dbt parse --profiles-dir dbt_profiles --target local
+      - run: dbt compile --profiles-dir dbt_profiles --target local
+      - run: dbt seed --profiles-dir dbt_profiles --target local --full-refresh
+      - run: dbt run-operation create_freshness_fixture --args '{age_hours: 0}' --profiles-dir dbt_profiles --target local
+      - run: dbt build --profiles-dir dbt_profiles --target local
+      - run: dbt docs generate --profiles-dir dbt_profiles --target local
+      - run: python scripts/verify_artifacts.py
+      - run: python scripts/verify_source_freshness.py
+      - run: DBT_PROFILES_DIR=dbt_profiles mf validate-configs
+      - run: DBT_PROFILES_DIR=dbt_profiles mf query --metrics orders,gross_revenue,delivered_revenue,average_order_value --group-by metric_time__month
+      - run: python scripts/verify_mcp_policy.py
+      - run: python scripts/verify_mcp_server.py
+      - run: python scripts/verify_ground_truth.py
+      - run: python scripts/score_agent_benchmark.py benchmarks/traces/*.fixture.json
+      - run: python scripts/verify_governance_metadata.py
+      - run: python scripts/verify_breaking_change.py
+      - run: python scripts/benchmark_state.py
+      - run: python scripts/verify_incremental_equivalence.py
+      - run: python scripts/benchmark_finops.py

@@ -1,0 +1,195 @@
+version: 2
+
+sources:
+  - name: olist
+    description: "{{ doc('source_olist_catalog') }}"
+    database: "{{ target.database if target.type == 'duckdb' else var('source_olist_database', 'sqlolist' ~ (target.name | default('dev'))) }}"
+    schema: "{{ 'b' if target.type == 'duckdb' else 'olist' }}"
+    tables:
+      - name: customers
+        description: "{{ doc('source_olist_customers') }}"
+        columns:
+          - name: customer_id
+            data_type: string
+            description: Identificador técnico do cliente usado como chave primária na base transacional.
+          - name: customer_unique_id
+            data_type: string
+            description: Identificador global do cliente para deduplicação entre marketplaces.
+          - name: customer_zip_code_prefix
+            data_type: string
+            description: Prefixo do CEP informado no cadastro.
+          - name: customer_city
+            data_type: string
+            description: Cidade de residência do cliente.
+          - name: customer_state
+            data_type: char(2)
+            description: Unidade federativa (UF) do endereço do cliente.
+      - name: orders
+        description: "{{ doc('source_olist_orders') }}"
+        config:
+          loaded_at_field: order_purchase_timestamp
+          freshness:
+            warn_after: {count: 3650, period: day}
+            error_after: {count: 7300, period: day}
+        columns:
+          - name: order_id
+            data_type: string
+            description: Identificador técnico do pedido.
+          - name: customer_id
+            data_type: string
+            description: Cliente associado ao pedido.
+          - name: order_status
+            data_type: string
+            description: Status atual do pedido conforme origem transacional.
+          - name: order_purchase_timestamp
+            data_type: timestamp
+            description: Data e hora da criação do pedido.
+          - name: order_approved_at
+            data_type: timestamp
+            description: Data e hora de aprovação do pagamento.
+          - name: order_delivered_carrier_date
+            data_type: timestamp
+            description: Data e hora em que o pedido foi coletado pela transportadora.
+          - name: order_delivered_customer_date
+            data_type: timestamp
+            description: Data e hora da entrega ao cliente.
+          - name: order_estimated_delivery_date
+            data_type: timestamp
+            description: Data de entrega estimada gerada pelo sistema.
+      - name: order_items
+        description: "{{ doc('source_olist_order_items') }}"
+        columns:
+          - name: order_id
+            data_type: string
+            description: Pedido ao qual o item pertence.
+          - name: order_item_id
+            data_type: int
+            description: Sequencial do item dentro do pedido.
+          - name: product_id
+            data_type: string
+            description: Produto vendido no item.
+          - name: seller_id
+            data_type: string
+            description: Vendedor responsável pelo item.
+          - name: shipping_limit_date
+            data_type: timestamp
+            description: Prazo máximo para despacho informado pela plataforma.
+          - name: price
+            data_type: decimal(10,2)
+            description: Valor de venda unitário do item.
+          - name: freight_value
+            data_type: decimal(10,2)
+            description: Valor do frete atribuído ao item.
+      - name: order_payments
+        description: "{{ doc('source_olist_order_payments') }}"
+        columns:
+          - name: order_id
+            data_type: string
+            description: Pedido ao qual o pagamento se refere.
+          - name: payment_sequential
+            data_type: int
+            description: Sequência do pagamento quando há múltiplas parcelas.
+          - name: payment_type
+            data_type: string
+            description: "Meio de pagamento utilizado (ex.: credit_card, boleto)."
+          - name: payment_installments
+            data_type: int
+            description: Número de parcelas do pagamento, quando aplicável.
+          - name: payment_value
+            data_type: decimal(10,2)
+            description: Valor efetivamente pago na parcela ou transação.
+
+models:
+  - name: customers_s
+    description: "{{ doc('silver_customers') }}"
+    columns:
+      - name: customer_id
+        description: ID técnico do cliente, usado como chave primária.
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_unique_id
+        description: ID global para reconciliar clientes entre canais.
+      - name: customer_zip_code_prefix
+        description: CEP (prefixo) do endereço do cliente.
+      - name: customer_city
+        description: Cidade de residência normalizada.
+      - name: customer_state
+        description: UF do cliente em formato padronizado.
+      - name: customer_latitude
+        description: Latitude do município conforme referência do IBGE.
+      - name: customer_longitude
+        description: Longitude do município conforme referência do IBGE.
+  - name: orders_s
+    description: "{{ doc('silver_orders') }}"
+    columns:
+      - name: order_id
+        description: ID do pedido (chave primária).
+        data_tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: Referência ao cliente na camada silver (chave estrangeira para `customers_s`).
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('customers_s')
+                field: customer_id
+      - name: order_status
+        description: Status do pedido na fonte transacional.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: [delivered, shipped, canceled, invoiced, processing, approved, created, unavailable]
+      - name: order_purchase_timestamp
+        description: Momento de criação do pedido.
+      - name: order_approved_at
+        description: Momento de aprovação do pagamento.
+      - name: order_delivered_carrier_date
+        description: Momento em que a transportadora recebeu o pedido.
+      - name: order_delivered_customer_date
+        description: Momento de entrega confirmada ao cliente.
+      - name: order_estimated_delivery_date
+        description: Data estimada de entrega calculada pelo sistema.
+  - name: order_items_s
+    description: "{{ doc('silver_order_items') }}"
+    columns:
+      - name: order_id
+        description: Pedido ao qual o item pertence (chave estrangeira para `orders_s`).
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('orders_s')
+                field: order_id
+      - name: order_item_id
+        description: Sequencial do item dentro do pedido (composição da chave primária com `order_id`).
+      - name: product_id
+        description: Produto comercializado no item.
+      - name: seller_id
+        description: Vendedor responsável pelo fulfillment.
+      - name: shipping_limit_date
+        description: SLA máximo para despacho do item.
+      - name: price
+        description: Valor unitário do item no pedido.
+      - name: freight_value
+        description: Valor de frete rateado para o item.
+  - name: order_payments_s
+    description: "{{ doc('silver_order_payments') }}"
+    columns:
+      - name: order_id
+        description: Pedido associado ao pagamento (chave estrangeira para `orders_s`).
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('orders_s')
+                field: order_id
+      - name: payment_sequential
+        description: Sequência do pagamento (1ª parcela, 2ª, etc.) – compõe a chave primária com `order_id`.
+      - name: payment_type
+        description: Tipo de pagamento categorizado.
+      - name: payment_installments
+        description: Número de parcelas.
+      - name: payment_value
+        description: Valor pago na parcela.

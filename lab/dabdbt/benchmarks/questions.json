@@ -1,0 +1,16 @@
+{
+  "dataset": "olist_synthetic_v1",
+  "notes": "Ground truth calculado pela fachada semantic.commerce_orders. Valores monetários em unidades da moeda do dataset.",
+  "questions": [
+    {"id": "q01", "question": "Quantos pedidos existem?", "expected": 8, "tolerance": 0, "rule": "count_distinct(order_id)", "ground_truth_sql": "select count(distinct order_id) from semantic.commerce_orders"},
+    {"id": "q02", "question": "Qual é a receita bruta de pagamentos?", "expected": 740, "tolerance": 0.001, "rule": "sum(total_payment) para todos os status", "ground_truth_sql": "select sum(total_payment) from semantic.commerce_orders"},
+    {"id": "q03", "question": "Qual é a receita reconhecida de pedidos entregues?", "expected": 630, "tolerance": 0.001, "rule": "sum(total_payment) somente quando order_status = delivered", "ground_truth_sql": "select sum(delivered_revenue) from semantic.commerce_orders"},
+    {"id": "q04", "question": "Qual é o ticket médio por pedido?", "expected": 92.5, "tolerance": 0.001, "rule": "gross_revenue / orders", "ground_truth_sql": "select sum(total_payment) / count(distinct order_id) from semantic.commerce_orders"},
+    {"id": "q05", "question": "Qual é o prazo médio dos pedidos que possuem entrega?", "expected": 5, "tolerance": 0.001, "rule": "average(delivery_days), ignorando nulos", "ground_truth_sql": "select avg(delivery_days) from semantic.commerce_orders"},
+    {"id": "q06", "question": "Quantos pedidos foram entregues?", "expected": 6, "tolerance": 0, "rule": "count de order_status = delivered", "ground_truth_sql": "select count(*) from semantic.commerce_orders where is_delivered"},
+    {"id": "q07", "question": "Quantos pedidos foram cancelados?", "expected": 1, "tolerance": 0, "rule": "count de order_status = canceled", "ground_truth_sql": "select count(*) from semantic.commerce_orders where order_status = 'canceled'"},
+    {"id": "q08", "question": "Qual foi a receita bruta em abril de 2024?", "expected": 210, "tolerance": 0.001, "rule": "gross_revenue filtrada por mês de order_purchase_date", "ground_truth_sql": "select sum(total_payment) from semantic.commerce_orders where order_purchase_date >= date '2024-04-01' and order_purchase_date < date '2024-05-01'"},
+    {"id": "q09", "question": "Qual UF possui a maior receita bruta?", "expected": "SP", "rule": "join customer_id com customers_s e ordenar sum(total_payment) desc", "ground_truth_sql": "select c.customer_state from semantic.commerce_orders o join s.customers c using(customer_id) group by c.customer_state order by sum(o.total_payment) desc, c.customer_state limit 1"},
+    {"id": "q10", "question": "Quanto pagamento ainda não foi reconhecido como receita entregue?", "expected": 110, "tolerance": 0.001, "rule": "gross_revenue - delivered_revenue", "ground_truth_sql": "select sum(total_payment) - sum(delivered_revenue) from semantic.commerce_orders"}
+  ]
+}

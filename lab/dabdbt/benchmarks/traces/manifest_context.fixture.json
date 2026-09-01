@@ -1,0 +1,19 @@
+{
+  "run_id": "fixture-manifest-v1",
+  "mode": "manifest_context",
+  "fixture": true,
+  "model": "synthetic-no-llm",
+  "pricing": {"input_per_million": 1.0, "output_per_million": 4.0},
+  "items": [
+    {"question_id":"q01","answer":8,"sql":"select count(distinct order_id) from semantic.commerce_orders","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q02","answer":740,"sql":"select sum(total_payment) from semantic.commerce_orders","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q03","answer":630,"sql":"select sum(delivered_revenue) from semantic.commerce_orders","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q04","answer":92.5,"sql":"select sum(total_payment)/count(distinct order_id) from semantic.commerce_orders","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q05","answer":5,"sql":"select avg(delivery_days) from semantic.commerce_orders","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q06","answer":6,"sql":"select count(*) from semantic.commerce_orders where is_delivered","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q07","answer":1,"sql":"select count(*) from semantic.commerce_orders where order_status='canceled'","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q08","answer":210,"sql":"select sum(total_payment) from semantic.commerce_orders where month(order_purchase_date)=4","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false},
+    {"question_id":"q09","answer":"MG","sql":"select state,sum(total_payment) from commerce_orders join customers_s using(customer_unique_id)","tokens_input":500,"tokens_output":60,"tool_calls":3,"latency_ms":950,"invalid_join":true},
+    {"question_id":"q10","answer":110,"sql":"select sum(total_payment)-sum(delivered_revenue) from semantic.commerce_orders","tokens_input":500,"tokens_output":60,"tool_calls":2,"latency_ms":750,"invalid_join":false}
+  ]
+}

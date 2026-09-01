@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "dbt-governed-read-only": {
+      "command": "<ABSOLUTE_PATH>/dabdbt/.venv/bin/dbt-mcp",
+      "args": [],
+      "env": {
+        "DBT_PROJECT_DIR": "<ABSOLUTE_PATH>/dabdbt",
+        "DBT_PATH": "<ABSOLUTE_PATH>/dabdbt/.venv/bin/dbt",
+        "DBT_PROFILES_DIR": "<ABSOLUTE_PATH>/dabdbt/dbt_profiles",
+        "DBT_MCP_ENABLE_TOOLS": "compile,list,parse,get_lineage_dev,get_node_details_dev",
+        "DBT_MCP_LOG_LEVEL": "INFO"
+      }
+    }
+  }
+}

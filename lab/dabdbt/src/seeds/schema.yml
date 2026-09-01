@@ -1,0 +1,18 @@
+version: 2
+
+seeds:
+  - name: ibge_municipios
+    description: "{{ doc('seed_ibge_municipios') }}"
+    columns:
+      - name: codigo_ibge
+        description: Código oficial do município no cadastro do IBGE (chave primária do seed).
+      - name: municipio_ascii
+        description: Nome normalizado em minúsculas sem acentos, utilizado para joins com dados brutos.
+      - name: municipio_upper
+        description: Nome oficial do município em caixa alta, usado para exibição nas camadas silver/gold.
+      - name: uf
+        description: Sigla do estado ao qual o município pertence.
+      - name: latitude
+        description: Latitude decimal do município segundo o IBGE.
+      - name: longitude
+        description: Longitude decimal do município segundo o IBGE.

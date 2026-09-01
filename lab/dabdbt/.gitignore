@@ -1,0 +1,18 @@
+# DABs
+.databricks/
+build/
+dist/
+__pycache__/
+*.egg-info
+.venv/
+.user.yml
+scratch/**
+!scratch/README.md
+
+# dbt
+target/
+dbt_packages/
+dbt_modules/
+logs/
+../data/*.duckdb
+dbt_internal_packages/

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/rescuepoint/agent-benchmark.schema.json",
+  "title": "Rescue Point governed agent benchmark",
+  "type": "object",
+  "required": ["run_id", "mode", "fixture", "model", "pricing", "items"],
+  "properties": {
+    "run_id": {"type": "string"},
+    "mode": {"enum": ["raw_schema", "manifest_context", "semantic_mcp"]},
+    "fixture": {"type": "boolean"},
+    "model": {"type": "string"},
+    "pricing": {
+      "type": "object",
+      "required": ["input_per_million", "output_per_million"],
+      "properties": {
+        "input_per_million": {"type": "number", "minimum": 0},
+        "output_per_million": {"type": "number", "minimum": 0}
+      }
+    },
+    "items": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["question_id", "answer", "sql", "tokens_input", "tokens_output", "tool_calls", "latency_ms", "invalid_join"],
+        "properties": {
+          "question_id": {"type": "string"},
+          "answer": {},
+          "sql": {"type": "string"},
+          "tokens_input": {"type": "integer", "minimum": 0},
+          "tokens_output": {"type": "integer", "minimum": 0},
+          "tool_calls": {"type": "integer", "minimum": 0},
+          "latency_ms": {"type": "integer", "minimum": 0},
+          "invalid_join": {"type": "boolean"}
+        }
+      }
+    }
+  }
+}
