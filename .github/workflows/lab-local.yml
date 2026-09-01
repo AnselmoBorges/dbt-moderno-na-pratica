@@ -34,12 +34,17 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: lab/dabdbt/requirements-local.txt
       - run: pip install -r requirements-local.txt
       - run: dbt deps --profiles-dir dbt_profiles --target local
       - run: dbt parse --profiles-dir dbt_profiles --target local
       - run: dbt compile --profiles-dir dbt_profiles --target local
       - run: dbt seed --profiles-dir dbt_profiles --target local --full-refresh
-      - run: dbt run-operation create_freshness_fixture --args '{age_hours: 0}' --profiles-dir dbt_profiles --target local
+      - run: >-
+          dbt run-operation create_freshness_fixture
+          --args '{age_hours: 0}'
+          --profiles-dir dbt_profiles
+          --target local
       - run: dbt build --profiles-dir dbt_profiles --target local
       - run: dbt docs generate --profiles-dir dbt_profiles --target local
       - run: python scripts/verify_artifacts.py
