@@ -99,6 +99,12 @@ Posso compartilhar o roteiro editorial, os links da playlist existente e a lista
 
 Obrigado pela orientação sobre o canal mais adequado.
 
+## Material complementar
+
+- [Preços oficiais](https://www.getdbt.com/pricing) — dbt Labs, página comercial/EN; limites devem ser revistos antes da gravação; episódios 13–16; verificado em 2026-09-01.
+- [dbt Community](https://www.getdbt.com/community/join-the-community) — dbt Labs, comunidade/EN; canal oficial de participação; episódios 13–16; verificado em 2026-09-01.
+- [Diretrizes de marca](https://www.getdbt.com/trademark-guidelines) — dbt Labs, política/EN; revisão obrigatória antes de monetizar; toda a segunda temporada; verificado em 2026-09-01.
+
 Anselmo Borges
 Rescue Point
 

@@ -14,6 +14,18 @@ Usar manifest, seleção por estado e descendentes; explicar defer e seus riscos
 
 Pré-requisito: checkpoint 08 e build que produza `target/manifest.json`.
 
+```mermaid
+flowchart LR
+    M1[Manifest anterior] --> C{Comparar estado}
+    CODE[Código atual] --> C
+    C --> S[state:modified+]
+    S --> CI[Build somente do impacto]
+    M1 --> D[defer para pais não construídos]
+    D --> CI
+```
+
+*Diagrama conceitual autoral: estado anterior orienta seleção e defer.*
+
 ## Roteiro falado
 
 ### 00:00–03:30 — Artifact não é lixo de build
@@ -47,9 +59,7 @@ State responde ‘o que mudou’. Defer responde ‘onde encontrar o que não vo
 “Nosso script evita alterar o checkout. Primeiro gera um manifest baseline. Depois copia o projeto para uma pasta temporária, acrescenta um comentário em `orders_s` e executa `dbt ls state:modified+`.”
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 09
+python course.py checkpoint 09
 ```
 
 “A prova exige que `orders_s`, `order_fulfillment_g` e `commerce_orders` estejam selecionados. Na execução validada, apareceram 36 recursos, incluindo testes, cinco métricas e a exposure do agente. Não foram 36 modelos: o número inclui tipos de recurso diferentes.
@@ -88,7 +98,7 @@ Por fim, salve `manifest.json`, `run_results.json` e logs com identificação do
 
 ## Demonstração e resultado esperado
 
-- `python scripts/run_checkpoint.py 09`.
+- `python course.py checkpoint 09`.
 - JSON com tempo do parse baseline, contagem e nós selecionados.
 - Presença mínima: `orders_s`, `order_fulfillment_g`, `commerce_orders`.
 - Projeto original permanece sem alteração.
@@ -114,3 +124,7 @@ Por fim, salve `manifest.json`, `run_results.json` e logs com identificação do
 - [Defer e seus critérios](https://docs.getdbt.com/reference/node-selection/defer)
 - [Auditoria anonimizada do projeto](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/09-state-ci.md)
+
+## Material complementar
+
+- [State method](https://docs.getdbt.com/reference/node-selection/methods#the-state-method) — dbt Labs, documentação/EN; sintaxe e comportamento oficial; episódio 9; verificado em 2026-09-01.

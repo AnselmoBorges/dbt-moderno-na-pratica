@@ -14,6 +14,15 @@ Conectar um cliente MCP neutro ao projeto, aplicar allowlist, iniciar o servidor
 
 Pré-requisito: checkpoint 10; `dbt-mcp` instalado por `requirements-local.txt`.
 
+```mermaid
+flowchart LR
+    C[Cliente MCP] --> A{Allowlist}
+    A -->|permitido| R[Manifest, docs e linhagem]
+    A -->|negado| W[build, SQL e codegen]
+```
+
+*Diagrama conceitual autoral: contexto útil com capacidade mínima.*
+
 ## Roteiro falado
 
 ### 00:00–03:30 — O que MCP resolve
@@ -53,9 +62,7 @@ A documentação do dbt alerta que ferramentas CLI podem modificar dados. Por is
 “O teste não depende de Claude, ChatGPT ou outro cliente visual. Um pequeno cliente MCP em Python inicia `dbt-mcp` via stdio, negocia a sessão e chama `list_tools`.”
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 11
+python course.py checkpoint 11
 ```
 
 “Primeiro, `verify_mcp_policy.py` lê `mcp/read-only.example.json` e rejeita qualquer ferramenta fora da lista. Depois `verify_mcp_server.py` inicia o servidor real, recebe as ferramentas expostas e procura nomes mutantes.
@@ -118,3 +125,8 @@ Por fim, o agente deve saber recusar: se a pergunta exige uma métrica não publ
 - [Case impact.com — resultado reportado pelo fornecedor](https://www.getdbt.com/case-studies/impact.com)
 - [M1 Finance e dbt MCP — relato do fornecedor](https://www.getdbt.com/blog/dbt-mcp-server-reliable-ai)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/11-mcp.md)
+
+## Material complementar
+
+- [Repositório dbt MCP](https://github.com/dbt-labs/dbt-mcp) — dbt Labs, repositório/EN; código e configuração oficial; episódio 11; verificado em 2026-09-01.
+- [Curso oficial dbt MCP](https://learn.getdbt.com/catalog?category=courses) — dbt Labs, curso/EN; fluxo guiado complementar; episódio 11; verificado em 2026-09-01.

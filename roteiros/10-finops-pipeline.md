@@ -14,6 +14,15 @@ Revisar incrementais, lookback, microbatch, materializações e seleção por im
 
 Pré-requisito: checkpoint 09 e banco DuckDB construído.
 
+```mermaid
+flowchart LR
+    F[Full refresh: todas as linhas] --> R[Mesmo resultado]
+    I[Incremental: filtro + unique key] --> R
+    I --> G[Menos candidatos e recomputação]
+```
+
+*Diagrama conceitual autoral: eficiência só vale quando preserva o resultado.*
+
 ## Roteiro falado
 
 ### 00:00–04:00 — A equação que falta
@@ -59,9 +68,7 @@ Para a camada semântica do laboratório usamos tabelas pequenas por previsibili
 ### 15:30–20:00 — Demonstração mensurável
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 10
+python course.py checkpoint 10
 ```
 
 “O checkpoint primeiro compara full refresh e incremental de `orders_s`. Na fixture, o full considera oito linhas da origem e a segunda execução incremental considera apenas a linha no maior timestamp; ambas terminam com os mesmos oito pedidos, sem duplicação. Depois executa um full build lógico e um build focal `order_fulfillment_g+`, lê `run_results.json` e calcula resource-seconds. Por fim recalcula as dez perguntas de negócio.
@@ -130,3 +137,8 @@ Uma boa conclusão de experimento tem três linhas: custo antes/depois, resultad
 - [Case Symend — resultado reportado pelo fornecedor](https://www.getdbt.com/case-studies/symend)
 - [Auditoria anonimizada do projeto](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/10-finops.md)
+
+## Material complementar
+
+- [dbt e DuckDB local](https://duckdb.org/2025/04/04/dbt-duckdb) — DuckDB, artigo/EN; materializações e processamento local; episódio 10; verificado em 2026-09-01.
+- [Curso Incremental Models](https://learn.getdbt.com/catalog?category=courses) — dbt Labs, curso/EN; aprofundamento oficial; episódio 10; verificado em 2026-09-01.

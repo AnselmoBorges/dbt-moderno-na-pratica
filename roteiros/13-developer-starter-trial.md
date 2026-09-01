@@ -95,3 +95,7 @@ O case é o próprio processo de avaliação. O ganho medido será tempo de conf
 - [dbt Community Champions](https://www.getdbt.com/dbt-champions)
 - [Guia de acesso e mensagens](../pesquisa/guia-acesso-dbt-platform.md)
 - [Runbook opcional](../lab/dabdbt/platform/README.md)
+
+## Material complementar
+
+- [dbt Learn](https://www.getdbt.com/dbt-learn) — dbt Labs, cursos/EN; compare o ambiente oficial sem confundir gratuito com open source; episódio 13; verificado em 2026-09-01.

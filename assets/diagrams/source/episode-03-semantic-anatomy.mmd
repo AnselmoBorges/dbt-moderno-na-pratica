@@ -1,0 +1,8 @@
+flowchart TB
+    SM[Semantic model] --> E[Entidades]
+    SM --> D[Dimensões]
+    SM --> ME[Medidas]
+    E --> M[Métricas]
+    D --> M
+    ME --> M
+    M --> Q[Consulta MetricFlow]

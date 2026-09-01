@@ -1,0 +1,8 @@
+flowchart LR
+    S[Fontes] --> V[Silver]
+    V --> G[Gold governada]
+    G --> M[Métricas]
+    G --> A[Manifest e linhagem]
+    M --> P[MCP somente leitura]
+    A --> P
+    P --> I[Agentes]

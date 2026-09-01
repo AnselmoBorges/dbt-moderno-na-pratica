@@ -14,6 +14,19 @@ Implementar entidades, dimensões, métricas simples, métrica derivada e time s
 
 Pré-requisitos: checkpoints 01 e 02 executados; ambiente `requirements-local.txt` instalado.
 
+```mermaid
+flowchart TB
+    SM[Semantic model] --> E[Entidades]
+    SM --> D[Dimensões]
+    SM --> ME[Medidas]
+    E --> M[Métricas]
+    D --> M
+    ME --> M
+    M --> Q[Consulta MetricFlow]
+```
+
+*Diagrama conceitual autoral: composição da interface semântica.*
+
 ## Roteiro falado
 
 ### 00:00–02:00 — O compilador entre pergunta e SQL
@@ -90,9 +103,7 @@ metrics:
 “Vamos validar primeiro. Uma configuração semanticamente inválida deve falhar antes da consulta.”
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 03
+python course.py checkpoint 03
 ```
 
 “O checkpoint executa:”
@@ -166,3 +177,8 @@ Por fim, apresento uma convenção de revisão para novas métricas: pergunta de
 - [Semantic Layer gerenciada](https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl)
 - [Case Inventa — resultado reportado pelo fornecedor](https://www.getdbt.com/case-studies/inventa)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/03-metricflow.md)
+
+## Material complementar
+
+- [README do MetricFlow](https://github.com/dbt-labs/metricflow/blob/main/README.md) — dbt Labs, repositório/EN; visão oficial do motor de compilação; episódio 3; verificado em 2026-09-01.
+- [Product Spotlight: Semantic Layer](https://www.youtube.com/watch?v=DS7Ub_CmBR0) — dbt Labs, vídeo/EN, 4 min; contraste com o serviço gerenciado; episódio 3; verificado em 2026-09-01.

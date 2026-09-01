@@ -14,6 +14,17 @@ Implementar owner, group, access, tags, `meta`, exposure e classificação; alin
 
 Pré-requisito: checkpoint 06 e compreensão de interface pública.
 
+```mermaid
+flowchart TB
+    O[Owner e group] --> A[Access]
+    O --> T[Tags e meta]
+    A --> P[Produto Gold]
+    T --> P
+    P --> E[Exposures: BI, API, agente]
+```
+
+*Diagrama conceitual autoral: metadados precisam chegar a decisões de consumo.*
+
 ## Roteiro falado
 
 ### 00:00–03:30 — Governança que produz uma ação
@@ -79,9 +90,7 @@ exposures:
 ### 15:00–18:00 — Demonstração
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 07
+python course.py checkpoint 07
 ```
 
 “O script gera o manifest e verifica programaticamente: grupo e owner, acesso público, contrato e duas versões, tags, classificação, consumidores aprovados, métricas e exposure. O esperado é `Governança OK`.
@@ -147,3 +156,8 @@ Para verificar drift, uma rotina pode comparar manifest dbt e tags do Unity Cata
 - [Model governance](https://docs.getdbt.com/docs/mesh/govern/about-model-governance)
 - [Auditoria anonimizada do projeto](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/07-governanca.md)
+
+## Material complementar
+
+- [Exposures](https://docs.getdbt.com/docs/build/exposures) — dbt Labs, documentação/EN; conecte consumidores ao DAG; episódio 7; verificado em 2026-09-01.
+- [dbt Project Evaluator](https://github.com/dbt-labs/dbt-project-evaluator) — dbt Labs, repositório/EN; avaliação opcional de governança e estrutura; episódio 7; verificado em 2026-09-01.

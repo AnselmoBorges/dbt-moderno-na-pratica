@@ -1,0 +1,4 @@
+flowchart LR
+    D1[Domínio Commerce] -->|interface pública| API[Contrato versionado]
+    D2[Domínio Customer] -->|package/ref permitido| API
+    D1 -. modelos privados .-> X[Implementação interna]

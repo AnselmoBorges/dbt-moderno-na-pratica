@@ -14,6 +14,16 @@ Adicionar contrato, constraints, versões, versão vigente e política de deprec
 
 Pré-requisito: modelo `commerce_orders` e checkpoint 04.
 
+```mermaid
+flowchart LR
+    V1[v1 ativa] --> C[Consumidores antigos]
+    V2[v2 latest] --> N[Novos consumidores]
+    BC[Mudança incompatível] --> CT{Contrato}
+    CT -->|rejeita| X[Build bloqueado]
+```
+
+*Diagrama conceitual autoral: coexistência de versões e bloqueio estrutural.*
+
 ## Roteiro falado
 
 ### 00:00–03:00 — O contrato possível no dbt
@@ -54,9 +64,7 @@ Manter duas versões custa storage, compute, testes e suporte. `deprecation_date
 “Primeiro mostro o build saudável. Depois o script de prova copia o projeto para uma pasta temporária, remove `customer_id` do SQL da versão 2 e executa somente esse modelo. A árvore original permanece intacta.”
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 05
+python course.py checkpoint 05
 ```
 
 “O resultado esperado é: `Breaking change bloqueada: implementação sem customer_id viola o contrato da versão 2.` O valor pedagógico está no exit code. Uma CI pode impedir o merge sem esperar o dashboard falhar.”
@@ -122,3 +130,7 @@ Também separo três mudanças na tela. Adicionar `item_revenue` é compatível 
 - [Model versions](https://docs.getdbt.com/docs/mesh/govern/model-versions)
 - [Auditoria anonimizada do projeto](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/05-contratos-versoes.md)
+
+## Material complementar
+
+- [Model governance](https://docs.getdbt.com/docs/mesh/govern/about-model-governance) — dbt Labs, documentação/EN; conecta contratos, acesso e versões; episódio 5; verificado em 2026-09-01.

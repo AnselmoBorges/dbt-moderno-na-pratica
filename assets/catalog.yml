@@ -1,0 +1,159 @@
+version: 1
+last_reviewed: 2026-09-01
+assets:
+  - id: dossier-architecture
+    path: assets/diagrams/source/dossier-architecture.mmd
+    rendered_svg: assets/diagrams/rendered/dossier-architecture.svg
+    rendered_png: assets/diagrams/rendered/dossier-architecture.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: internal://pesquisa/matriz-evidencias.csv
+    episodes: [2, 3, 4, 7, 11, 12]
+    alt: Fontes passam por Silver, Gold governada e métricas antes de servir manifest, MCP e agentes.
+    reviewed: true
+  - id: episode-01-lifecycle
+    path: assets/diagrams/source/episode-01-lifecycle.mmd
+    rendered_svg: assets/diagrams/rendered/episode-01-lifecycle.svg
+    rendered_png: assets/diagrams/rendered/episode-01-lifecycle.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/reference/commands/build
+    episodes: [1]
+    alt: Ciclo local do seed aos artifacts do dbt.
+    reviewed: true
+  - id: episode-02-grain
+    path: assets/diagrams/source/episode-02-grain.mmd
+    rendered_svg: assets/diagrams/rendered/episode-02-grain.svg
+    rendered_png: assets/diagrams/rendered/episode-02-grain.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: internal://lab/ground-truth
+    episodes: [2]
+    alt: Join bruto multiplica linhas e a Gold restaura o grão de pedido antes das métricas.
+    reviewed: true
+  - id: episode-03-semantic-anatomy
+    path: assets/diagrams/source/episode-03-semantic-anatomy.mmd
+    rendered_svg: assets/diagrams/rendered/episode-03-semantic-anatomy.svg
+    rendered_png: assets/diagrams/rendered/episode-03-semantic-anatomy.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/docs/build/semantic-models
+    episodes: [3]
+    alt: Entidades, dimensões e medidas formam métricas consultáveis.
+    reviewed: true
+  - id: episode-04-osi
+    path: assets/diagrams/source/episode-04-osi.mmd
+    rendered_svg: assets/diagrams/rendered/episode-04-osi.svg
+    rendered_png: assets/diagrams/rendered/episode-04-osi.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/metricflow
+    episodes: [4]
+    alt: Definições dbt são compiladas para OSI, SQL e consumidores locais.
+    reviewed: true
+  - id: episode-05-contracts
+    path: assets/diagrams/source/episode-05-contracts.mmd
+    rendered_svg: assets/diagrams/rendered/episode-05-contracts.svg
+    rendered_png: assets/diagrams/rendered/episode-05-contracts.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/docs/mesh/govern/model-versions
+    episodes: [5]
+    alt: Versões um e dois coexistem enquanto um contrato bloqueia mudanças incompatíveis.
+    reviewed: true
+  - id: episode-06-quality
+    path: assets/diagrams/source/episode-06-quality.mmd
+    rendered_svg: assets/diagrams/rendered/episode-06-quality.svg
+    rendered_png: assets/diagrams/rendered/episode-06-quality.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/docs/build/data-tests
+    episodes: [6]
+    alt: Qualidade em camadas combina unit test, data test, contrato e freshness.
+    reviewed: true
+  - id: episode-07-governance
+    path: assets/diagrams/source/episode-07-governance.mmd
+    rendered_svg: assets/diagrams/rendered/episode-07-governance.svg
+    rendered_png: assets/diagrams/rendered/episode-07-governance.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/docs/mesh/govern/model-access
+    episodes: [7]
+    alt: Owner e group governam acesso, tags, metadados e exposures.
+    reviewed: true
+  - id: episode-08-domains
+    path: assets/diagrams/source/episode-08-domains.mmd
+    rendered_svg: assets/diagrams/rendered/episode-08-domains.svg
+    rendered_png: assets/diagrams/rendered/episode-08-domains.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview
+    episodes: [8]
+    alt: Domínios publicam interfaces estáveis e mantêm modelos internos privados.
+    reviewed: true
+  - id: episode-09-state
+    path: assets/diagrams/source/episode-09-state.mmd
+    rendered_svg: assets/diagrams/rendered/episode-09-state.svg
+    rendered_png: assets/diagrams/rendered/episode-09-state.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/reference/node-selection/methods#the-state-method
+    episodes: [9]
+    alt: O manifest anterior identifica mudanças e limita a CI aos descendentes afetados.
+    reviewed: true
+  - id: episode-10-finops
+    path: assets/diagrams/source/episode-10-finops.mmd
+    rendered_svg: assets/diagrams/rendered/episode-10-finops.svg
+    rendered_png: assets/diagrams/rendered/episode-10-finops.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://docs.getdbt.com/docs/build/incremental-models
+    episodes: [10]
+    alt: Full refresh relê tudo; incremental filtra candidatos e preserva o resultado.
+    reviewed: true
+  - id: episode-11-mcp
+    path: assets/diagrams/source/episode-11-mcp.mmd
+    rendered_svg: assets/diagrams/rendered/episode-11-mcp.svg
+    rendered_png: assets/diagrams/rendered/episode-11-mcp.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/dbt-mcp
+    episodes: [11]
+    alt: Cliente MCP acessa apenas leitura de manifest, documentação e linhagem por uma allowlist.
+    reviewed: true
+  - id: episode-12-benchmark
+    path: assets/diagrams/source/episode-12-benchmark.mmd
+    rendered_svg: assets/diagrams/rendered/episode-12-benchmark.svg
+    rendered_png: assets/diagrams/rendered/episode-12-benchmark.png
+    kind: conceptual_diagram
+    origin: original
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: internal://lab/agent-benchmark
+    episodes: [12]
+    alt: Três agentes recebem raw, manifest ou métricas e são avaliados contra o mesmo ground truth.
+    reviewed: true

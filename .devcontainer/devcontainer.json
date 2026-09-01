@@ -1,0 +1,20 @@
+{
+  "name": "dbt Moderno na Prática",
+  "image": "mcr.microsoft.com/devcontainers/python:1-3.12-bookworm",
+  "hostRequirements": {
+    "cpus": 2,
+    "memory": "4gb",
+    "storage": "2gb"
+  },
+  "postCreateCommand": "python course.py setup",
+  "postStartCommand": "python course.py doctor",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "innoverio.vscode-dbt-power-user",
+        "redhat.vscode-yaml"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
+}

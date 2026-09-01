@@ -91,3 +91,7 @@ Pré-requisitos: episódio 13, trial Starter ativo ou acesso compatível, métri
 - [Case Inventa — resultado reportado](https://www.getdbt.com/case-studies/inventa)
 - [Case Bilt — resultado reportado](https://www.getdbt.com/case-studies/bilt-rewards)
 - [Checkpoint open de referência](../lab/dabdbt/checkpoints/04-interfaces.md)
+
+## Material complementar
+
+- [Product Spotlight: Semantic Layer](https://www.youtube.com/watch?v=DS7Ub_CmBR0) — dbt Labs, vídeo/EN, 4 min; visão oficial da experiência gerenciada; episódio 14; verificado em 2026-09-01.

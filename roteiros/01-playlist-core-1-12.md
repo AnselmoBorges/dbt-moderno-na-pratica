@@ -14,6 +14,13 @@ Ao final, a pessoa saberá o que pode assumir como pré-requisito, instalará a 
 
 Pré-requisitos: Python 3.12 ou 3.13, Git, terminal e `lab/dabdbt`. O conjunto fixado não suporta Python 3.14. Nenhuma conta dbt ou Databricks.
 
+```mermaid
+flowchart LR
+    S[seed] --> P[parse] --> B[build] --> D[docs generate] --> A[artifacts JSON]
+```
+
+*Diagrama conceitual autoral: o ciclo executável usado como baseline da temporada.*
+
 ## Roteiro falado
 
 ### 00:00–03:30 — Auditar o conteúdo, não o título
@@ -41,11 +48,9 @@ As lacunas reais são consistência: métricas ainda não estão como código, v
 ### 10:30–17:30 — Demonstração estável
 
 ```bash
-cd lab/dabdbt
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-local.txt
-python scripts/run_checkpoint.py 01
+python course.py doctor
+python course.py setup
+python course.py checkpoint 01
 ```
 
 “O checkpoint carrega os seeds, cria uma fonte de freshness com horário atual, faz parse e build. Ele termina verificando quatro contratos de máquina:
@@ -67,7 +72,7 @@ O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tes
 
 ## Demonstração e resultado esperado
 
-- `python scripts/run_checkpoint.py 01` retorna sucesso.
+- `python course.py checkpoint 01` retorna sucesso.
 - Core reporta 1.12.3 e DuckDB 1.11.0.
 - Quatro artifacts obrigatórios existem e são válidos.
 - Não há instalação ou execução de Fusion.
@@ -100,3 +105,8 @@ O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tes
 - [dbt Core 1.12](https://github.com/dbt-labs/dbt-core/releases/tag/v1.12.0)
 - [Matriz oficial de recursos](https://docs.getdbt.com/docs/dbt/supported-features)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/01-core-1-12.md)
+
+## Material complementar
+
+- [dbt Fundamentals](https://learn.getdbt.com/catalog?category=courses) — dbt Labs, curso/EN; compare a progressão oficial após esta aula; episódio 1; verificado em 2026-09-01.
+- [Jaffle Shop](https://github.com/dbt-labs/jaffle-shop) — dbt Labs, repositório/EN; referência oficial de estrutura; episódio 1; verificado em 2026-09-01.

@@ -1,0 +1,5 @@
+flowchart LR
+    V1[v1 ativa] --> C[Consumidores antigos]
+    V2[v2 latest] --> N[Novos consumidores]
+    BC[Mudança incompatível] --> CT{Contrato}
+    CT -->|rejeita| X[Build bloqueado]

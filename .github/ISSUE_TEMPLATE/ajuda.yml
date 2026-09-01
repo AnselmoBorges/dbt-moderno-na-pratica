@@ -1,0 +1,43 @@
+name: Ajuda com o laboratório
+description: Relate uma falha reproduzível sem compartilhar segredos.
+title: "[Ajuda] "
+labels: ["ajuda"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de enviar, execute `python course.py support-report`. Não inclua tokens, `.env`, hosts privados, perfis corporativos, e-mails ou chaves.
+  - type: input
+    id: checkpoint
+    attributes:
+      label: Aula ou checkpoint
+      placeholder: "Ex.: Aula 0 / checkpoint 03"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Sistema operacional
+      options: [Windows, macOS, Linux, GitHub Codespaces]
+    validations:
+      required: true
+  - type: textarea
+    id: error
+    attributes:
+      label: Comando e mensagem de erro
+      description: Remova qualquer dado sensível antes de colar.
+    validations:
+      required: true
+  - type: textarea
+    id: attempted
+    attributes:
+      label: O que você já tentou?
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacidade
+      options:
+        - label: Revisei o conteúdo e não incluí credenciais ou identificadores privados.
+          required: true

@@ -1,0 +1,106 @@
+name: Validação do curso
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: curso-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  editorial:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: python scripts/verify_editorial.py
+      - run: python scripts/verify_links.py
+
+  smoke-cross-platform:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python: ["3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: lab/dabdbt/requirements-local.txt
+      - run: python course.py doctor
+      - run: python course.py setup
+      - run: python course.py checkpoint 01
+      - if: failure()
+        run: python course.py support-report
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: support-${{ matrix.os }}-py${{ matrix.python }}
+          path: build/support-report.json
+
+  full-ubuntu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: lab/dabdbt/requirements-local.txt
+      - run: python course.py setup
+      - run: python course.py validate
+      - if: failure()
+        run: python course.py support-report
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: support-full-ubuntu
+          path: build/support-report.json
+
+  full-cross-platform:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+        python: ["3.12", "3.13"]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: lab/dabdbt/requirements-local.txt
+      - run: python course.py setup
+      - run: python course.py validate
+      - if: failure()
+        run: python course.py support-report
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: support-full-${{ matrix.os }}-py${{ matrix.python }}
+          path: build/support-report.json
+
+  external-links:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+      - run: python scripts/verify_links.py --external

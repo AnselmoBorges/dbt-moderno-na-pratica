@@ -14,6 +14,18 @@ Definir um benchmark justo de três abordagens, validar traces sem chave de LLM 
 
 Pré-requisito: checkpoints 01–11 e banco local construído.
 
+```mermaid
+flowchart LR
+    Q[Perguntas fixas] --> R[Agente sobre raw]
+    Q --> M[Agente com manifest]
+    Q --> S[Agente com métricas + MCP]
+    R --> E[Ground truth e custos]
+    M --> E
+    S --> E
+```
+
+*Diagrama conceitual autoral: os três modos enfrentam as mesmas perguntas e critérios.*
+
 ## Roteiro falado
 
 ### 00:00–04:00 — A hipótese e os três tratamentos
@@ -66,9 +78,7 @@ A utilidade das fixtures é determinística: se alguém quebrar o cálculo de cu
 ### 16:00–19:00 — Demonstração do checkpoint final
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 12
+python course.py checkpoint 12
 ```
 
 “O primeiro passo recalcula as dez respostas. O segundo valida cada trace contra `benchmark.schema.json` e produz resumo de acurácia, joins inválidos, tokens, tools, latência e custo normalizado.
@@ -146,3 +156,7 @@ Se uma regra muda, alteramos código, testes, versão e documentação. Depois o
 - [Case impact.com — resultado reportado](https://www.getdbt.com/case-studies/impact.com)
 - [Entrevista Ramp — relato/anecdota](https://roundup.getdbt.com/p/the-scarce-resource-is-consensus)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/12-agentes.md)
+
+## Material complementar
+
+- [MCP: IA confiável com contexto dbt](https://www.getdbt.com/blog/dbt-mcp-server-reliable-ai) — dbt Labs, artigo/EN; case M1 Finance reportado pelo fornecedor; episódio 12; verificado em 2026-09-01.

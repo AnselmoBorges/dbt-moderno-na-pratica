@@ -1,0 +1,4 @@
+flowchart LR
+    C[Cliente MCP] --> A{Allowlist}
+    A -->|permitido| R[Manifest, docs e linhagem]
+    A -->|negado| W[build, SQL e codegen]

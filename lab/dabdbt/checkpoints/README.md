@@ -1,6 +1,6 @@
 # Checkpoints da temporada
 
-Cada checkpoint é uma porta de qualidade executável. Rode `python scripts/run_checkpoint.py NN` na raiz de `dabdbt`. O projeto é cumulativo: os arquivos representam o estado final, enquanto os checkpoints isolam a capacidade apresentada em cada episódio.
+Cada checkpoint é uma porta de qualidade executável. Rode `python course.py checkpoint NN` na raiz do repositório. O projeto é cumulativo: os arquivos representam o estado final, enquanto os checkpoints isolam a capacidade apresentada em cada episódio.
 
 | # | Capacidade comprovada | Critério automático |
 |---|---|---|

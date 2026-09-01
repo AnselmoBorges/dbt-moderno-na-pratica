@@ -1,0 +1,7 @@
+flowchart LR
+    Q[Perguntas fixas] --> R[Agente sobre raw]
+    Q --> M[Agente com manifest]
+    Q --> S[Agente com métricas + MCP]
+    R --> E[Ground truth e custos]
+    M --> E
+    S --> E

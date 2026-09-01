@@ -4,23 +4,17 @@
 from __future__ import annotations
 
 import argparse
-import os
 import subprocess
-from pathlib import Path
 
-PROJECT = Path(__file__).resolve().parents[1]
-PYTHON = PROJECT / ".venv/bin/python"
-DBT = PROJECT / ".venv/bin/dbt"
-MF = PROJECT / ".venv/bin/mf"
-ENV = {
-    **os.environ,
-    "DBT_PROFILES_DIR": "dbt_profiles",
-    "PATH": f"{PROJECT / '.venv/bin'}:{os.environ.get('PATH', '')}",
-}
+from runtime import PROJECT, environment, python, tool
+
+PYTHON = python()
+DBT = tool("dbt", "DBT_BIN")
+MF = tool("mf", "MF_BIN")
+ENV = environment()
 
 CHECKPOINTS = {
     "01": ("Playlist auditada e Core 1.12", [
-        [DBT, "deps", "--profiles-dir", "dbt_profiles", "--target", "local"],
         [DBT, "seed", "--profiles-dir", "dbt_profiles", "--target", "local", "--full-refresh"],
         [DBT, "run-operation", "create_freshness_fixture", "--args", "{age_hours: 0}", "--profiles-dir", "dbt_profiles", "--target", "local"],
         [DBT, "parse", "--profiles-dir", "dbt_profiles", "--target", "local"],

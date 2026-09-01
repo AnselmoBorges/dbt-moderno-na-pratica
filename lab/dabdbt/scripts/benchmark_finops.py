@@ -5,16 +5,15 @@ from __future__ import annotations
 
 import json
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
 import time
 from pathlib import Path
 
-PROJECT = Path(__file__).resolve().parents[1]
-LOCAL_DBT = PROJECT / ".venv/bin/dbt"
-DBT = Path(os.environ.get("DBT_BIN") or (str(LOCAL_DBT) if LOCAL_DBT.exists() else shutil.which("dbt") or "dbt"))
+from runtime import PROJECT, tool
+
+DBT = tool("dbt", "DBT_BIN")
 PROFILES = PROJECT / "dbt_profiles"
 
 

@@ -14,6 +14,16 @@ Separar e combinar unit tests, data tests, contratos, freshness e observabilidad
 
 Pré-requisito: checkpoint 05 e build local disponível.
 
+```mermaid
+flowchart TB
+    U[Unit test: regra isolada] --> B[Build confiável]
+    D[Data test: registros inválidos] --> B
+    C[Contrato: estrutura] --> B
+    F[Freshness: atraso da fonte] --> B
+```
+
+*Diagrama conceitual autoral: cada teste responde a uma pergunta diferente.*
+
 ## Roteiro falado
 
 ### 00:00–04:00 — Cinco perguntas, cinco mecanismos
@@ -64,9 +74,7 @@ Freshness ainda não detecta queda de volume, mudança de distribuição ou pipe
 ### 15:00–18:30 — Demonstração
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 06
+python course.py checkpoint 06
 ```
 
 “O `dbt build` ordena dependências, executa unit test, materializa e roda data tests. Na versão validada, são 45 recursos aprovados e uma exposure `NO-OP`. Para isolar unit tests:”
@@ -133,3 +141,8 @@ Por fim, mostro o runbook: alerta identifica teste e modelo; manifest encontra o
 - [Model contracts](https://docs.getdbt.com/docs/mesh/govern/model-contracts)
 - [Source freshness](https://docs.getdbt.com/docs/build/sources#source-data-freshness)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/06-qualidade.md)
+
+## Material complementar
+
+- [Curso Advanced Testing](https://learn.getdbt.com/catalog?category=courses) — dbt Labs, curso/EN; prática oficial complementar; episódio 6; verificado em 2026-09-01.
+- [Data tests](https://docs.getdbt.com/docs/build/data-tests) — dbt Labs, documentação/EN; referência oficial de assertions; episódio 6; verificado em 2026-09-01.

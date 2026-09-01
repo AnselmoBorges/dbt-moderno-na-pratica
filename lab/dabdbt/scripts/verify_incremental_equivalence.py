@@ -5,16 +5,15 @@ from __future__ import annotations
 
 import json
 import os
-import shutil
 import subprocess
 import tempfile
 from pathlib import Path
 
 import duckdb
 
-PROJECT = Path(__file__).resolve().parents[1]
-LOCAL_DBT = PROJECT / ".venv/bin/dbt"
-DBT = Path(os.environ.get("DBT_BIN") or (str(LOCAL_DBT) if LOCAL_DBT.exists() else shutil.which("dbt") or "dbt"))
+from runtime import PROJECT, tool
+
+DBT = tool("dbt", "DBT_BIN")
 PROFILES = PROJECT / "dbt_profiles"
 DB_PATH = Path(os.environ.get("DBT_DUCKDB_PATH", str((PROJECT / "../data/dabdbt.duckdb").resolve())))
 

@@ -1,0 +1,4 @@
+flowchart LR
+    F[Full refresh: todas as linhas] --> R[Mesmo resultado]
+    I[Incremental: filtro + unique key] --> R
+    I --> G[Menos candidatos e recomputação]

@@ -117,3 +117,8 @@ A playlist ensina a motivação do dbt e constrói um primeiro pipeline Olist. O
 ## Regra para os novos roteiros
 
 Quando o novo vídeo disser “como vimos anteriormente”, ele só poderá apontar para uma capacidade marcada como executada. Para conteúdo apenas conceitual, a fala será “a série apresentou o conceito; agora vamos implementá-lo”.
+
+## Material complementar
+
+- [Playlist DBT do Rescue Point](https://www.youtube.com/watch?v=ZAgoqhlR95g&list=PLeblJhqzZe1rvFehI3MsGXmrNch4zQqg8) — Rescue Point, vídeos/PT-BR; fonte primária da auditoria; episódios 1–2; verificado em 2026-09-01.
+- [dbt Learn](https://www.getdbt.com/dbt-learn) — dbt Labs, cursos/EN; comparação com a trilha oficial atual; episódio 1; verificado em 2026-09-01.

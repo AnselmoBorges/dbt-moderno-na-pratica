@@ -1,0 +1,10 @@
+flowchart LR
+    O[Pedidos 1] --> J[Join bruto 4 linhas]
+    I[Itens 2] --> J
+    P[Pagamentos 2] --> J
+    I --> AI[Agrega por pedido]
+    P --> AP[Agrega por pedido]
+    O --> G[Gold 1 linha por pedido]
+    AI --> G
+    AP --> G
+    G --> M[Métrica correta]

@@ -14,6 +14,15 @@ Definir produto, interface pública e dependência privada; aplicar limites dent
 
 Pré-requisito: checkpoint 07 com grupo, access, owner e exposure válidos.
 
+```mermaid
+flowchart LR
+    D1[Domínio Commerce] -->|interface pública| API[Contrato versionado]
+    D2[Domínio Customer] -->|package/ref permitido| API
+    D1 -. modelos privados .-> X[Implementação interna]
+```
+
+*Diagrama conceitual autoral: produto de dados começa pela fronteira pública.*
+
 ## Roteiro falado
 
 ### 00:00–04:00 — Produto não é pasta Gold
@@ -50,9 +59,7 @@ Um domínio de logística deve depender da interface pública de fulfillment, n�
 ### 16:00–19:00 — Demonstração
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 08
+python course.py checkpoint 08
 ```
 
 “O script valida grupo, acesso público, contrato, versões, tags, consumidores aprovados e exposure. O resultado esperado é `Governança OK`. Nada faz chamada cross-project ou usa conta dbt.”
@@ -95,8 +102,12 @@ Use um score de cinco sinais: owner separado, permissão separada, release indep
 
 ## Fontes
 
-- [Project groups](https://docs.getdbt.com/docs/mesh/govern/project-groups)
+- [Add groups to your DAG](https://docs.getdbt.com/docs/build/groups)
 - [Model access](https://docs.getdbt.com/docs/mesh/govern/model-access)
 - [Packages](https://docs.getdbt.com/docs/build/packages)
 - [Auditoria anonimizada](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/08-data-products-open.md)
+
+## Material complementar
+
+- [Estrutura recomendada de projetos](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) — dbt Labs, documentação/EN; separação de responsabilidades; episódio 8; verificado em 2026-09-01.

@@ -14,6 +14,21 @@ Distinguir tabela Gold, modelo dimensional, semantic model, métrica e serviço 
 
 Pré-requisito: checkpoint 01 e noções de `ref` e agregação SQL.
 
+```mermaid
+flowchart LR
+    O[Pedido 1] --> J[Join bruto 4 linhas]
+    I[Itens 2] --> J
+    P[Pagamentos 2] --> J
+    I --> AI[Agrega por pedido]
+    P --> AP[Agrega por pedido]
+    O --> G[Gold 1 linha por pedido]
+    AI --> G
+    AP --> G
+    G --> M[Métrica correta]
+```
+
+*Diagrama conceitual autoral: cardinalidade deve ser resolvida antes da métrica.*
+
 ## Roteiro falado
 
 ### 00:00–02:00 — O teste das quatro perguntas
@@ -45,9 +60,7 @@ Prazo de entrega também exige semântica: média de dias apenas quando há data
 “Primeiro, construímos a Gold e a fachada semântica.”
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 02
+python course.py checkpoint 02
 ```
 
 “Abra `order_fulfillment_g.sql`. Ele calcula prazo e reúne pagamentos no grão pedido. Agora abra `order_metrics_v2.sql`. Ele apresenta uma API contratada, acrescenta `delivered_revenue` e separa receita de itens de pagamentos. Por último, `commerce_orders.sql` aponta para a versão vigente. Consumidores não precisam conhecer o arquivo físico da versão.”
@@ -104,7 +117,7 @@ Repare na escolha temporal. Uma área financeira pode preferir data de entrega. 
 
 ## Demonstração e resultado esperado
 
-- Comando: `python scripts/run_checkpoint.py 02`.
+- Comando: `python course.py checkpoint 02`.
 - Resultado: build do ramo Gold/semântico e `Ground truth OK: 10 perguntas`.
 - Arquivos-chave: `order_fulfillment_g.sql`, `order_metrics_v2.sql`, `commerce_orders.sql`, `benchmarks/questions.json`.
 
@@ -135,3 +148,8 @@ Repare na escolha temporal. Uma área financeira pode preferir data de entrega. 
 - [Case Inventa — resultado reportado pelo fornecedor](https://www.getdbt.com/case-studies/inventa)
 - [Auditoria anonimizada do projeto](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/02-gold-semantica.md)
+
+## Material complementar
+
+- [Semantic Layer com MetricFlow](https://www.youtube.com/watch?v=2Qo5_CIsSH4) — dbt Labs, vídeo/EN; veja como a definição central é consumida; episódio 2; verificado em 2026-09-01.
+- [Guia de estrutura de projetos](https://docs.getdbt.com/best-practices/how-we-structure/1-guide-overview) — dbt Labs, documentação/EN; posiciona staging, intermediate e marts; episódio 2; verificado em 2026-09-01.

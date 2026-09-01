@@ -14,6 +14,17 @@ Reconciliar uma definição semântica em interfaces locais e mostrar, sem simul
 
 Pré-requisito: checkpoint 03 e as métricas `orders`, `gross_revenue`, `delivered_revenue` e `average_order_value` válidas.
 
+```mermaid
+flowchart LR
+    Y[YAML semântico] --> MF[MetricFlow]
+    MF --> OSI[OSI document]
+    MF --> SQL[SQL compilado]
+    OSI --> C[Consumidores locais]
+    SQL --> C
+```
+
+*Diagrama conceitual autoral: duas interfaces abertas derivadas da mesma definição.*
+
 ## Roteiro falado
 
 ### 00:00–04:00 — Três interfaces, uma fonte de significado
@@ -54,9 +65,7 @@ python scripts/verify_artifacts.py
 ### 15:30–19:00 — Demonstração completa
 
 ```bash
-cd lab/dabdbt
-source .venv/bin/activate
-python scripts/run_checkpoint.py 04
+python course.py checkpoint 04
 ```
 
 “O checkpoint consulta MetricFlow, valida artifacts e executa dez perguntas diretamente em DuckDB. A aceitação não é um print bonito: é reconciliação com ground truth.”
@@ -104,3 +113,8 @@ No próximo episódio vamos tratar a interface Gold como API e provar uma quebra
 - [OSI](https://github.com/open-semantic-interchange/OSI)
 - [Case Inventa — resultado reportado](https://www.getdbt.com/case-studies/inventa)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/04-interfaces.md)
+
+## Material complementar
+
+- [Open Semantic Interchange](https://github.com/open-semantic-interchange/OSI) — OSI, repositório/EN; especificação aberta usada pelo artifact; episódio 4; verificado em 2026-09-01.
+- [Como a Semantic Layer usa MetricFlow](https://www.getdbt.com/blog/how-the-dbt-semantic-layer-works) — dbt Labs, artigo/EN; fluxo técnico oficial; episódio 4; verificado em 2026-09-01.

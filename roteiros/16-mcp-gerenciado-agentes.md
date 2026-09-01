@@ -104,3 +104,7 @@ Pré-requisitos: episódios 11–14; acesso Platform compatível; token temporá
 - [Case impact.com — resultado reportado](https://www.getdbt.com/case-studies/impact.com)
 - [M1 Finance — relato do fornecedor](https://www.getdbt.com/blog/dbt-mcp-server-reliable-ai)
 - [Checkpoint open de referência](../lab/dabdbt/checkpoints/11-mcp.md)
+
+## Material complementar
+
+- [Ferramentas do dbt MCP](https://docs.getdbt.com/docs/dbt-ai/mcp-available-tools) — dbt Labs, documentação/EN; comparação entre toolsets locais e gerenciados; episódio 16; verificado em 2026-09-01.

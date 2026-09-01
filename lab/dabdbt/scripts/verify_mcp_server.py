@@ -5,18 +5,16 @@ from __future__ import annotations
 
 import asyncio
 import os
-import shutil
 from pathlib import Path
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 
 
-PROJECT = Path(__file__).resolve().parents[1]
-LOCAL_SERVER = PROJECT / ".venv/bin/dbt-mcp"
-LOCAL_DBT = PROJECT / ".venv/bin/dbt"
-SERVER = os.environ.get("DBT_MCP_BIN") or (str(LOCAL_SERVER) if LOCAL_SERVER.exists() else shutil.which("dbt-mcp"))
-DBT = os.environ.get("DBT_BIN") or (str(LOCAL_DBT) if LOCAL_DBT.exists() else shutil.which("dbt"))
+from runtime import PROJECT, tool
+
+SERVER = str(tool("dbt-mcp", "DBT_MCP_BIN"))
+DBT = str(tool("dbt", "DBT_BIN"))
 ALLOWED = {"compile", "list", "parse", "get_lineage_dev", "get_node_details_dev"}
 FORBIDDEN = {
     "build", "run", "show", "test", "clone", "execute_sql", "text_to_sql",

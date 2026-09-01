@@ -12,15 +12,18 @@ O projeto privado auditado é mais maduro que a playlist e que o laboratório p�
 
 A tese da nova série permanece válida e ficou mais forte:
 
-```text
-fontes -> Silver -> Gold com regras funcionais testadas
-                         |
-                         +-> contrato + versão + owner
-                         +-> entidades, dimensões e métricas como código
-                         +-> manifest, OSI, linhagem e exposures
-                                      |
-                                      +-> BI / API local / MCP somente leitura / agentes
+```mermaid
+flowchart LR
+    S[Fontes] --> V[Silver]
+    V --> G[Gold governada]
+    G --> M[Métricas]
+    G --> A[Manifest e linhagem]
+    M --> P[MCP somente leitura]
+    A --> P
+    P --> I[BI, APIs e agentes]
 ```
+
+*Diagrama conceitual autoral. Fonte editável: [`dossier-architecture.mmd`](../assets/diagrams/source/dossier-architecture.mmd).*
 
 Gold e camada semântica não são sinônimos. A Gold materializa regras; a camada semântica declara grão, entidades, dimensões, métricas e caminhos de junção. Para um agente, essa combinação reduz decisões livres e torna a resposta auditável. Economia de tokens e consultas é uma hipótese que o laboratório mede; não é uma promessa automática.
 
@@ -207,3 +210,15 @@ Esses temas são adjacentes à engenharia de dados moderna, não funcionalidades
 - [Recursos suportados do dbt](https://docs.getdbt.com/docs/dbt/supported-features)
 - [MetricFlow](https://github.com/dbt-labs/metricflow)
 - [dbt MCP](https://github.com/dbt-labs/dbt-mcp)
+
+## Material complementar
+
+| Material | Organização | Tipo/idioma | Por que consultar | Episódios | Verificado |
+|---|---|---|---|---|---|
+| [dbt Learn](https://www.getdbt.com/dbt-learn) | dbt Labs | cursos, EN | trilhas oficiais de fundamentos e recursos avançados | 1–12 | 2026-09-01 |
+| [Jaffle Shop oficial](https://github.com/dbt-labs/jaffle-shop) | dbt Labs | repositório, EN | projeto de referência compatível com Core 1.12+ | 1–9 | 2026-09-01 |
+| [Jaffle Shop com DuckDB](https://github.com/dbt-labs/jaffle_shop_duckdb) | dbt Labs | repositório, EN | caminho local oficial comparável ao laboratório | 1–10 | 2026-09-01 |
+| [Semantic Layer com MetricFlow](https://www.youtube.com/watch?v=2Qo5_CIsSH4) | dbt Labs | vídeo, EN | contexto histórico e demonstração oficial | 2–4 | 2026-09-01 |
+| [Product Spotlight: Semantic Layer](https://www.youtube.com/watch?v=DS7Ub_CmBR0) | dbt Labs | vídeo, EN, 4 min | visão rápida das capacidades gerenciadas | 14 | 2026-09-01 |
+| [dbt Core com Databricks](https://docs.databricks.com/aws/en/integrations/dbt-core-tutorial) | Databricks | tutorial, EN | contraste com o caminho cloud opcional | 1, 13 | 2026-09-01 |
+| [dbt e DuckDB local](https://duckdb.org/2025/04/04/dbt-duckdb) | DuckDB | artigo, EN | justificativa técnica da execução portátil | 1, 10 | 2026-09-01 |

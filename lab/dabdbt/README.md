@@ -22,18 +22,12 @@ seeds Olist -> Silver (limpeza) -> Gold (regras funcionais)
 
 Use Python 3.12 ou 3.13. As versões fixadas em `requirements-local.txt` ainda não aceitam Python 3.14.
 
-```bash
-python3.12 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-local.txt
-./scripts/run_local.sh
-```
+Na raiz do repositório, use `python course.py setup` e depois `python course.py validate`. O launcher chama os executáveis corretos em Windows, macOS e Linux; não é necessário ativar `.venv`.
 
 Também é possível executar um episódio isolado:
 
 ```bash
-python scripts/run_checkpoint.py 03
-python scripts/run_checkpoint.py --list
+python course.py checkpoint 03
 ```
 
 Os checkpoints são cumulativos: o checkpoint 12 pressupõe as interfaces introduzidas nos anteriores, mas cada comando valida somente a capacidade focal do episódio.
@@ -86,3 +80,11 @@ Antes de usar o bundle, substitua os valores de exemplo de `databricks.yml` por 
 - Microbatch não é executado no DuckDB deste laboratório porque o suporte precisa ser confirmado por adapter; o roteiro mostra os requisitos `event_time`, lote, lookback e late data sem fingir uma medição.
 - Semantic Layer gerenciada, cache, APIs hospedadas e cross-project refs exigem produto/plano compatível e são tratados conceitualmente.
 - A pasta `platform/` contém somente runbooks opcionais e placeholders; não participa da CI e não armazena credenciais.
+
+## Material complementar
+
+| Material | Organização | Tipo/idioma | Uso na aula | Verificado |
+|---|---|---|---|---|
+| [Jaffle Shop com DuckDB](https://github.com/dbt-labs/jaffle_shop_duckdb) | dbt Labs | repositório, EN | referência oficial de projeto local | 2026-09-01 |
+| [Documentação estável do DuckDB](https://duckdb.org/docs/stable/) | DuckDB | documentação, EN | comportamento e solução de problemas do banco local | 2026-09-01 |
+| [Manual de instalação do dbt Core](https://docs.getdbt.com/guides/manual-install?step=1) | dbt Labs | guia, EN | pré-requisitos e instalação oficial | 2026-09-01 |

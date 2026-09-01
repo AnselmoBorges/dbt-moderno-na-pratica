@@ -93,3 +93,7 @@ Usar o cenário privado apenas como motivação anonimizada. Se houver case ofic
 - [Model versions](https://docs.getdbt.com/docs/mesh/govern/model-versions)
 - [Auditoria anonimizada](../pesquisa/auditoria-projeto-privado.md)
 - [Checkpoint open de referência](../lab/dabdbt/checkpoints/08-data-products-open.md)
+
+## Material complementar
+
+- [Visão geral do dbt Mesh](https://docs.getdbt.com/docs/mesh/about-mesh) — dbt Labs, documentação/EN; critérios oficiais e fronteira do produto; episódio 15; verificado em 2026-09-01.

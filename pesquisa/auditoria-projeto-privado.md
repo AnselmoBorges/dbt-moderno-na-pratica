@@ -93,3 +93,8 @@ As dependências variam entre faixas amplas, principalmente `dbt-databricks >=1.
 - Que as configurações sem filtro necessariamente geraram custo excessivo: isso exige query history e billing.
 - Que o assistente atual inventa regras: não houve benchmark do ambiente privado.
 - Que Mesh ou Semantic Layer gerenciada são necessários: primeiro serão esgotadas as alternativas abertas.
+
+## Material complementar
+
+- [Model governance](https://docs.getdbt.com/docs/mesh/govern/about-model-governance) — dbt Labs, documentação/EN; referência pública para os padrões anonimizados; episódios 5–8; verificado em 2026-09-01.
+- [Incremental models](https://docs.getdbt.com/docs/build/incremental-models-overview) — dbt Labs, documentação/EN; critério técnico para a auditoria de filtros; episódio 10; verificado em 2026-09-01.

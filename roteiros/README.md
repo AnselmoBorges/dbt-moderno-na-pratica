@@ -6,6 +6,8 @@
 
 Os 12 episódios usam dbt Core 1.12, DuckDB, MetricFlow e dbt MCP local. Cada roteiro termina em um checkpoint executável e possui um quadro Radar separado, sem dependência beta/preview.
 
+Antes deles, a [Aula 0](aula-00-ambiente.md) prepara Windows, macOS, Linux ou Codespaces sem renumerar a temporada.
+
 | # | Episódio | Duração |
 |---|---|---|
 | 01 | [O que a série ensinou e o baseline Core 1.12](01-playlist-core-1-12.md) | 20–23 min |
@@ -41,3 +43,12 @@ Estes roteiros só serão gravados depois da temporada open. Todos possuem rota 
 - **LAB:** resultado reproduzido localmente.
 - **FORNECEDOR:** número ou conclusão reportado em case/blog comercial.
 - **FIXTURE:** dado sintético que valida CI, não benchmark de LLM.
+
+## Apresentações
+
+O piloto público contém PPTX e PDF da Aula 0 e do episódio 1 em [`assets/decks`](../assets/decks/README.md). Os demais decks serão produzidos somente depois da aprovação visual e didática do piloto.
+
+## Material complementar
+
+- [dbt Learn](https://www.getdbt.com/dbt-learn) — dbt Labs, cursos/EN; referência de progressão didática; toda a série; verificado em 2026-09-01.
+- [Catálogo visual e atribuições](../assets/README.md) — Rescue Point, documentação/PT-BR; regras de imagens, diagramas e licença; toda a série; verificado em 2026-09-01.

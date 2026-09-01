@@ -4,7 +4,9 @@
 from __future__ import annotations
 
 import csv
+import json
 import re
+import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -62,7 +64,7 @@ for path in episode_files:
         raise SystemExit(f"{path.name} tenta executar software preview.")
 
 markdown_files = [
-    *ROOT.glob("*.md"), *ROOT.glob("pesquisa/*.md"), *ROOT.glob("roteiros/*.md"),
+    *ROOT.glob("*.md"), *ROOT.glob("docs/**/*.md"), *ROOT.glob("pesquisa/*.md"), *ROOT.glob("roteiros/*.md"),
     *ROOT.glob("lab/dabdbt/*.md"), *ROOT.glob("lab/dabdbt/checkpoints/*.md"),
 ]
 for path in markdown_files:
@@ -72,6 +74,71 @@ for path in markdown_files:
             continue
         if not (path.parent / target).resolve().exists():
             raise SystemExit(f"Link local quebrado em {path}: {raw_target}")
+
+course_markdown = [*ROOT.glob("docs/**/*.md"), *ROOT.glob("pesquisa/*.md"), *ROOT.glob("roteiros/*.md")]
+for path in course_markdown:
+    if "## Material complementar" not in path.read_text(encoding="utf-8"):
+        raise SystemExit(f"{path.relative_to(ROOT)} não contém Material complementar.")
+
+for path in markdown_files:
+    for alt, target in re.findall(r"!\[([^]]*)\]\(([^)]+)\)", path.read_text(encoding="utf-8")):
+        if not alt.strip():
+            raise SystemExit(f"Imagem sem texto alternativo em {path.relative_to(ROOT)}: {target}")
+
+catalog = ROOT / "assets/catalog.yml"
+catalog_text = catalog.read_text(encoding="utf-8")
+entries = re.split(r"\n  - id: ", catalog_text)[1:]
+if len(entries) != 13:
+    raise SystemExit(f"Catálogo visual deveria conter 13 diagramas; contém {len(entries)}.")
+for entry in entries:
+    asset_id = entry.splitlines()[0].strip()
+    fields = {}
+    for line in entry.splitlines()[1:]:
+        match = re.match(r"    ([a-z_]+):\s*(.+)", line)
+        if match:
+            fields[match.group(1)] = match.group(2).strip()
+    required_asset_fields = {
+        "path", "rendered_svg", "rendered_png", "kind", "origin", "author",
+        "license", "source_url", "episodes", "alt", "reviewed",
+    }
+    if not required_asset_fields.issubset(fields):
+        raise SystemExit(f"Ativo {asset_id} sem campos: {sorted(required_asset_fields - set(fields))}")
+    if fields["reviewed"] != "true" or len(fields["alt"]) < 20:
+        raise SystemExit(f"Ativo {asset_id} sem revisão ou texto alternativo útil.")
+    if not (ROOT / fields["path"]).is_file():
+        raise SystemExit(f"Ativo {asset_id} aponta para arquivo inexistente: {fields['path']}")
+    for rendered_key in ("rendered_svg", "rendered_png"):
+        rendered = ROOT / fields[rendered_key]
+        if not rendered.is_file() or rendered.stat().st_size < 500:
+            raise SystemExit(f"Ativo {asset_id} sem render válido: {fields[rendered_key]}")
+    if "<svg" not in (ROOT / fields["rendered_svg"]).read_text(encoding="utf-8"):
+        raise SystemExit(f"Ativo {asset_id} possui SVG inválido.")
+
+deck_specs = {
+    "aula-00-ambiente": 12,
+    "episodio-01-baseline-core-1-12": 14,
+}
+for stem, expected_slides in deck_specs.items():
+    pptx = ROOT / "assets/decks" / f"{stem}.pptx"
+    pdf = ROOT / "assets/decks" / f"{stem}.pdf"
+    if not pptx.is_file() or not pdf.is_file():
+        raise SystemExit(f"Apresentação piloto ausente: {stem}")
+    with zipfile.ZipFile(pptx) as archive:
+        slides = [name for name in archive.namelist() if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
+        notes = [name for name in archive.namelist() if re.fullmatch(r"ppt/notesSlides/notesSlide\d+\.xml", name)]
+        note_text = "\n".join(archive.read(name).decode("utf-8", errors="ignore") for name in notes)
+    if len(slides) != expected_slides or len(notes) != expected_slides or "[Sources]" not in note_text:
+        raise SystemExit(f"Deck {stem} sem slides/notas/fontes esperados: slides={len(slides)}, notes={len(notes)}")
+    if not pdf.read_bytes().startswith(b"%PDF"):
+        raise SystemExit(f"PDF inválido: {pdf.relative_to(ROOT)}")
+
+legacy_commands = []
+for path in ROOT.glob("roteiros/*.md"):
+    text = path.read_text(encoding="utf-8")
+    if "source .venv/bin/activate" in text or "python scripts/run_checkpoint.py" in text:
+        legacy_commands.append(path.name)
+if legacy_commands:
+    raise SystemExit(f"Roteiros ainda usam comandos não portáveis: {legacy_commands}")
 
 lab_root = ROOT / "lab/dabdbt"
 ignored_parts = {".venv", "target", "logs", "dbt_packages", "__pycache__"}
@@ -92,4 +159,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, links e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 13 diagramas, 2 decks e sanitização válidos.")

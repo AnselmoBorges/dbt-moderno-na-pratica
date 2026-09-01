@@ -1,0 +1,7 @@
+flowchart LR
+    M1[Manifest anterior] --> C{Comparar estado}
+    CODE[Código atual] --> C
+    C --> S[state:modified+]
+    S --> CI[Build somente do impacto]
+    M1 --> D[defer para pais não construídos]
+    D --> CI
