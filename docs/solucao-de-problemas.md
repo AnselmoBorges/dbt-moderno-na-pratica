@@ -10,6 +10,24 @@ Se a franquia mensal tiver terminado, aguarde a renovação ou siga a instalaç�
 
 Abra **Terminal → New Terminal** e execute `python course.py setup`. O processo pode ser repetido. Depois, rode `python course.py doctor` e `python course.py checkpoint 01`.
 
+## Power User mostra dbt 1.11 e perfil ausente
+
+Esse erro vem do assistente da extensão **dbt Power User**, não do ambiente isolado do curso. O caso típico combina estas mensagens:
+
+- `Running with dbt=1.11.x`;
+- `profiles.yml file [ERROR not found]` em `~/.dbt`;
+- `Required version of dbt ... >=1.12.0,<1.13.0`.
+
+O laboratório não precisa dessa extensão. Feche **Get Started with dbt Power User**, desabilite ou desinstale **dbt Power User** no Codespace e execute:
+
+```bash
+python course.py setup
+python course.py doctor
+python course.py checkpoint 01
+```
+
+O diagnóstico correto mostra `dbt Core do curso: 1.12.3`. Não use `--no-version-check` e não crie `~/.dbt/profiles.yml`: isso esconderia a divergência em vez de usar o perfil versionado do curso.
+
 ## Python incorreto
 
 Se `doctor` mostrar Python 3.11 ou 3.14, instale 3.12/3.13 e invoque explicitamente `py -3.12` no Windows ou `python3.12` em macOS/Linux.

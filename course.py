@@ -19,6 +19,7 @@ ROOT = Path(__file__).resolve().parent
 LAB = ROOT / "lab" / "dabdbt"
 VENV = LAB / ".venv"
 SUPPORTED_PYTHON = {(3, 12), (3, 13)}
+EXPECTED_DBT_CORE = "1.12.3"
 MIN_FREE_BYTES = 2 * 1024**3
 
 
@@ -69,6 +70,18 @@ def doctor(*, quiet: bool = False) -> tuple[bool, list[dict[str, str | bool]]]:
         detail = f"sem permissão de escrita ({exc.__class__.__name__})"
     add("Permissões", writable, detail)
     add("Arquivos do curso", (LAB / "dbt_project.yml").is_file(), "projeto dbt localizado")
+
+    if venv_tool("python").exists():
+        dbt_version = package_version("dbt-core")
+        add(
+            "dbt Core do curso",
+            dbt_version == EXPECTED_DBT_CORE,
+            f"{dbt_version}; esperado {EXPECTED_DBT_CORE}"
+            if dbt_version != EXPECTED_DBT_CORE
+            else dbt_version,
+        )
+    else:
+        add("dbt Core do curso", True, f"{EXPECTED_DBT_CORE} será instalado pelo setup")
 
     if not quiet:
         print(f"\nSistema: {platform.system()} {platform.release()} ({platform.machine()})")

@@ -1,6 +1,6 @@
 # GitHub Codespaces
 
-O GitHub Codespaces é o **ambiente recomendado para acompanhar o curso**. Ele abre o mesmo repositório em um VS Code no navegador, com Python 3.12, dbt Core, DuckDB e as extensões do curso preparados pela configuração versionada em `.devcontainer/devcontainer.json`.
+O GitHub Codespaces é o **ambiente recomendado para acompanhar o curso**. Ele abre o mesmo repositório em um VS Code no navegador, com Python 3.12, dbt Core e DuckDB preparados pela configuração versionada em `.devcontainer/devcontainer.json`.
 
 Isso reduz diferenças entre Windows, macOS e Linux. A instalação local continua disponível como alternativa para quem precisa trabalhar offline ou não deseja usar a franquia do GitHub.
 
@@ -61,6 +61,18 @@ postStartCommand:  python course.py doctor
 
 Não interrompa o primeiro `setup`. O terminal deve terminar com **Ambiente pronto** e o diagnóstico deve mostrar os itens principais como `OK`. Se o terminal não estiver visível, abra **Terminal → New Terminal**.
 
+### Não execute o assistente “Get Started with dbt Power User”
+
+O curso **não precisa do dbt Power User**. Essa extensão de terceiros pode criar outro ambiente, executar um dbt global e procurar `profiles.yml` em `~/.dbt`, enquanto o laboratório usa:
+
+- `dbt-core 1.12.3` no ambiente isolado `lab/dabdbt/.venv`;
+- o perfil versionado em `lab/dabdbt/dbt_profiles`;
+- o launcher `course.py`, que escolhe ambos automaticamente.
+
+Se aparecer uma aba **Get Started with dbt Power User**, feche-a sem selecionar versão nem executar **Validate Setup**. Em um Codespace antigo, abra **Extensions**, procure **dbt Power User** e escolha **Disable (Workspace)** ou **Uninstall**. Novos Codespaces criados a partir da configuração atual não instalam essa extensão.
+
+A extensão oficial da dbt Labs também não é pré-requisito nesta temporada: sua experiência atual usa o Fusion em preview, enquanto as aulas executam o dbt Core 1.12 estável. O editor continua oferecendo terminal, SQL e YAML sem essas extensões.
+
 ## Passo 4 — valide o primeiro checkpoint
 
 No terminal do Codespaces, execute:
@@ -78,6 +90,7 @@ OK  Git
 OK  Espaço livre
 OK  Permissões
 OK  Arquivos do curso
+OK  dbt Core do curso: 1.12.3
 Pronto para o setup.
 
 Checkpoint 01 OK
@@ -102,6 +115,7 @@ Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambient
 | A opção Codespaces não aparece | Confirme que você está conectado a uma conta pessoal e abra o link direto desta página. |
 | A franquia terminou | Aguarde a renovação mensal ou use a instalação local; não é necessário contratar um plano para continuar o curso. |
 | O setup foi interrompido | Execute `python course.py setup` novamente. O processo é repetível. |
+| Power User mostra dbt 1.11, `profiles.yml` ausente ou projeto inválido | Feche o assistente e desabilite a extensão. Execute apenas `python course.py setup`, `python course.py doctor` e `python course.py checkpoint 01`. |
 | O terminal mostra Python diferente de 3.12 | Confirme que o dev container selecionado é `dbt Moderno na Prática` e recrie o Codespace. |
 | O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
 
@@ -115,3 +129,5 @@ O Codespace preserva os arquivos enquanto existir. Como alunos não têm permiss
 - [Uso incluído e cobrança](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces) — GitHub, documentação/EN; verificado em 2026-09-01.
 - [Aproveitar melhor a franquia incluída](https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage) — GitHub, documentação/EN; verificado em 2026-09-01.
 - [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace) — GitHub, documentação/EN; verificado em 2026-09-01.
+- [Extensão dbt Power User](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) — Altimate AI, marketplace/EN; extensão de terceiros e opcional, não utilizada pelo curso; verificado em 2026-09-01.
+- [Extensão oficial da dbt Labs](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) — dbt Labs, marketplace/EN; usa Fusion e está identificada como preview, portanto permanece fora do ambiente open/stable; verificado em 2026-09-01.

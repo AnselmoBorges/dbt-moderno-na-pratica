@@ -55,6 +55,8 @@ python course.py doctor
 python course.py checkpoint 01
 ```
 
+Não execute assistentes de instalação de extensões dbt: o curso fixa e usa o dbt Core 1.12.3 pelo próprio launcher. O dbt Power User é opcional e não faz parte do ambiente recomendado.
+
 Veja o [passo a passo ilustrado, limites e como parar o ambiente](docs/codespaces.md).
 
 ## Alternativa: instalação local sem ativação manual

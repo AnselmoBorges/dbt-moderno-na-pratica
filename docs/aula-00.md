@@ -42,6 +42,8 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 
 No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateCommand` versionado no repositório.
 
+> O dbt Power User não é necessário. Se o editor abrir o assistente dessa extensão, feche-o e siga apenas os comandos `course.py`. O [guia de Codespaces](codespaces.md) explica por que o dbt 1.11 mostrado pelo assistente não é o dbt 1.12.3 do laboratório.
+
 ## Material complementar
 
 - [Quickstart manual do dbt](https://docs.getdbt.com/guides/manual-install?step=1) — dbt Labs, guia/EN, comparação com a instalação oficial; verificado em 2026-09-01.
