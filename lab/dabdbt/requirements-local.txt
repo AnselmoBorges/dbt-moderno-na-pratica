@@ -4,4 +4,4 @@ duckdb==1.5.5
 dbt-metricflow==0.14.0
 metricflow==0.212.0
 dbt-mcp==2.2.0
-jsonschema>=4.26,<5
+jsonschema==4.26.0

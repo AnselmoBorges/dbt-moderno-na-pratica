@@ -62,6 +62,8 @@ python course.py doctor
 
 “O diagnóstico não instala nada. Ele confirma Python, Git, espaço, permissão e arquivos do curso. No Codespaces, o resultado deve ser igual para todos. As variações `py -3.12` e `python3.12` pertencem apenas à instalação local.”
 
+“Quando aparecer Ambiente preparado, siga direto para o checkpoint. Não repita setup nem ative a virtualenv manualmente.”
+
 ### 13:30–15:30 — Primeiro checkpoint
 
 ```bash
@@ -86,7 +88,7 @@ python course.py data-ui
 python course.py setup
 ```
 
-“Se o terminal fechou ou a preparação automática foi interrompida, execute setup novamente. O processo é idempotente e reaproveita o que já está correto.”
+“Se o terminal fechou ou a preparação automática foi interrompida, execute setup novamente e aguarde as três etapas. `^C` e `KeyboardInterrupt` significam interrupção manual. Quando o ambiente já estiver completo, o setup pula pip e dbt deps em vez de reinstalar tudo.”
 
 ### 18:00–19:00 — Como pedir ajuda sem expor segredo
 
@@ -115,7 +117,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - O Codespaces seleciona o dev container do curso e a máquina `2-core`.
 - O setup automático termina com “Ambiente pronto”.
 - `paths` mostra dbt Core 1.12.3, DuckDB, profile, banco e artifacts do curso.
-- `doctor` termina com “Pronto para o setup”.
+- `doctor` termina com “Ambiente preparado. Você já pode executar o checkpoint”.
 - `checkpoint 01` termina com `Checkpoint 01 OK`.
 - `data-ui` abre o explorador autoral sobre a cópia somente leitura pela porta privada 4213 e encerra com Ctrl+C.
 - `build/support-report.json` não contém usuário, e-mail, host ou variável de ambiente.

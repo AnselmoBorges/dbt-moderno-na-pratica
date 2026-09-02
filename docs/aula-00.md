@@ -26,8 +26,8 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 
 1. Crie o ambiente pela [rota recomendada no Codespaces](codespaces.md). Se preferir trabalhar offline, use a [instalação local](instalacao/README.md).
 2. No Codespaces, aguarde o `setup` automático terminar. Na instalação local, execute `python course.py setup`.
-3. Execute `python course.py paths` para conferir os caminhos detectados do dbt, DuckDB, profile, banco e artifacts.
-4. Execute `python course.py doctor` e corrija qualquer item marcado como `ERRO`.
+3. Execute `python course.py doctor`. Se aparecer **Ambiente preparado**, não execute `setup` novamente; corrija apenas itens marcados como `ERRO`.
+4. Execute `python course.py paths` para conferir os caminhos detectados do dbt, DuckDB, profile, banco e artifacts.
 5. Execute `python course.py checkpoint 01`.
 6. Procure a mensagem `Checkpoint 01 OK`.
 7. Opcionalmente, execute `python course.py data-ui` e use o explorador autoral do curso sobre a cópia somente leitura, pela porta privada 4213.
@@ -44,6 +44,8 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 - Não acessa Databricks e não solicita chaves.
 
 No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateCommand` versionado no repositório.
+
+> `^C` e `KeyboardInterrupt` significam que o processo foi interrompido pelo usuário. Na primeira preparação, aguarde as três etapas terminarem. Reexecutar `setup` depois disso apenas confirma o ambiente e pula instalações já concluídas.
 
 > O dbt Power User não é necessário. Se o editor abrir o assistente dessa extensão, feche-o e siga apenas os comandos `course.py`. O [guia de Codespaces](codespaces.md) explica por que o dbt 1.11 mostrado pelo assistente não é o dbt 1.12.3 do laboratório.
 

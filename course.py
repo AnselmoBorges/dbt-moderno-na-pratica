@@ -20,6 +20,15 @@ LAB = ROOT / "lab" / "dabdbt"
 VENV = LAB / ".venv"
 SUPPORTED_PYTHON = {(3, 12), (3, 13)}
 EXPECTED_DBT_CORE = "1.12.3"
+EXPECTED_PACKAGES = {
+    "dbt-core": "1.12.3",
+    "dbt-duckdb": "1.11.0",
+    "duckdb": "1.5.5",
+    "dbt-metricflow": "0.14.0",
+    "metricflow": "0.212.0",
+    "dbt-mcp": "2.2.0",
+    "jsonschema": "4.26.0",
+}
 MIN_FREE_BYTES = 2 * 1024**3
 
 
@@ -31,7 +40,7 @@ def venv_tool(name: str) -> Path:
 
 def run(command: list[str | Path], *, cwd: Path = ROOT, check: bool = True) -> subprocess.CompletedProcess[str]:
     printable = " ".join(str(part) for part in command)
-    print(f"\n› {printable}")
+    print(f"\n› {printable}", flush=True)
     return subprocess.run(
         [str(part) for part in command], cwd=cwd, check=check, text=True
     )
@@ -85,7 +94,12 @@ def doctor(*, quiet: bool = False) -> tuple[bool, list[dict[str, str | bool]]]:
 
     if not quiet:
         print(f"\nSistema: {platform.system()} {platform.release()} ({platform.machine()})")
-        print("Pronto para o setup." if all(bool(item["ok"]) for item in checks) else "Corrija os itens marcados como ERRO.")
+        if not all(bool(item["ok"]) for item in checks):
+            print("Corrija os itens marcados como ERRO.")
+        elif environment_ready():
+            print("Ambiente preparado. Você já pode executar o checkpoint.")
+        else:
+            print("Pré-requisitos aprovados. Execute o setup.")
     return all(bool(item["ok"]) for item in checks), checks
 
 
@@ -144,17 +158,34 @@ def show_paths() -> None:
     print("Os comandos course.py usam esses executáveis diretamente; ativar a .venv é opcional.")
 
 
+def environment_ready() -> bool:
+    """Confirma que o ambiente fixado e os packages dbt já estão completos."""
+    if not venv_tool("python").exists():
+        return False
+    versions_ok = all(package_version(name) == version for name, version in EXPECTED_PACKAGES.items())
+    return versions_ok and (LAB / "dbt_packages" / "dbt_utils" / "dbt_project.yml").is_file()
+
+
 def setup() -> None:
     require_supported_python()
     ok, _ = doctor()
     if not ok:
         raise SystemExit("O diagnóstico encontrou bloqueios; corrija-os antes do setup.")
     (ROOT / "lab" / "data").mkdir(parents=True, exist_ok=True)
+    if environment_ready():
+        print("\nAmbiente já preparado; instalação e dbt deps não serão repetidos.")
+        show_paths()
+        print("\nPróximo passo: python course.py checkpoint 01")
+        return
     if not venv_tool("python").exists():
+        print("\nEtapa 1/3 — criando o ambiente Python isolado...", flush=True)
         run([sys.executable, "-m", "venv", VENV])
     python = venv_tool("python")
-    run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", "requirements-local.txt"], cwd=LAB)
+    print("\nEtapa 1/3 — instalando as versões fixadas (pode levar alguns minutos)...", flush=True)
+    run([python, "-m", "pip", "install", "--quiet", "--disable-pip-version-check", "-r", "requirements-local.txt"], cwd=LAB)
+    print("\nEtapa 2/3 — preparando os packages dbt; aguarde a mensagem de conclusão...", flush=True)
     run([venv_tool("dbt"), "deps", "--profiles-dir", "dbt_profiles", "--target", "local"], cwd=LAB)
+    print("\nEtapa 3/3 — validando projeto, profile e conexão local...", flush=True)
     run([venv_tool("dbt"), "debug", "--profiles-dir", "dbt_profiles", "--target", "local"], cwd=LAB)
     show_paths()
     print("\nAmbiente pronto. Próximo passo: python course.py checkpoint 01")
@@ -261,4 +292,8 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    try:
+        raise SystemExit(main())
+    except KeyboardInterrupt:
+        print("\nOperação interrompida pelo usuário. Execute o mesmo comando novamente para continuar.")
+        raise SystemExit(130)

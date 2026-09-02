@@ -102,12 +102,12 @@ OK  Espaço livre
 OK  Permissões
 OK  Arquivos do curso
 OK  dbt Core do curso: 1.12.3
-Pronto para o setup.
+Ambiente preparado. Você já pode executar o checkpoint.
 
 Checkpoint 01 OK
 ```
 
-Se a criação automática tiver sido interrompida, execute `python course.py setup` antes do checkpoint.
+No Codespaces, não repita `setup` quando o diagnóstico disser **Ambiente preparado**. Se a criação automática tiver sido interrompida, execute `python course.py setup` uma vez e aguarde todas as três etapas; não pressione `Ctrl+C` enquanto `dbt deps` estiver carregando.
 
 ## Explore as tabelas graficamente — opcional
 
@@ -140,7 +140,7 @@ Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambient
 | A opção Codespaces não aparece | Confirme que você está conectado a uma conta pessoal e abra o link direto desta página. |
 | A franquia terminou | Aguarde a renovação mensal ou use a instalação local; não é necessário contratar um plano para continuar o curso. |
 | O setup foi interrompido | Execute `python course.py setup` novamente. O processo é repetível. |
-| Power User mostra dbt 1.11, `profiles.yml` ausente ou projeto inválido | Feche o assistente e desabilite a extensão. Execute apenas `python course.py setup`, `python course.py doctor` e `python course.py checkpoint 01`. |
+| Power User mostra dbt 1.11, `profiles.yml` ausente ou projeto inválido | Feche o assistente e desabilite a extensão. Execute `python course.py doctor`; rode `setup` somente se o ambiente não estiver preparado e depois siga para `checkpoint 01`. |
 | O terminal mostra Python diferente de 3.12 | Confirme que o dev container selecionado é `dbt Moderno na Prática` e recrie o Codespace. |
 | O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
 | O explorador não abre | Atualize o repositório, execute novamente `python course.py setup` e mantenha o terminal com `data-ui` aberto. Na guia **Ports**, abra a porta privada 4213. |

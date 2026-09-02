@@ -10,6 +10,12 @@ Se a franquia mensal tiver terminado, aguarde a renovação ou siga a instalaç�
 
 Abra **Terminal → New Terminal** e execute `python course.py setup`. O processo pode ser repetido. Depois, rode `python course.py doctor` e `python course.py checkpoint 01`.
 
+## Apareceram `^C`, `KeyboardInterrupt` ou muitos `Requirement already satisfied`
+
+`^C` indica que `Ctrl+C` interrompeu o processo; não é uma falha de versão do dbt. Atualize o repositório e execute `python course.py setup` novamente. O setup atual detecta o ambiente completo, pula `pip` e `dbt deps` quando eles já estão prontos e mostra apenas três etapas na primeira instalação. Não execute `source .../.venv/bin/activate`: o launcher seleciona o ambiente automaticamente.
+
+No checkpoint, `NO-OP exposure ...` é esperado. Considere sucesso quando o resumo terminar com `ERROR=0` e aparecer `Checkpoint 01 OK`.
+
 ## Power User mostra dbt 1.11 e perfil ausente
 
 Esse erro vem do assistente da extensão **dbt Power User**, não do ambiente isolado do curso. O caso típico combina estas mensagens:
@@ -21,10 +27,11 @@ Esse erro vem do assistente da extensão **dbt Power User**, não do ambiente is
 O laboratório não precisa dessa extensão. Feche **Get Started with dbt Power User**, desabilite ou desinstale **dbt Power User** no Codespace e execute:
 
 ```bash
-python course.py setup
 python course.py doctor
 python course.py checkpoint 01
 ```
+
+Execute `python course.py setup` entre esses dois comandos somente quando o diagnóstico não disser **Ambiente preparado**.
 
 O diagnóstico correto mostra `dbt Core do curso: 1.12.3`. Não use `--no-version-check` e não crie `~/.dbt/profiles.yml`: isso esconderia a divergência em vez de usar o perfil versionado do curso.
 
