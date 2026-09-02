@@ -132,6 +132,31 @@ A interface autoral do curso mostra schemas, tabelas e resultados SQL. O comando
 
 Essa interface não é a DuckDB UI oficial nem uma reprodução de sua tela. A extensão oficial atualmente escuta apenas em `localhost`; o projeto mantém um issue aberto sobre execução em containers, e há um relato com o mesmo erro `DataView` em acesso por túnel. O explorador do curso liga-se ao endereço aceito pelo encaminhamento de portas do Codespaces e não baixa componentes adicionais. Ele continua opcional: nenhum checkpoint depende da interface gráfica.
 
+### Alternativa avançada — DuckDB UI oficial por túnel
+
+Quem quiser conhecer a interface oficial pode usá-la sem passar pelo domínio `app.github.dev`. Essa rota exige o [GitHub CLI](https://cli.github.com/) instalado também no computador do aluno.
+
+No terminal do Codespaces:
+
+```bash
+python course.py official-data-ui
+```
+
+Não abra o link automático do Codespaces. No computador local, dentro de uma cópia do repositório, execute:
+
+```bash
+gh auth refresh -h github.com -s codespace
+python course.py codespace-ui-tunnel
+```
+
+A autorização é necessária apenas na primeira vez. Se houver mais de um Codespace, o GitHub CLI solicitará a escolha. Também é possível informar o nome explicitamente:
+
+```bash
+python course.py codespace-ui-tunnel --codespace NOME_DO_CODESPACE
+```
+
+O navegador será aberto em `http://localhost:4213`. Mantenha os dois terminais abertos; `Ctrl+C` encerra cada processo. Essa alternativa é opcional e não substitui o explorador recomendado, pois requer preparação no computador local.
+
 ## Passo 5 — pare o ambiente ao terminar
 
 Abra [github.com/codespaces](https://github.com/codespaces), localize o ambiente, selecione `…` e escolha **Stop codespace**. Parar interrompe o consumo de processamento; o armazenamento continua sendo contabilizado enquanto o Codespace existir.
@@ -154,6 +179,7 @@ Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambient
 | O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
 | O explorador não abre | Atualize o repositório, execute novamente `python course.py setup` e mantenha o terminal com `data-ui` aberto. Na guia **Ports**, abra a porta privada 4213. |
 | Aparece `Initialization Error` ou `DataView` | Você abriu a DuckDB UI oficial antiga. Encerre o processo, atualize o repositório e execute `python course.py data-ui`; a tela correta diz **interface autoral do curso**. |
+| Quero usar a DuckDB UI oficial | Use `official-data-ui` no Codespaces e `codespace-ui-tunnel` no computador local; nunca abra a UI oficial pelo domínio `app.github.dev`. |
 
 ## Como salvar seu progresso
 

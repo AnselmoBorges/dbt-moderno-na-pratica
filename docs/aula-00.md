@@ -31,6 +31,7 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 5. Execute `python course.py checkpoint 01`.
 6. Procure a mensagem `Checkpoint 01 OK`.
 7. Opcionalmente, execute `python course.py data-ui` e use o explorador autoral do curso sobre a cópia somente leitura, pela porta privada 4213.
+8. Como bônus avançado, use `official-data-ui` no Codespaces e `codespace-ui-tunnel` no computador local para abrir a DuckDB UI oficial em `localhost`.
 8. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
 9. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
 

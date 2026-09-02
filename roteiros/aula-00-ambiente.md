@@ -131,6 +131,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - Destaque grande para o primeiro erro acionável do `doctor`.
 - Captura real da guia **Ports** com `Explorador DuckDB` na porta privada 4213.
 - Linha do tempo curta: criação → setup → paths/doctor → checkpoint → UI opcional → stop.
+- Demonstração bônus em tela dividida: `official-data-ui` no Codespaces e `codespace-ui-tunnel` no computador local, destacando que o navegador acessa `localhost`.
 
 ## Limitações
 
@@ -139,6 +140,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - Máquina parada continua consumindo armazenamento enquanto existir.
 - A instalação local permanece necessária quando o aluno precisa trabalhar offline.
 - O explorador é autoral, propositalmente simples e não é requisito dos checkpoints.
+- A DuckDB UI oficial pode ser apresentada como bônus avançado: ela exige GitHub CLI local, autorização `codespace` e dois processos ativos.
 
 ## CTA
 

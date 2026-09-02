@@ -59,6 +59,8 @@ Não execute assistentes de instalação de extensões dbt: o curso fixa e usa o
 
 Depois do checkpoint 01, `python course.py data-ui` abre o explorador gráfico autoral do curso em uma porta privada do Codespaces. O comando usa uma cópia somente leitura do DuckDB para não interferir no pipeline. A DuckDB UI oficial não é usada porque seu servidor local ainda possui uma limitação conhecida com túneis e containers.
 
+Como alternativa avançada, a Aula 0 também documenta a DuckDB UI oficial por túnel: `python course.py official-data-ui` roda no Codespaces e `python course.py codespace-ui-tunnel` roda no computador local com GitHub CLI. Essa rota mantém o navegador em `localhost` e evita o proxy incompatível `app.github.dev`.
+
 Veja o [passo a passo ilustrado, limites e como parar o ambiente](docs/codespaces.md).
 
 ## Alternativa: instalação local sem ativação manual

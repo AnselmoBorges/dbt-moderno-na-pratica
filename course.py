@@ -218,6 +218,30 @@ def data_ui(port: int) -> None:
         pass
 
 
+def official_data_ui(port: int) -> None:
+    """Inicia a UI oficial dentro do Codespaces; o acesso remoto exige túnel local."""
+    require_environment()
+    database = ROOT / "lab" / "data" / "dabdbt.duckdb"
+    print("DuckDB UI oficial. Não abra o endereço *.app.github.dev.")
+    print("No seu computador, execute: python course.py codespace-ui-tunnel")
+    try:
+        run([venv_tool("duckdb"), database, "-cmd", f"SET ui_local_port={port}", "-ui"])
+    except KeyboardInterrupt:
+        pass
+
+
+def codespace_ui_tunnel(codespace: str | None, port: int) -> None:
+    command: list[str | Path] = [
+        sys.executable,
+        ROOT / "scripts" / "codespace_duckdb_ui_tunnel.py",
+        "--port",
+        str(port),
+    ]
+    if codespace:
+        command.extend(["--codespace", codespace])
+    run(command)
+
+
 def validate() -> None:
     python = require_environment()
     run([sys.executable, "scripts/verify_editorial.py"], cwd=ROOT)
@@ -272,6 +296,15 @@ def main() -> int:
     checkpoint_parser.add_argument("number")
     data_ui_parser = subparsers.add_parser("data-ui", help="abre a interface gráfica opcional do DuckDB")
     data_ui_parser.add_argument("--port", type=int, default=4213)
+    official_ui_parser = subparsers.add_parser(
+        "official-data-ui", help="inicia a DuckDB UI oficial para acesso por túnel"
+    )
+    official_ui_parser.add_argument("--port", type=int, default=4213)
+    tunnel_parser = subparsers.add_parser(
+        "codespace-ui-tunnel", help="abre no computador local o túnel para a DuckDB UI"
+    )
+    tunnel_parser.add_argument("--codespace")
+    tunnel_parser.add_argument("--port", type=int, default=4213)
     subparsers.add_parser("paths", help="mostra os caminhos reais do dbt, DuckDB e arquivos do curso")
     subparsers.add_parser("validate", help="executa toda a validação editorial e técnica")
     subparsers.add_parser("support-report", help="gera diagnóstico sanitizado para pedir ajuda")
@@ -286,6 +319,10 @@ def main() -> int:
         checkpoint(args.number.zfill(2))
     elif args.command == "data-ui":
         data_ui(args.port)
+    elif args.command == "official-data-ui":
+        official_data_ui(args.port)
+    elif args.command == "codespace-ui-tunnel":
+        codespace_ui_tunnel(args.codespace, args.port)
     elif args.command == "paths":
         show_paths()
     elif args.command == "validate":
