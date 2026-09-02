@@ -29,8 +29,9 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 3. Execute `python course.py doctor` e corrija qualquer item marcado como `ERRO`.
 4. Execute `python course.py checkpoint 01`.
 5. Procure a mensagem `Checkpoint 01 OK`.
-6. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
-7. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
+6. Opcionalmente, execute `python course.py data-ui` e explore as tabelas pela porta privada 4213.
+7. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
+8. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
 
 ## O que o setup faz
 
@@ -43,6 +44,8 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateCommand` versionado no repositório.
 
 > O dbt Power User não é necessário. Se o editor abrir o assistente dessa extensão, feche-o e siga apenas os comandos `course.py`. O [guia de Codespaces](codespaces.md) explica por que o dbt 1.11 mostrado pelo assistente não é o dbt 1.12.3 do laboratório.
+
+> A DuckDB UI é uma visualização opcional. Ela opera sobre uma cópia do banco, não substitui os comandos dbt e não é necessária para concluir nenhum checkpoint.
 
 ## Material complementar
 

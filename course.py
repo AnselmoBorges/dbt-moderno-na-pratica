@@ -125,6 +125,25 @@ def checkpoint(number: str) -> None:
     run([python, "scripts/run_checkpoint.py", number], cwd=LAB)
 
 
+def data_ui(port: int) -> None:
+    python = require_environment()
+    try:
+        run(
+            [
+                python,
+                ROOT / "scripts" / "start_duckdb_ui.py",
+                "--source",
+                ROOT / "lab" / "data" / "dabdbt.duckdb",
+                "--snapshot",
+                ROOT / "build" / "duckdb-ui" / "course-snapshot.duckdb",
+                "--port",
+                str(port),
+            ]
+        )
+    except KeyboardInterrupt:
+        pass
+
+
 def validate() -> None:
     python = require_environment()
     run([sys.executable, "scripts/verify_editorial.py"], cwd=ROOT)
@@ -154,6 +173,7 @@ def support_report() -> Path:
         "tools": {
             "dbt_core": package_version("dbt-core"),
             "dbt_duckdb": package_version("dbt-duckdb"),
+            "duckdb_engine": package_version("duckdb"),
             "metricflow_engine": package_version("metricflow"),
             "dbt_metricflow_cli": package_version("dbt-metricflow"),
             "dbt_mcp": package_version("dbt-mcp"),
@@ -174,6 +194,8 @@ def main() -> int:
     subparsers.add_parser("setup", help="prepara o laboratório local")
     checkpoint_parser = subparsers.add_parser("checkpoint", help="executa um checkpoint de 01 a 12")
     checkpoint_parser.add_argument("number")
+    data_ui_parser = subparsers.add_parser("data-ui", help="abre a interface gráfica opcional do DuckDB")
+    data_ui_parser.add_argument("--port", type=int, default=4213)
     subparsers.add_parser("validate", help="executa toda a validação editorial e técnica")
     subparsers.add_parser("support-report", help="gera diagnóstico sanitizado para pedir ajuda")
     args = parser.parse_args()
@@ -185,6 +207,8 @@ def main() -> int:
         setup()
     elif args.command == "checkpoint":
         checkpoint(args.number.zfill(2))
+    elif args.command == "data-ui":
+        data_ui(args.port)
     elif args.command == "validate":
         validate()
     elif args.command == "support-report":

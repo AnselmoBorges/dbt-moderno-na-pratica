@@ -98,6 +98,20 @@ Checkpoint 01 OK
 
 Se a criação automática tiver sido interrompida, execute `python course.py setup` antes do checkpoint.
 
+## Explore as tabelas graficamente — opcional
+
+Depois de concluir o checkpoint 01, inicie a interface do DuckDB:
+
+```bash
+python course.py data-ui
+```
+
+O Codespaces avisará que a porta **4213** está disponível. Escolha **Open in Browser** ou abra a guia **Ports** e selecione o endereço de **DuckDB UI**. A porta permanece **Private**, exigindo autenticação na sua conta GitHub; não a torne pública.
+
+A interface mostra schemas, tabelas, colunas e resultados SQL. O comando cria `build/duckdb-ui/course-snapshot.duckdb`, uma cópia do banco didático, para que consultas e notebooks da UI não modifiquem nem bloqueiem o arquivo usado pelo dbt. Para atualizar os dados exibidos, encerre com `Ctrl+C` e execute o comando novamente.
+
+Na primeira utilização, a extensão `ui` baixa seus componentes oficiais e precisa de internet. Ela é opcional: os checkpoints e as aulas continuam funcionando sem a interface gráfica. A extensão é distribuída no ecossistema DuckDB, construída pela MotherDuck e classificada pela documentação do DuckDB como extensão de terceiros.
+
 ## Passo 5 — pare o ambiente ao terminar
 
 Abra [github.com/codespaces](https://github.com/codespaces), localize o ambiente, selecione `…` e escolha **Stop codespace**. Parar interrompe o consumo de processamento; o armazenamento continua sendo contabilizado enquanto o Codespace existir.
@@ -118,6 +132,7 @@ Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambient
 | Power User mostra dbt 1.11, `profiles.yml` ausente ou projeto inválido | Feche o assistente e desabilite a extensão. Execute apenas `python course.py setup`, `python course.py doctor` e `python course.py checkpoint 01`. |
 | O terminal mostra Python diferente de 3.12 | Confirme que o dev container selecionado é `dbt Moderno na Prática` e recrie o Codespace. |
 | O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
+| A DuckDB UI não abre | Confirme que o terminal com `data-ui` continua aberto; na guia **Ports**, abra a porta privada 4213. Execute o checkpoint 01 antes de iniciar a UI. |
 
 ## Como salvar seu progresso
 
@@ -131,3 +146,5 @@ O Codespace preserva os arquivos enquanto existir. Como alunos não têm permiss
 - [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace) — GitHub, documentação/EN; verificado em 2026-09-01.
 - [Extensão dbt Power User](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) — Altimate AI, marketplace/EN; extensão de terceiros e opcional, não utilizada pelo curso; verificado em 2026-09-01.
 - [Extensão oficial da dbt Labs](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) — dbt Labs, marketplace/EN; usa Fusion e está identificada como preview, portanto permanece fora do ambiente open/stable; verificado em 2026-09-01.
+- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; inicialização, porta 4213, execução local e limitações; verificado em 2026-09-01.
+- [Segurança das portas no Codespaces](https://docs.github.com/en/codespaces/reference/security-in-github-codespaces) — GitHub, documentação/EN; portas encaminhadas são privadas por padrão; verificado em 2026-09-01.

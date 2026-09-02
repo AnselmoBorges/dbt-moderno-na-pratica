@@ -8,6 +8,14 @@
   },
   "postCreateCommand": "python course.py setup",
   "postStartCommand": "python course.py doctor",
+  "forwardPorts": [4213],
+  "portsAttributes": {
+    "4213": {
+      "label": "DuckDB UI",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    }
+  },
   "customizations": {
     "vscode": {
       "extensions": [
