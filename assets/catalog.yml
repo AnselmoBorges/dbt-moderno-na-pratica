@@ -1,6 +1,17 @@
 version: 2
 last_reviewed: 2026-09-01
 assets:
+  - id: rescue-point-logo
+    path: assets/brand/rescue-point-logo.png
+    kind: brand_logo
+    origin: official-rescue-point-site
+    author: Rescue Point
+    license: proprietary-brand-asset
+    source_url: https://rescuepoint.com.br/assets/img/logo.png
+    sha256: ec0328af1a58ac70d14bec1fb370f3ff17401242422bffeaa9a231e36c163ed1
+    episodes: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    alt: Logotipo oficial da Rescue Point.
+    reviewed: true
   - id: dossier-architecture
     path: assets/diagrams/source/dossier-architecture.mmd
     rendered_svg: assets/diagrams/rendered/dossier-architecture.svg

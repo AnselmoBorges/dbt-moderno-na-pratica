@@ -113,6 +113,8 @@ decks:
     official_assets: [dbt-agent-recommendation]
 publication_rules:
   composition: native-editable-plus-reviewed-illustrations
+  brand_asset: assets/brand/rescue-point-logo.png
+  brand_asset_source: https://rescuepoint.com.br/assets/img/logo.png
   presenter_notes_preserved: true
   third_party_logos: none
   product_interfaces_simulated: false

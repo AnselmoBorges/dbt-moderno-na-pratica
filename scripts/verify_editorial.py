@@ -89,8 +89,8 @@ for path in markdown_files:
 catalog = ROOT / "assets/catalog.yml"
 catalog_text = catalog.read_text(encoding="utf-8")
 entries = re.split(r"\n  - id: ", catalog_text)[1:]
-if len(entries) != 39:
-    raise SystemExit(f"Catálogo visual deveria conter 39 ativos; contém {len(entries)}.")
+if len(entries) != 40:
+    raise SystemExit(f"Catálogo visual deveria conter 40 ativos; contém {len(entries)}.")
 for entry in entries:
     asset_id = entry.splitlines()[0].strip()
     fields = {}
@@ -136,6 +136,13 @@ for entry in entries:
             raise SystemExit(f"Screenshot {asset_id} sem campos: {sorted(screenshot_fields - set(fields))}")
         if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
             raise SystemExit(f"Hash divergente no screenshot {asset_id}.")
+    elif fields["kind"] == "brand_logo":
+        if "sha256" not in fields:
+            raise SystemExit(f"Marca {asset_id} sem hash de integridade.")
+        if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
+            raise SystemExit(f"Hash divergente na marca {asset_id}.")
+        if fields["author"] != "Rescue Point" or not fields["source_url"].startswith("https://rescuepoint.com.br/"):
+            raise SystemExit(f"Marca {asset_id} não aponta para a origem oficial da Rescue Point.")
     else:
         raise SystemExit(f"Tipo visual não reconhecido em {asset_id}: {fields['kind']}")
 
@@ -231,4 +238,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 39 ativos, 13 decks, 265 slides e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 40 ativos, 13 decks, 265 slides e sanitização válidos.")

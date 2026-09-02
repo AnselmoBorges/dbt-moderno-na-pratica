@@ -35,7 +35,9 @@ const diagrams = (name) => path.join(ROOT, "assets/diagrams/rendered", name);
 const official = (name) => path.join(ROOT, "assets/official/dbt", name);
 const banana = (name) => path.join(ROOT, "assets/illustrations/banana", name);
 const screenshot = (name) => path.join(ROOT, "assets/screenshots/codespaces", name);
+const brandLogo = path.join(ROOT, "assets/brand/rescue-point-logo.png");
 const imageContentType = (filePath) => path.extname(filePath).toLowerCase().match(/\.jpe?g$/) ? "image/jpeg" : "image/png";
+let brandLogoBytes;
 
 const decks = [
   {
@@ -406,8 +408,20 @@ function addGlow(slide, left = 980, top = 80, size = 220) {
   addShape(slide, "ellipse", { left: left + 48, top: top + 48, width: size - 96, height: size - 96 }, "#1565C025", { style: "solid", fill: "#1EC5FF55", width: 2 }, "ambient-core");
 }
 
+function addBrandLogo(slide) {
+  addShape(slide, "roundRect", { left: 1026, top: 14, width: 182, height: 48 }, C.navy, { style: "solid", fill: "#1EC5FF55", width: 1 }, "rescue-point-logo-background");
+  slide.images.add({
+    blob: brandLogoBytes,
+    contentType: "image/png",
+    alt: "Logotipo oficial da Rescue Point.",
+    fit: "contain",
+    position: { left: 1038, top: 22, width: 158, height: 34 },
+  });
+}
+
 function addChrome(slide, deck, index, total, isDark = true) {
   addText(slide, `${deck.episode}  •  OPEN / CORE 1.12`, { left: 72, top: 28, width: 540, height: 28 }, { fontSize: 14, bold: true, color: isDark ? C.cyan : C.blue }, "eyebrow");
+  addBrandLogo(slide);
   addShape(slide, "line", { left: 72, top: 675, width: 1136, height: 0 }, "none", { style: "solid", fill: isDark ? "#FFFFFF30" : "#1565C035", width: 1 }, "footer-rule");
   addText(slide, "dbt Moderno na Prática • Rescue Point • curso independente", { left: 72, top: 682, width: 880, height: 22 }, { fontSize: 11, color: isDark ? "#FFFFFF88" : "#0B1F3A88" }, "footer");
   addText(slide, `${index}/${total}`, { left: 1120, top: 682, width: 88, height: 22 }, { fontSize: 11, bold: true, color: isDark ? "#FFFFFF88" : "#0B1F3A88", alignment: "right" }, "page-number");
@@ -530,6 +544,7 @@ function addCover(p, layouts, deck, sources) {
     addGlow(slide, 960, 92, 250);
   }
   addText(slide, deck.episode, { left: 72, top: 86, width: 300, height: 38 }, { fontSize: 18, bold: true, color: C.cyan }, "cover-episode");
+  addBrandLogo(slide);
   addText(slide, deck.title, { left: 72, top: 160, width: deck.illustrationBytes ? 520 : 760, height: 210 }, { fontSize: deck.illustrationBytes ? 43 : 50, bold: true, color: C.white }, "cover-title");
   addText(slide, deck.subtitle, { left: 72, top: 400, width: deck.illustrationBytes ? 510 : 720, height: 90 }, { fontSize: 24, color: C.pale }, "cover-subtitle");
   addShape(slide, "line", { left: 72, top: 530, width: 240, height: 0 }, "none", { style: "solid", fill: C.cyan, width: 4 }, "cover-accent");
@@ -690,6 +705,7 @@ async function buildDeck(deck) {
   const layouts = { dark: darkLayout, light: lightLayout };
   const sources = [
     ...deck.sources,
+    "https://rescuepoint.com.br/assets/img/logo.png",
     `https://github.com/AnselmoBorges/dbt-moderno-na-pratica/blob/main/${deck.script}`,
     `repo://laboratorio/checkpoints/ep${deck.checkpoint}`,
     "repo://assets/catalog.yml",
@@ -736,6 +752,7 @@ async function buildDeck(deck) {
 async function main() {
   await fs.mkdir(OUT, { recursive: true });
   await fs.mkdir(BUILD, { recursive: true });
+  brandLogoBytes = new Uint8Array(await fs.readFile(brandLogo));
   const requested = process.argv.slice(2);
   const selected = requested.length ? decks.filter((d) => requested.includes(d.stem)) : decks;
   if (!selected.length) throw new Error("Nenhum deck selecionado.");

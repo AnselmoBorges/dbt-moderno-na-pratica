@@ -270,7 +270,9 @@ async function processDeck(stem) {
       : index === 2
         ? `Diagrama didático autoral que apresenta: ${contents[index - 1].title}.`
         : `Imagem de apoio usada para explicar: ${contents[index - 1].title}.`;
-    for (const image of slide.images.items) image.alt = imageAlt;
+    for (const image of slide.images.items) {
+      if (!image.alt) image.alt = imageAlt;
+    }
     notesReport.push({ slide: index, role, title: contents[index - 1].title, chars: notes.length, sources: sources.length });
   }
 

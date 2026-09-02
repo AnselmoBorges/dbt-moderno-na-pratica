@@ -1,5 +1,9 @@
 # Atribuições visuais
 
+## Marca Rescue Point
+
+O logotipo em `assets/brand/rescue-point-logo.png` foi obtido do site oficial `rescuepoint.com.br` e incorporado aos decks por solicitação e autorização do proprietário da marca. O arquivo não é abrangido pela licença Apache 2.0 do repositório e permanece um ativo proprietário da Rescue Point. Ele é preservado sem redesenho ou geração por IA.
+
 ## Ativos autorais
 
 Os diagramas Mermaid, ilustrações e apresentações criados especificamente para este curso são de autoria Rescue Point e seguem a licença do repositório.
