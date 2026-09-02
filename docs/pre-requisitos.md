@@ -13,7 +13,15 @@ Responda sem executar:
 
 Se duas ou mais perguntas forem desconhecidas, faça primeiro uma revisão curta de SQL. Isso não impede a Aula 0.
 
-## Software
+## Rota recomendada: Codespaces
+
+- Conta pessoal GitHub Free, Pro ou Student.
+- Navegador atualizado e conexão com a internet.
+- Nenhuma instalação local de Python, Git ou VS Code.
+
+O curso fixa uma máquina de 2 CPUs e 4 GB de RAM. Consulte a [franquia e o passo a passo do Codespaces](codespaces.md).
+
+## Rota alternativa: instalação local
 
 - Python 3.12 ou 3.13 de 64 bits.
 - Git.
@@ -30,10 +38,9 @@ Python 3.11 e 3.14 não são aceitos pelo conjunto fixado. O motivo é compatibi
 
 ## Contas que não são necessárias
 
-Você não precisa de Databricks, dbt Platform, provedor de LLM, Gemini ou cartão de crédito para a temporada open.
+Você não precisa de Databricks, dbt Platform, provedor de LLM ou Gemini para a temporada open. O GitHub informa que, sem forma de pagamento válida, o Codespaces é bloqueado ao acabar a franquia gratuita em vez de gerar cobrança; a instalação local continua disponível.
 
 ## Material complementar
 
 - [Pré-requisitos do quickstart manual](https://docs.getdbt.com/guides/manual-install?step=1) — dbt Labs, documentação/EN, terminal e instalação; verificado em 2026-09-01.
 - [Introdução SQL do DuckDB](https://duckdb.org/docs/stable/sql/introduction) — DuckDB, documentação/EN, revisão de SQL local; verificado em 2026-09-01.
-

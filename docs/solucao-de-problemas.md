@@ -1,5 +1,15 @@
 # Solução de problemas
 
+## Codespaces não abre ou não aparece
+
+Use o [link direto e o tutorial ilustrado](codespaces.md). Confirme que você está conectado a uma conta pessoal GitHub e que a configuração selecionada é `dbt Moderno na Prática` com máquina `2-core`.
+
+Se a franquia mensal tiver terminado, aguarde a renovação ou siga a instalação local. O conteúdo e os checkpoints são os mesmos.
+
+## Codespaces abriu, mas o setup parou
+
+Abra **Terminal → New Terminal** e execute `python course.py setup`. O processo pode ser repetido. Depois, rode `python course.py doctor` e `python course.py checkpoint 01`.
+
 ## Python incorreto
 
 Se `doctor` mostrar Python 3.11 ou 3.14, instale 3.12/3.13 e invoque explicitamente `py -3.12` no Windows ou `python3.12` em macOS/Linux.
@@ -32,4 +42,3 @@ Execute `python course.py support-report` e abra uma issue usando o [modelo de p
 
 - [Concorrência no DuckDB](https://duckdb.org/docs/stable/connect/concurrency) — DuckDB, documentação/EN; verificado em 2026-09-01.
 - [Ajuda e comunidade dbt](https://docs.getdbt.com/community/resources/getting-help) — dbt Labs, documentação/EN; verificado em 2026-09-01.
-

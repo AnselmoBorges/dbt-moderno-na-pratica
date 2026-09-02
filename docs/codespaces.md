@@ -1,21 +1,117 @@
 # GitHub Codespaces
 
-Codespaces é a rota de contingência para quem não consegue instalar Python ou Git localmente.
+O GitHub Codespaces é o **ambiente recomendado para acompanhar o curso**. Ele abre o mesmo repositório em um VS Code no navegador, com Python 3.12, dbt Core, DuckDB e as extensões do curso preparados pela configuração versionada em `.devcontainer/devcontainer.json`.
 
-1. Entre na sua conta GitHub.
-2. Na página do repositório, escolha **Code → Codespaces → Create codespace on main**.
-3. Aguarde a preparação automática.
-4. No terminal aberto, execute:
+Isso reduz diferenças entre Windows, macOS e Linux. A instalação local continua disponível como alternativa para quem precisa trabalhar offline ou não deseja usar a franquia do GitHub.
+
+**[Abrir o laboratório no GitHub Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687)**
+
+## O que você precisa
+
+- Uma conta pessoal no GitHub Free, Pro ou Student.
+- Navegador atualizado e conexão com a internet.
+- Nenhuma instalação local de Python, Git, dbt ou DuckDB.
+- Nenhuma conta dbt Platform, Databricks ou chave de IA.
+
+## Franquia gratuita e escolha da máquina
+
+Em 1º de setembro de 2026, uma conta pessoal **GitHub Free** inclui 120 core-hours e 15 GB-mês de armazenamento para Codespaces. Como o curso usa uma máquina de **2 núcleos**, isso equivale a aproximadamente 60 horas ativas por ciclo mensal. Contas Pro e estudantes verificados possuem limites diferentes.
+
+Regras para não consumir além do necessário:
+
+1. Mantenha a opção **2-core**.
+2. Pare o Codespace ao terminar cada aula.
+3. Exclua ambientes antigos quando não precisar preservar os arquivos.
+4. Consulte o consumo em **Settings → Billing and licensing → Metered usage**.
+5. Se houver forma de pagamento cadastrada, configure um orçamento que interrompa o uso no limite desejado.
+
+Sem forma de pagamento válida, o GitHub informa que o uso é bloqueado quando a franquia termina; ele volta quando o ciclo mensal é renovado.
+
+## Passo 1 — abra a opção Codespaces
+
+Entre no GitHub, abra o [repositório do curso](https://github.com/AnselmoBorges/dbt-moderno-na-pratica), selecione **Code**, depois **Codespaces** e escolha **Create codespace on main**.
+
+![Menu Code do repositório com a guia Codespaces e o botão Create codespace on main](../assets/screenshots/codespaces/01-code-codespaces.png)
+
+> Captura do GitHub.com em 2026-09-01. A interface pode mudar; procure os mesmos nomes descritos no texto.
+
+O link direto no início desta página leva à mesma configuração.
+
+## Passo 2 — confirme a configuração econômica
+
+Na tela de criação, confirme:
+
+- **Branch:** `main`;
+- **Dev container configuration:** `dbt Moderno na Prática`;
+- **Machine type:** `2-core`;
+- **Region:** pode ser a região disponível mais próxima.
+
+![Configuração de criação com branch main, dev container do curso e máquina 2-core](../assets/screenshots/codespaces/02-configuracao-2-core.png)
+
+Depois, selecione **Create codespace**. A criação consome a franquia pessoal de Codespaces da conta conectada.
+
+## Passo 3 — aguarde a preparação automática
+
+O navegador abrirá um VS Code. Na primeira criação, o GitHub executa automaticamente:
+
+```text
+postCreateCommand: python course.py setup
+postStartCommand:  python course.py doctor
+```
+
+Não interrompa o primeiro `setup`. O terminal deve terminar com **Ambiente pronto** e o diagnóstico deve mostrar os itens principais como `OK`. Se o terminal não estiver visível, abra **Terminal → New Terminal**.
+
+## Passo 4 — valide o primeiro checkpoint
+
+No terminal do Codespaces, execute:
 
 ```bash
 python course.py doctor
 python course.py checkpoint 01
 ```
 
-O container usa Python 3.12 e executa o setup na criação. Codespaces tem limites e franquias definidos pelo GitHub; verifique sua conta antes de deixar uma sessão aberta.
+Resultado esperado:
+
+```text
+OK  Python: 3.12.x
+OK  Git
+OK  Espaço livre
+OK  Permissões
+OK  Arquivos do curso
+Pronto para o setup.
+
+Checkpoint 01 OK
+```
+
+Se a criação automática tiver sido interrompida, execute `python course.py setup` antes do checkpoint.
+
+## Passo 5 — pare o ambiente ao terminar
+
+Abra [github.com/codespaces](https://github.com/codespaces), localize o ambiente, selecione `…` e escolha **Stop codespace**. Parar interrompe o consumo de processamento; o armazenamento continua sendo contabilizado enquanto o Codespace existir.
+
+![Lista de Codespaces com o menu de um ambiente aberto e a opção Stop codespace](../assets/screenshots/codespaces/03-parar-codespace.png)
+
+> Captura oficial da documentação GitHub, CC BY 4.0, fixada no commit registrado no catálogo de ativos.
+
+Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambiente. Para liberar armazenamento, use **Delete** somente depois de salvar qualquer alteração que queira manter.
+
+## Se algo der errado
+
+| Sintoma | O que fazer |
+|---|---|
+| A opção Codespaces não aparece | Confirme que você está conectado a uma conta pessoal e abra o link direto desta página. |
+| A franquia terminou | Aguarde a renovação mensal ou use a instalação local; não é necessário contratar um plano para continuar o curso. |
+| O setup foi interrompido | Execute `python course.py setup` novamente. O processo é repetível. |
+| O terminal mostra Python diferente de 3.12 | Confirme que o dev container selecionado é `dbt Moderno na Prática` e recrie o Codespace. |
+| O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
+
+## Como salvar seu progresso
+
+O Codespace preserva os arquivos enquanto existir. Como alunos não têm permissão de escrita no repositório original, faça um fork se quiser publicar alterações na própria conta. Para apenas executar os checkpoints, nenhum fork é necessário.
 
 ## Material complementar
 
 - [Criar um codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository) — GitHub, documentação/EN; verificado em 2026-09-01.
-- [Uso incluído e cobrança](https://docs.github.com/en/billing/managing-billing-for-your-products/managing-billing-for-github-codespaces/about-billing-for-github-codespaces) — GitHub, documentação/EN; verificado em 2026-09-01.
-
+- [Uso incluído e cobrança](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces) — GitHub, documentação/EN; verificado em 2026-09-01.
+- [Aproveitar melhor a franquia incluída](https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage) — GitHub, documentação/EN; verificado em 2026-09-01.
+- [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace) — GitHub, documentação/EN; verificado em 2026-09-01.

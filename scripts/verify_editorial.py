@@ -89,8 +89,8 @@ for path in markdown_files:
 catalog = ROOT / "assets/catalog.yml"
 catalog_text = catalog.read_text(encoding="utf-8")
 entries = re.split(r"\n  - id: ", catalog_text)[1:]
-if len(entries) != 36:
-    raise SystemExit(f"Catálogo visual deveria conter 36 ativos; contém {len(entries)}.")
+if len(entries) != 39:
+    raise SystemExit(f"Catálogo visual deveria conter 39 ativos; contém {len(entries)}.")
 for entry in entries:
     asset_id = entry.splitlines()[0].strip()
     fields = {}
@@ -130,11 +130,17 @@ for entry in entries:
             raise SystemExit(f"Ilustração assistida {asset_id} sem campos: {sorted(ai_fields - set(fields))}")
         if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
             raise SystemExit(f"Hash divergente na ilustração assistida {asset_id}.")
+    elif fields["kind"] == "product_screenshot":
+        screenshot_fields = {"product", "captured_at", "sha256"}
+        if not screenshot_fields.issubset(fields):
+            raise SystemExit(f"Screenshot {asset_id} sem campos: {sorted(screenshot_fields - set(fields))}")
+        if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
+            raise SystemExit(f"Hash divergente no screenshot {asset_id}.")
     else:
         raise SystemExit(f"Tipo visual não reconhecido em {asset_id}: {fields['kind']}")
 
 deck_specs = {
-    "aula-00-ambiente": 18,
+    "aula-00-ambiente": 22,
     "episodio-01-baseline-core-1-12": 18,
     "episodio-02-gold-nao-e-semantica": 20,
     "episodio-03-metricflow-local": 22,
@@ -185,8 +191,8 @@ for stem, expected_slides in deck_specs.items():
     if pptx.stat().st_size > 15 * 1024 * 1024 or pdf.stat().st_size > 10 * 1024 * 1024:
         raise SystemExit(f"Deck {stem} ultrapassa o limite de tamanho editorial.")
 
-if total_slides != 261:
-    raise SystemExit(f"Temporada deveria conter 261 slides; contém {total_slides}.")
+if total_slides != 265:
+    raise SystemExit(f"Temporada deveria conter 265 slides; contém {total_slides}.")
 if list((ROOT / "assets/decks").glob("*-banana.pptx")) or list((ROOT / "assets/decks").glob("*-banana.pdf")):
     raise SystemExit("Há variantes -banana concorrendo com os arquivos canônicos.")
 
@@ -225,4 +231,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 36 ativos, 13 decks, 261 slides e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 39 ativos, 13 decks, 265 slides e sanitização válidos.")

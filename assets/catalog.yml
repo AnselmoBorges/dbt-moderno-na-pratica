@@ -472,3 +472,43 @@ assets:
     episodes: [12]
     alt: Três caminhos de agente divergem; o caminho governado termina em um escudo e uma confirmação.
     reviewed: true
+  - id: codespaces-create-from-repository
+    path: assets/screenshots/codespaces/01-code-codespaces.png
+    kind: product_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: GitHub-Terms-educational-screenshot
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica
+    product: GitHub Codespaces web interface
+    captured_at: 2026-09-01
+    sha256: 9b71ad54ba356806d5ce1a95b5439cd99a2685fd3c7a0503361bd397d873e47b
+    episodes: [0]
+    alt: Menu Code do repositório com a guia Codespaces e o botão Create codespace on main.
+    reviewed: true
+  - id: codespaces-two-core-configuration
+    path: assets/screenshots/codespaces/02-configuracao-2-core.png
+    kind: product_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: GitHub-Terms-educational-screenshot
+    source_url: https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687
+    product: GitHub Codespaces web interface
+    captured_at: 2026-09-01
+    sha256: bebbc58cbbd4a2588dacf375937901e670e19c70a983b795d9b2603f5777a66a
+    episodes: [0]
+    alt: Configuração de criação com branch main, dev container do curso e máquina de dois núcleos.
+    reviewed: true
+  - id: codespaces-stop-environment
+    path: assets/screenshots/codespaces/03-parar-codespace.png
+    kind: product_screenshot
+    origin: github-docs
+    author: GitHub documentation contributors
+    license: CC-BY-4.0
+    source_url: https://github.com/github/docs/blob/484d28e95db7c592c368da359ff1a9fecb08a08a/assets/images/help/codespaces/stop-codespace-webui.png
+    source_commit: 484d28e95db7c592c368da359ff1a9fecb08a08a
+    product: GitHub Codespaces web interface
+    captured_at: 2026-09-01
+    sha256: 7e47f2fcd409a70b04bdb897cd51856a2291c86c964bb9c630f0d1fdf5ad9b99
+    episodes: [0]
+    alt: Lista de Codespaces com o menu de um ambiente aberto e a opção Stop codespace selecionada.
+    reviewed: true

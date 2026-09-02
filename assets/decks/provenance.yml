@@ -12,10 +12,10 @@ authoring_environment:
   course_dependency: none
 quality_assurance:
   slide_overflow: passed
-  pptx_visual_review: 261_of_261
-  pdf_visual_review: 261_of_261
+  pptx_visual_review: 265_of_265
+  pdf_visual_review: 265_of_265
   notes_and_sources: passed
-  recommended_speaker_script: 261_of_261
+  recommended_speaker_script: 265_of_265
   alt_text: passed
   official_asset_hashes: passed
 decks:
@@ -24,8 +24,9 @@ decks:
     image_version: v2
     editorial_source: roteiros/aula-00-ambiente.md
     checkpoint: "01"
-    slides: 18
+    slides: 22
     official_assets: []
+    screenshots: [codespaces-create-from-repository, codespaces-two-core-configuration, codespaces-stop-environment]
   - id: episodio-01-baseline-core-1-12
     page_id: 9385b9ff-3812-41ce-8dd0-c17e720411ee
     image_version: v2

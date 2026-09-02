@@ -42,7 +42,22 @@ A proposta é simples: regras funcionais determinísticas pertencem ao pipeline 
 
 Quatro episódios adicionais cobrem Developer/Starter, Semantic Layer gerenciada, Mesh Enterprise e MCP gerenciado. Todo recurso proprietário, pago, beta ou preview é identificado explicitamente e possui uma alternativa documental quando não houver acesso ao produto.
 
-## Comece sem ativar ambientes manualmente
+## Comece pelo ambiente recomendado
+
+Para padronizar o curso entre Windows, macOS e Linux, use o **GitHub Codespaces**. Uma conta pessoal GitHub Free possui franquia mensal; o curso seleciona uma máquina de 2 núcleos para reduzir o consumo.
+
+**[Abrir o dbt Moderno na Prática no Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687)**
+
+O ambiente instala as dependências automaticamente. Quando o terminal estiver pronto:
+
+```bash
+python course.py doctor
+python course.py checkpoint 01
+```
+
+Veja o [passo a passo ilustrado, limites e como parar o ambiente](docs/codespaces.md).
+
+## Alternativa: instalação local sem ativação manual
 
 Pré-requisitos: Python 3.12 ou 3.13, Git e 2 GB livres. Nenhuma conta dbt, Databricks ou chave de LLM é necessária. Terminal, Git, Python e dbt são introduzidos na [Aula 0](docs/aula-00.md).
 
@@ -56,7 +71,7 @@ python course.py checkpoint 01
 
 No Windows, se `python` abrir a Microsoft Store ou não for encontrado, use `py -3.12 course.py doctor` e mantenha `py -3.12` nos demais comandos. Em macOS/Linux, use `python3.12` quando `python` não estiver disponível.
 
-Prefere não instalar nada? Abra o repositório no [GitHub Codespaces](docs/codespaces.md). O fluxo do curso é o mesmo.
+O fluxo funcional é o mesmo no Codespaces e localmente.
 
 Para acompanhar somente uma aula:
 

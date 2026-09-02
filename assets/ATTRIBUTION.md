@@ -10,7 +10,13 @@ Dez figuras da documentação oficial da dbt Labs são redistribuídas sem alter
 
 Os arquivos ficam em `assets/official/dbt/`. URL exata, commit, autor, licença, hash SHA-256, episódio, legenda e texto alternativo estão registrados em `catalog.yml`. As figuras foram apenas recortadas ou redimensionadas na composição; texto e anotações do curso são objetos externos à imagem.
 
-Capturas futuras devem registrar produto, versão, data, página de origem, titular e permissão aplicável no mesmo catálogo.
+## Capturas do GitHub Codespaces
+
+A Aula 0 contém duas capturas sanitizadas da interface do GitHub.com, feitas em 2026-09-01 exclusivamente para explicar a abertura e a configuração do laboratório. Elas foram recortadas para remover avatar, navegação e identificação da conta. O uso é descritivo e não implica endosso; essas imagens não recebem a licença Apache 2.0 do curso.
+
+A captura de **Stop codespace** vem do repositório oficial `github/docs`, fixado no commit `484d28e95db7c592c368da359ff1a9fecb08a08a`. O conteúdo da pasta `assets` desse repositório é disponibilizado sob CC BY 4.0. O arquivo é usado sem alteração de conteúdo, além de escala na composição.
+
+Produto, data, página de origem, titular, licença e hash das três capturas estão registrados em `catalog.yml`.
 
 ## Conteúdo assistido por IA
 

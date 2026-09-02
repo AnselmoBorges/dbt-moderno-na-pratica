@@ -3,10 +3,10 @@ updated_at: "2026-09-01"
 season: open-stable
 baseline: dbt-core-1.12
 total_decks: 13
-total_slides: 261
+total_slides: 265
 speaker_notes: recommended_per_slide
 decks:
-  - {id: aula-00-ambiente, script: roteiros/aula-00-ambiente.md, checkpoint: "01", slides: 18, qa: complete}
+  - {id: aula-00-ambiente, script: roteiros/aula-00-ambiente.md, checkpoint: "01", slides: 22, qa: complete}
   - {id: episodio-01-baseline-core-1-12, script: roteiros/01-playlist-core-1-12.md, checkpoint: "01", slides: 18, qa: complete}
   - {id: episodio-02-gold-nao-e-semantica, script: roteiros/02-gold-nao-e-semantica.md, checkpoint: "02", slides: 20, qa: complete}
   - {id: episodio-03-metricflow-local, script: roteiros/03-metricflow-local.md, checkpoint: "03", slides: 22, qa: complete}

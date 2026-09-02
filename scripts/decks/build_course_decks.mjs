@@ -34,33 +34,36 @@ const DBT_DOCS = "https://docs.getdbt.com";
 const diagrams = (name) => path.join(ROOT, "assets/diagrams/rendered", name);
 const official = (name) => path.join(ROOT, "assets/official/dbt", name);
 const banana = (name) => path.join(ROOT, "assets/illustrations/banana", name);
+const screenshot = (name) => path.join(ROOT, "assets/screenshots/codespaces", name);
 const imageContentType = (filePath) => path.extname(filePath).toLowerCase().match(/\.jpe?g$/) ? "image/jpeg" : "image/png";
 
 const decks = [
   {
     stem: "aula-00-ambiente",
     episode: "AULA 0",
-    title: "Prepare seu laboratório dbt sem sofrer com o ambiente",
-    subtitle: "Windows, macOS, Linux ou Codespaces — o mesmo hands-on local",
-    slides: 18,
+    title: "Prepare seu laboratório dbt no Codespaces",
+    subtitle: "Rota recomendada no navegador; instalação local continua disponível",
+    slides: 22,
     checkpoint: "01",
     script: "roteiros/aula-00-ambiente.md",
     diagram: diagrams("episode-01-lifecycle.png"),
-    hook: "Você termina com um build, testes e artifacts — não apenas com uma instalação que parece funcionar.",
-    objective: ["Validar os pré-requisitos", "Preparar o ambiente isolado", "Fechar o primeiro checkpoint"],
+    hook: "Um ambiente padronizado reduz o suporte e deixa a aula começar pelo dbt — não pela instalação.",
+    objective: ["Criar um Codespace 2-core", "Validar o setup automático", "Fechar o checkpoint 01"],
     sections: [
       { title: "SQL básico basta para começar", claim: "Terminal, Git, Python e dbt entram passo a passo.", bullets: ["SELECT, JOIN, GROUP BY, SUM e COUNT", "Nenhuma experiência prévia com dbt", "Comandos completos em todas as aulas"], visual: "steps", labels: ["SQL", "Terminal", "Python", "dbt"] },
-      { title: "Local e Codespaces chegam ao mesmo laboratório", claim: "A rota muda; o checkpoint e o resultado permanecem iguais.", bullets: ["Local: funciona offline depois do setup", "Codespaces: desbloqueia o início pelo navegador", "Os dois usam o mesmo course.py"], visual: "compare", labels: ["Local", "Codespaces"] },
-      { title: "Um launcher esconde diferenças do sistema", claim: "O aluno executa a aula sem ativar virtualenv manualmente.", bullets: ["doctor encontra bloqueios", "setup cria o ambiente", "checkpoint executa a aula"], visual: "flow", labels: ["Seu sistema", "course.py", "dbt + DuckDB", "checkpoint"] },
-      { title: "Diagnóstico vem antes da tentativa e erro", claim: "O support-report ajuda sem publicar tokens ou caminhos sensíveis.", bullets: ["Versões e permissões", "Espaço e arquivos esperados", "Relatório sanitizado para pedir ajuda"], visual: "status", labels: ["Verde: siga", "Amarelo: revise", "Vermelho: bloqueie"] },
+      { title: "Codespaces é a rota recomendada", claim: "Code → Codespaces → Create codespace on main abre o laboratório no navegador.", bullets: ["Conta pessoal GitHub", "Sem instalar Python ou Git", "Mesmo ambiente para todos"], image: screenshot("01-code-codespaces.png"), imageWide: true, imageAlt: "Menu Code com a guia Codespaces e o botão Create codespace on main", caption: "Captura sanitizada do GitHub.com — 2026-09-01", imageSource: "https://github.com/AnselmoBorges/dbt-moderno-na-pratica" },
+      { title: "2-core preserva a franquia gratuita", claim: "GitHub Free inclui 120 core-hours e 15 GB-mês; em 2-core, são cerca de 60 horas ativas.", bullets: ["Branch main", "Dev container do curso", "Máquina 2-core", "Pare o ambiente ao terminar"], image: screenshot("02-configuracao-2-core.png"), imageWide: true, imageAlt: "Configuração de Codespaces com branch main, dev container do curso e máquina 2-core", caption: "Captura sanitizada do GitHub.com — 2026-09-01", imageSource: "https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687" },
+      { title: "O repositório prepara o ambiente", claim: "O dev container executa setup na criação e doctor a cada abertura.", bullets: ["Python 3.12 fixado", "dbt + DuckDB instalados", "Nenhuma ativação manual", "Checkpoint reproduzível"], visual: "flow", labels: ["Create", "setup", "doctor", "checkpoint"] },
+      { title: "Parar evita consumo de processamento", claim: "Stop codespace interrompe core-hours; armazenamento continua até excluir o ambiente.", bullets: ["Pare ao terminar cada aula", "Reabra o mesmo ambiente", "Exclua quando não precisar dos arquivos"], image: screenshot("03-parar-codespace.png"), imageWide: true, imageAlt: "Menu oficial de gerenciamento do Codespaces com a opção Stop codespace", caption: "GitHub Docs — CC BY 4.0 — commit 484d28e", imageSource: "https://github.com/github/docs/blob/484d28e95db7c592c368da359ff1a9fecb08a08a/assets/images/help/codespaces/stop-codespace-webui.png" },
+      { title: "Local continua sendo a rota alternativa", claim: "O launcher mantém o mesmo resultado quando Codespaces ou internet não estão disponíveis.", bullets: ["Windows, macOS e Linux documentados", "doctor encontra bloqueios", "support-report sanitiza a ajuda"], visual: "status", labels: ["Codespaces: recomendado", "Local: alternativa", "Suporte: diagnóstico"] },
     ],
-    demo: { command: "python course.py setup\npython course.py checkpoint 01", observe: ["Ambiente virtual criado", "dbt debug concluído", "Seeds, build e artifacts executados"], result: "Checkpoint 01 OK" },
-    impact: ["Governança: versões fixadas", "FinOps: execução local", "IA: nenhuma chave necessária"],
+    demo: { command: "python course.py doctor\npython course.py checkpoint 01", observe: ["Python 3.12 e Git OK", "dbt build concluído", "Seeds e artifacts executados"], result: "Checkpoint 01 OK" },
+    impact: ["Governança: ambiente versionado", "FinOps: 2-core + stop", "IA: nenhuma chave necessária"],
     case: { number: "46 recursos", label: "baseline dbt validado localmente", caveat: "Resultado do laboratório, não benchmark de produção." },
-    limitations: ["A instalação inicial ainda precisa de internet", "Codespaces depende da conta e da franquia", "2 CPUs, 4 GB e 2 GB livres são a meta validada"],
+    limitations: ["Codespaces exige internet e conta pessoal GitHub", "Franquias e cobrança podem mudar", "Ambiente parado ainda consome armazenamento", "Instalação local permanece disponível"],
     radar: "Core 2.0 e Fusion ficam apenas no Radar; a aula executa Core 1.12 estável.",
-    cta: "Execute doctor, setup e checkpoint 01 antes de avançar.",
-    sources: ["https://docs.getdbt.com/guides/manual-install?step=1", "https://github.com/dbt-labs/jaffle_shop_duckdb", "https://duckdb.org/docs/stable/"],
+    cta: "Abra o Codespace em 2-core, execute doctor e checkpoint 01 e pare ao terminar.",
+    sources: ["https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository", "https://docs.github.com/en/billing/concepts/product-billing/github-codespaces", "https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage", "https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace", "https://docs.getdbt.com/guides/manual-install?step=1", "https://github.com/dbt-labs/jaffle_shop_duckdb"],
   },
   {
     stem: "episodio-01-baseline-core-1-12",
@@ -584,7 +587,8 @@ function addSectionVisual(p, layouts, deck, section, total, sources, isDark) {
   addTitle(slide, section.title, isDark);
   addVisual(slide, section, isDark);
   addChrome(slide, deck, total, deck.slides, isDark);
-  setNotes(slide, `Use a composição para explicar visualmente: ${section.claim} ${section.bullets.join(" ")}`, sources.concat(section.image ? [`https://github.com/dbt-labs/docs.getdbt.com/blob/${DOCS_COMMIT}/website/static/img/`] : []));
+  const imageSources = section.image ? [section.imageSource ?? `https://github.com/dbt-labs/docs.getdbt.com/blob/${DOCS_COMMIT}/website/static/img/`] : [];
+  setNotes(slide, `Use a composição para explicar visualmente: ${section.claim} ${section.bullets.join(" ")}`, sources.concat(imageSources));
 }
 
 function addDemoSlides(p, layouts, deck, sources, startIndex) {

@@ -1,16 +1,16 @@
 # Aula 0 — Prepare seu laboratório dbt sem sofrer com o ambiente
 
-**Duração alvo:** 18–22 minutos  
+**Duração alvo:** 20–24 minutos
 **Nível:** iniciante  
 **Rótulos na tela:** `OPEN`, `Windows`, `macOS`, `Linux`, `Codespaces`, `sem cloud`
 
 ## Gancho
 
-“Antes de falar de modelo, métrica ou agente, precisamos garantir uma coisa: seu ambiente precisa funcionar sem você decorar caminhos diferentes ou ativar ferramentas escondidas.”
+“Antes de falar de modelo, métrica ou agente, precisamos garantir uma coisa: todo mundo precisa começar do mesmo ambiente. Por isso, o Codespaces será nossa rota recomendada; a instalação local continua disponível.”
 
 ## Objetivo e pré-requisitos
 
-Validar o computador, preparar o laboratório isolado e executar o checkpoint 01. O aluno precisa apenas reconhecer SQL básico e ter acesso a um terminal ou GitHub Codespaces.
+Criar um Codespace de 2 núcleos, validar o laboratório preparado automaticamente e executar o checkpoint 01. O aluno precisa apenas reconhecer SQL básico, ter uma conta pessoal GitHub e acesso ao navegador. A instalação local é uma alternativa.
 
 ## Roteiro falado
 
@@ -18,23 +18,33 @@ Validar o computador, preparar o laboratório isolado e executar o checkpoint 01
 
 “Ao final desta aula você terá um banco DuckDB local, um projeto dbt compilado, testes executados e artifacts que poderá abrir. Nenhuma conta cloud e nenhuma chave de IA.”
 
-### 02:00–04:00 — O que você precisa saber
+### 02:00–03:30 — O que você precisa saber
 
 “SQL básico é suficiente. Vamos ensinar os comandos de terminal, a função do Git, por que existe um ambiente Python e o que cada comando dbt produz.”
 
-### 04:00–06:00 — Local ou Codespaces
+### 03:30–07:00 — Codespaces como caminho recomendado
 
-“Local funciona sem custo recorrente e continua disponível offline após a instalação. Codespaces elimina boa parte da configuração, mas depende da conta e dos limites do GitHub. O laboratório e os comandos são os mesmos.”
+“Abra o repositório, clique em Code, Codespaces e Create codespace on main. Na configuração avançada, mantenha branch main, o dev container dbt Moderno na Prática e a máquina de 2 núcleos. Assim todos recebem Python 3.12, as mesmas extensões e as mesmas dependências.”
+
+Mostrar as capturas `01-code-codespaces.png` e `02-configuracao-2-core.png` sem simular a interface.
+
+### 07:00–09:00 — O que significa gratuito
+
+“Em 1º de setembro de 2026, a conta pessoal GitHub Free inclui 120 core-hours e 15 GB-mês. Como usamos 2 núcleos, isso representa aproximadamente 60 horas ativas no ciclo. O limite não é infinito: pare o ambiente ao terminar e acompanhe o consumo. Sem forma de pagamento válida, o GitHub bloqueia o uso ao acabar a franquia.”
+
+### 09:00–11:00 — Preparação automática
+
+“O arquivo `.devcontainer/devcontainer.json` é parte do curso. Na primeira criação, `postCreateCommand` executa o setup. A cada abertura, `postStartCommand` executa o diagnóstico. Nenhuma ativação manual de virtualenv é necessária.”
 
 ```mermaid
 flowchart LR
-    L[Windows, macOS ou Linux] --> C[course.py]
-    CS[GitHub Codespaces] --> C
+    CS[GitHub Codespaces recomendado] --> C[course.py]
+    L[Windows, macOS ou Linux alternativo] --> C
     C --> D[DuckDB + dbt Core 1.12]
     D --> R[12 checkpoints]
 ```
 
-### 06:00–09:00 — Diagnóstico antes da instalação
+### 11:00–13:00 — Diagnóstico antes da tentativa e erro
 
 Execute na raiz:
 
@@ -42,17 +52,9 @@ Execute na raiz:
 python course.py doctor
 ```
 
-“O diagnóstico não instala nada. Ele verifica Python 3.12/3.13, Git, espaço e permissão. No Windows podemos usar `py -3.12`; em macOS e Linux, `python3.12`.”
+“O diagnóstico não instala nada. Ele confirma Python, Git, espaço, permissão e arquivos do curso. No Codespaces, o resultado deve ser igual para todos. As variações `py -3.12` e `python3.12` pertencem apenas à instalação local.”
 
-### 09:00–12:00 — Um setup, sem ativação manual
-
-```bash
-python course.py setup
-```
-
-“O curso cria `.venv`, instala versões fixadas, baixa packages dbt e executa `dbt debug`. Não precisamos ativar o ambiente manualmente nem ensinar comandos diferentes para PowerShell.”
-
-### 12:00–15:30 — Primeiro checkpoint
+### 13:00–15:00 — Primeiro checkpoint
 
 ```bash
 python course.py checkpoint 01
@@ -60,7 +62,15 @@ python course.py checkpoint 01
 
 “O checkpoint carrega a amostra, faz parse, build, gera documentação e verifica os artifacts. Procure `Checkpoint 01 OK`. Aviso amarelo deve ser lido; erro vermelho precisa ser resolvido.”
 
-### 15:30–18:00 — Como pedir ajuda sem expor segredo
+### 15:00–17:00 — Como recuperar uma criação interrompida
+
+```bash
+python course.py setup
+```
+
+“Se o terminal fechou ou a preparação automática foi interrompida, execute setup novamente. O processo é idempotente e reaproveita o que já está correto.”
+
+### 17:00–19:00 — Como pedir ajuda sem expor segredo
 
 ```bash
 python course.py support-report
@@ -68,37 +78,54 @@ python course.py support-report
 
 “Esse relatório mostra apenas sistema, versões e verificações. Ele não coleta variáveis de ambiente, tokens ou caminhos pessoais. Anexe o JSON ao modelo de issue.”
 
-### 18:00–20:00 — Fechamento
+### 19:00–21:00 — Pare o ambiente e preserve a franquia
+
+“Abra github.com/codespaces, use o menu de três pontos e selecione Stop codespace. Processamento parado não consome core-hours, mas o armazenamento continua existindo. Exclua apenas quando não precisar mais dos arquivos.”
+
+Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um exemplo genérico da documentação GitHub.
+
+### 21:00–23:00 — Instalação local como alternativa
+
+“Se a franquia acabou, a rede bloqueia Codespaces ou você precisa trabalhar offline, siga o guia de Windows, macOS ou Linux. O launcher, o checkpoint e o resultado funcional continuam iguais.”
+
+### 23:00–24:00 — Fechamento
 
 “Você não precisa compreender toda a saída ainda. Precisa apenas saber repetir o ambiente e reconhecer onde está o resultado. No episódio 1 vamos dar significado a cada etapa.”
 
 ## Demonstração e resultado esperado
 
+- O Codespaces seleciona o dev container do curso e a máquina `2-core`.
+- O setup automático termina com “Ambiente pronto”.
 - `doctor` termina com “Pronto para o setup”.
-- `setup` termina com “Ambiente pronto”.
 - `checkpoint 01` termina com `Checkpoint 01 OK`.
 - `build/support-report.json` não contém usuário, e-mail, host ou variável de ambiente.
 
 ## Sugestões visuais
 
-- Tela dividida com Windows, macOS/Linux e Codespaces convergindo para o mesmo launcher.
+- Captura real de **Code → Codespaces → Create codespace on main**.
+- Captura real da configuração `main` + dev container do curso + `2-core`.
+- Captura oficial do GitHub Docs mostrando **Stop codespace**.
 - Destaque grande para o primeiro erro acionável do `doctor`.
-- Linha do tempo curta: download inicial → trabalho local → ajuda.
+- Linha do tempo curta: criação → setup automático → checkpoint → stop.
 
 ## Limitações
 
-- A primeira instalação precisa de internet para PyPI e GitHub.
-- Codespaces segue franquias e cobrança da conta GitHub.
-- A meta de 2 CPUs, 4 GB e 2 GB livres só vira mínimo validado após teste controlado.
+- Codespaces exige internet e uma conta pessoal GitHub.
+- A franquia mensal e as regras de cobrança podem mudar; verifique a fonte oficial antes de gravar.
+- Máquina parada continua consumindo armazenamento enquanto existir.
+- A instalação local permanece necessária quando o aluno precisa trabalhar offline.
 
 ## CTA
 
-“Execute o diagnóstico agora. Se algum item falhar, abra o guia do seu sistema antes de avançar.”
+“Abra o Codespace em 2-core, execute doctor e checkpoint 01 e pare o ambiente ao terminar. Se a rota cloud não estiver disponível, use o guia local.”
 
 ## Fontes
 
 - [Manual de instalação do dbt Core](https://docs.getdbt.com/guides/manual-install?step=1)
 - [Criar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
+- [Cobrança e franquia do Codespaces](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces)
+- [Aproveitar melhor a franquia incluída](https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage)
+- [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace)
 - [Jaffle Shop com DuckDB](https://github.com/dbt-labs/jaffle_shop_duckdb)
 - [Guia do aluno](../docs/README.md)
 
@@ -106,3 +133,4 @@ python course.py support-report
 
 - [dbt Learn](https://www.getdbt.com/dbt-learn) — dbt Labs, cursos/EN; referência oficial para continuar após o setup; Aula 0; verificado em 2026-09-01.
 - [Documentação estável do DuckDB](https://duckdb.org/docs/stable/) — DuckDB, documentação/EN; referência do banco local; Aula 0; verificado em 2026-09-01.
+- [GitHub Codespaces billing](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces) — GitHub, documentação/EN; limites e cobrança do caminho recomendado; Aula 0; verificado em 2026-09-01.

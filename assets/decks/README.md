@@ -1,10 +1,10 @@
 # Apresentações da temporada open
 
-Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 261 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
+Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 265 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
 
 | Aula | Slides | PowerPoint | PDF |
 |---|---:|---|---|
-| Aula 0 — ambiente | 18 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
+| Aula 0 — ambiente e Codespaces | 22 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
 | Episódio 1 — baseline Core 1.12 | 18 | [PPTX](episodio-01-baseline-core-1-12.pptx) | [PDF](episodio-01-baseline-core-1-12.pdf) |
 | Episódio 2 — Gold não é semântica | 20 | [PPTX](episodio-02-gold-nao-e-semantica.pptx) | [PDF](episodio-02-gold-nao-e-semantica.pdf) |
 | Episódio 3 — MetricFlow local | 22 | [PPTX](episodio-03-metricflow-local.pptx) | [PDF](episodio-03-metricflow-local.pdf) |
@@ -28,7 +28,7 @@ Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em Po
 
 ## Qualidade verificada
 
-- 261 slides renderizados e inspecionados no PPTX e no PDF.
+- 265 slides renderizados e inspecionados no PPTX e no PDF.
 - Nenhum overflow detectado pelo validador de apresentações.
 - Mesma contagem de páginas nos dois formatos.
 - Cada slide possui fala sugerida, indicação do que destacar, transição, tempo aproximado e `[Sources]` nas notas.
