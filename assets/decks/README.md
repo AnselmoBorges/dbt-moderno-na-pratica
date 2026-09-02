@@ -1,6 +1,6 @@
 # Apresentações da temporada open
 
-Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 261 slides, usam proporção 16:9, fonte Arial, notas completas do apresentador e um bloco `[Sources]` em todas as páginas.
+Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 261 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
 
 | Aula | Slides | PowerPoint | PDF |
 |---|---:|---|---|
@@ -31,7 +31,8 @@ Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em Po
 - 261 slides renderizados e inspecionados no PPTX e no PDF.
 - Nenhum overflow detectado pelo validador de apresentações.
 - Mesma contagem de páginas nos dois formatos.
-- Notas, `[Sources]`, checkpoint, CTA, limitações e Radar presentes em todos os decks.
+- Cada slide possui fala sugerida, indicação do que destacar, transição, tempo aproximado e `[Sources]` nas notas.
+- Checkpoint, CTA, limitações e Radar permanecem alinhados ao roteiro da aula.
 - Imagens com texto alternativo; ativos com hash, licença, origem e revisão no catálogo.
 - Cada PPTX fica abaixo de 15 MB e cada PDF abaixo de 10 MB.
 

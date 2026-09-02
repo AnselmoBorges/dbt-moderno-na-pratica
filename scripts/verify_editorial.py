@@ -163,6 +163,15 @@ for stem, expected_slides in deck_specs.items():
         raise SystemExit(f"Deck {stem} sem slides/notas esperados: slides={len(slides)}, notes={len(notes)}")
     if any("[Sources]" not in xml for xml in note_xml):
         raise SystemExit(f"Deck {stem} possui slide sem bloco [Sources] nas notas.")
+    required_note_sections = ("[Roteiro recomendado]", "Fala sugerida:", "O que destacar:", "Transição:")
+    for index, xml in enumerate(note_xml, start=1):
+        missing_sections = [section for section in required_note_sections if section not in xml]
+        if missing_sections:
+            raise SystemExit(f"Deck {stem}, slide {index}, sem roteiro completo: {missing_sections}")
+        if not re.search(r"\[Tempo sugerido: \d{2}:\d{2}\]", xml):
+            raise SystemExit(f"Deck {stem}, slide {index}, sem tempo sugerido.")
+        if len(xml) < 750:
+            raise SystemExit(f"Deck {stem}, slide {index}, possui notas curtas demais para roteiro recomendado.")
     for index, xml in enumerate(slide_xml, start=1):
         pictures = re.findall(r"<p:pic>.*?</p:pic>", xml, flags=re.DOTALL)
         if any(not re.search(r"<p:cNvPr\b[^>]*\bdescr=\"[^\"]{20,}\"", picture) for picture in pictures):

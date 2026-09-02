@@ -15,6 +15,7 @@ quality_assurance:
   pptx_visual_review: 261_of_261
   pdf_visual_review: 261_of_261
   notes_and_sources: passed
+  recommended_speaker_script: 261_of_261
   alt_text: passed
   official_asset_hashes: passed
 decks:

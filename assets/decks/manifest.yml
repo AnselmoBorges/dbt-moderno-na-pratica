@@ -4,6 +4,7 @@ season: open-stable
 baseline: dbt-core-1.12
 total_decks: 13
 total_slides: 261
+speaker_notes: recommended_per_slide
 decks:
   - {id: aula-00-ambiente, script: roteiros/aula-00-ambiente.md, checkpoint: "01", slides: 18, qa: complete}
   - {id: episodio-01-baseline-core-1-12, script: roteiros/01-playlist-core-1-12.md, checkpoint: "01", slides: 18, qa: complete}

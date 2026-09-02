@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import html
+import os
 import re
 import tempfile
 import zipfile
@@ -11,7 +12,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[2]
-DECKS = ROOT / "assets/decks"
+DECKS = Path(os.environ.get("PPTX_DIR", ROOT / "assets/decks")).resolve()
 
 
 def visible_text(xml: str) -> list[str]:
