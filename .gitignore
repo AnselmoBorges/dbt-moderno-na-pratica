@@ -32,3 +32,4 @@ scratch/**
 !scratch/README.md
 assets/decks/*/
 assets/decks/*.inspect.ndjson
+~$*.pptx

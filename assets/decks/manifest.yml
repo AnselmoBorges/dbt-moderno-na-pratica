@@ -1,0 +1,23 @@
+version: 1
+updated_at: "2026-09-01"
+season: open-stable
+baseline: dbt-core-1.12
+total_decks: 13
+total_slides: 261
+decks:
+  - {id: aula-00-ambiente, script: roteiros/aula-00-ambiente.md, checkpoint: "01", slides: 18, qa: complete}
+  - {id: episodio-01-baseline-core-1-12, script: roteiros/01-playlist-core-1-12.md, checkpoint: "01", slides: 18, qa: complete}
+  - {id: episodio-02-gold-nao-e-semantica, script: roteiros/02-gold-nao-e-semantica.md, checkpoint: "02", slides: 20, qa: complete}
+  - {id: episodio-03-metricflow-local, script: roteiros/03-metricflow-local.md, checkpoint: "03", slides: 22, qa: complete}
+  - {id: episodio-04-semantica-aberta-interoperavel, script: roteiros/04-semantica-aberta-interoperavel.md, checkpoint: "04", slides: 20, qa: complete}
+  - {id: episodio-05-contratos-versoes, script: roteiros/05-contratos-versoes.md, checkpoint: "05", slides: 20, qa: complete}
+  - {id: episodio-06-piramide-qualidade, script: roteiros/06-piramide-qualidade.md, checkpoint: "06", slides: 21, qa: complete}
+  - {id: episodio-07-governanca-como-codigo, script: roteiros/07-governanca-como-codigo.md, checkpoint: "07", slides: 20, qa: complete}
+  - {id: episodio-08-data-products-open, script: roteiros/08-data-products-open.md, checkpoint: "08", slides: 18, qa: complete}
+  - {id: episodio-09-ci-state-defer, script: roteiros/09-ci-state-defer.md, checkpoint: "09", slides: 20, qa: complete}
+  - {id: episodio-10-finops-pipeline, script: roteiros/10-finops-pipeline.md, checkpoint: "10", slides: 22, qa: complete}
+  - {id: episodio-11-dbt-mcp, script: roteiros/11-dbt-mcp.md, checkpoint: "11", slides: 20, qa: complete}
+  - {id: episodio-12-gold-governada-agente-solto, script: roteiros/12-gold-governada-agente-solto.md, checkpoint: "12", slides: 22, qa: complete}
+formats:
+  pptx: assets/decks/{id}.pptx
+  pdf: assets/decks/{id}.pdf

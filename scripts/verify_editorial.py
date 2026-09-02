@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import re
 import zipfile
@@ -88,38 +89,66 @@ for path in markdown_files:
 catalog = ROOT / "assets/catalog.yml"
 catalog_text = catalog.read_text(encoding="utf-8")
 entries = re.split(r"\n  - id: ", catalog_text)[1:]
-if len(entries) != 13:
-    raise SystemExit(f"Catálogo visual deveria conter 13 diagramas; contém {len(entries)}.")
+if len(entries) != 36:
+    raise SystemExit(f"Catálogo visual deveria conter 36 ativos; contém {len(entries)}.")
 for entry in entries:
     asset_id = entry.splitlines()[0].strip()
     fields = {}
     for line in entry.splitlines()[1:]:
-        match = re.match(r"    ([a-z_]+):\s*(.+)", line)
+        match = re.match(r"    ([a-z0-9_]+):\s*(.+)", line)
         if match:
             fields[match.group(1)] = match.group(2).strip()
-    required_asset_fields = {
-        "path", "rendered_svg", "rendered_png", "kind", "origin", "author",
-        "license", "source_url", "episodes", "alt", "reviewed",
-    }
+    required_asset_fields = {"path", "kind", "origin", "author", "license", "source_url", "episodes", "alt", "reviewed"}
     if not required_asset_fields.issubset(fields):
         raise SystemExit(f"Ativo {asset_id} sem campos: {sorted(required_asset_fields - set(fields))}")
     if fields["reviewed"] != "true" or len(fields["alt"]) < 20:
         raise SystemExit(f"Ativo {asset_id} sem revisão ou texto alternativo útil.")
     if not (ROOT / fields["path"]).is_file():
         raise SystemExit(f"Ativo {asset_id} aponta para arquivo inexistente: {fields['path']}")
-    for rendered_key in ("rendered_svg", "rendered_png"):
-        rendered = ROOT / fields[rendered_key]
-        if not rendered.is_file() or rendered.stat().st_size < 500:
-            raise SystemExit(f"Ativo {asset_id} sem render válido: {fields[rendered_key]}")
-    if "<svg" not in (ROOT / fields["rendered_svg"]).read_text(encoding="utf-8"):
-        raise SystemExit(f"Ativo {asset_id} possui SVG inválido.")
+    asset_path = ROOT / fields["path"]
+    if fields["kind"] == "conceptual_diagram":
+        diagram_fields = {"rendered_svg", "rendered_png"}
+        if not diagram_fields.issubset(fields):
+            raise SystemExit(f"Diagrama {asset_id} sem campos: {sorted(diagram_fields - set(fields))}")
+        for rendered_key in diagram_fields:
+            rendered = ROOT / fields[rendered_key]
+            if not rendered.is_file() or rendered.stat().st_size < 500:
+                raise SystemExit(f"Ativo {asset_id} sem render válido: {fields[rendered_key]}")
+        if "<svg" not in (ROOT / fields["rendered_svg"]).read_text(encoding="utf-8"):
+            raise SystemExit(f"Ativo {asset_id} possui SVG inválido.")
+    elif fields["kind"] == "official_image":
+        official_fields = {"source_commit", "sha256"}
+        if not official_fields.issubset(fields):
+            raise SystemExit(f"Imagem oficial {asset_id} sem campos: {sorted(official_fields - set(fields))}")
+        if fields["source_commit"] != "8249c7c904848efa786831381ca1d53b4157e392":
+            raise SystemExit(f"Imagem oficial {asset_id} não está fixada no commit editorial.")
+        if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
+            raise SystemExit(f"Hash divergente no ativo oficial {asset_id}.")
+    elif fields["kind"] == "ai_assisted_illustration":
+        ai_fields = {"project_id", "page_id", "image_version", "model", "sha256"}
+        if not ai_fields.issubset(fields):
+            raise SystemExit(f"Ilustração assistida {asset_id} sem campos: {sorted(ai_fields - set(fields))}")
+        if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
+            raise SystemExit(f"Hash divergente na ilustração assistida {asset_id}.")
+    else:
+        raise SystemExit(f"Tipo visual não reconhecido em {asset_id}: {fields['kind']}")
 
 deck_specs = {
-    "aula-00-ambiente": 12,
-    "aula-00-ambiente-banana": 12,
-    "episodio-01-baseline-core-1-12": 14,
-    "episodio-01-baseline-core-1-12-banana": 14,
+    "aula-00-ambiente": 18,
+    "episodio-01-baseline-core-1-12": 18,
+    "episodio-02-gold-nao-e-semantica": 20,
+    "episodio-03-metricflow-local": 22,
+    "episodio-04-semantica-aberta-interoperavel": 20,
+    "episodio-05-contratos-versoes": 20,
+    "episodio-06-piramide-qualidade": 21,
+    "episodio-07-governanca-como-codigo": 20,
+    "episodio-08-data-products-open": 18,
+    "episodio-09-ci-state-defer": 20,
+    "episodio-10-finops-pipeline": 22,
+    "episodio-11-dbt-mcp": 20,
+    "episodio-12-gold-governada-agente-solto": 22,
 }
+total_slides = 0
 for stem, expected_slides in deck_specs.items():
     pptx = ROOT / "assets/decks" / f"{stem}.pptx"
     pdf = ROOT / "assets/decks" / f"{stem}.pdf"
@@ -128,16 +157,37 @@ for stem, expected_slides in deck_specs.items():
     with zipfile.ZipFile(pptx) as archive:
         slides = [name for name in archive.namelist() if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
         notes = [name for name in archive.namelist() if re.fullmatch(r"ppt/notesSlides/notesSlide\d+\.xml", name)]
-        note_text = "\n".join(archive.read(name).decode("utf-8", errors="ignore") for name in notes)
-    if len(slides) != expected_slides or len(notes) != expected_slides or "[Sources]" not in note_text:
-        raise SystemExit(f"Deck {stem} sem slides/notas/fontes esperados: slides={len(slides)}, notes={len(notes)}")
+        note_xml = [archive.read(name).decode("utf-8", errors="ignore") for name in notes]
+        slide_xml = [archive.read(name).decode("utf-8", errors="ignore") for name in slides]
+    if len(slides) != expected_slides or len(notes) != expected_slides:
+        raise SystemExit(f"Deck {stem} sem slides/notas esperados: slides={len(slides)}, notes={len(notes)}")
+    if any("[Sources]" not in xml for xml in note_xml):
+        raise SystemExit(f"Deck {stem} possui slide sem bloco [Sources] nas notas.")
+    for index, xml in enumerate(slide_xml, start=1):
+        pictures = re.findall(r"<p:pic>.*?</p:pic>", xml, flags=re.DOTALL)
+        if any(not re.search(r"<p:cNvPr\b[^>]*\bdescr=\"[^\"]{20,}\"", picture) for picture in pictures):
+            raise SystemExit(f"Deck {stem}, slide {index}, possui imagem sem texto alternativo útil.")
+    total_slides += len(slides)
     if not pdf.read_bytes().startswith(b"%PDF"):
         raise SystemExit(f"PDF inválido: {pdf.relative_to(ROOT)}")
+    pdf_counts = [int(value) for value in re.findall(rb"/Count\s+(\d+)", pdf.read_bytes())]
+    if not pdf_counts or max(pdf_counts) != expected_slides:
+        raise SystemExit(f"PDF {stem} não possui {expected_slides} páginas: {pdf_counts}")
+    if pptx.stat().st_size > 15 * 1024 * 1024 or pdf.stat().st_size > 10 * 1024 * 1024:
+        raise SystemExit(f"Deck {stem} ultrapassa o limite de tamanho editorial.")
+
+if total_slides != 261:
+    raise SystemExit(f"Temporada deveria conter 261 slides; contém {total_slides}.")
+if list((ROOT / "assets/decks").glob("*-banana.pptx")) or list((ROOT / "assets/decks").glob("*-banana.pdf")):
+    raise SystemExit("Há variantes -banana concorrendo com os arquivos canônicos.")
 
 provenance = (ROOT / "assets/decks/provenance.yml").read_text(encoding="utf-8")
-for stem in ("aula-00-ambiente-banana", "episodio-01-baseline-core-1-12-banana"):
-    if f"id: {stem}" not in provenance or f"pptx: assets/decks/{stem}.pptx" not in provenance:
-        raise SystemExit(f"Deck visual sem procedência registrada: {stem}")
+manifest = (ROOT / "assets/decks/manifest.yml").read_text(encoding="utf-8")
+for stem, slides in deck_specs.items():
+    if f"id: {stem}" not in provenance:
+        raise SystemExit(f"Deck sem procedência registrada: {stem}")
+    if not re.search(rf"id: {re.escape(stem)}[^\n]*slides: {slides}", manifest):
+        raise SystemExit(f"Deck ausente ou com contagem errada no manifesto: {stem}")
 
 legacy_commands = []
 for path in ROOT.glob("roteiros/*.md"):
@@ -166,4 +216,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 13 diagramas, 4 decks e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 36 ativos, 13 decks, 261 slides e sanitização válidos.")

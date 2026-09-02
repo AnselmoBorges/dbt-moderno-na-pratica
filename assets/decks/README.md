@@ -1,36 +1,44 @@
-# Apresentações da série
+# Apresentações da temporada open
 
-Piloto aprovado tecnicamente para avaliação editorial:
+Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 261 slides, usam proporção 16:9, fonte Arial, notas completas do apresentador e um bloco `[Sources]` em todas as páginas.
 
-| Aula | Versão visual | PDF visual | Base editável |
-|---|---|---|---|
-| Aula 0 — ambiente | [PPTX Banana](aula-00-ambiente-banana.pptx) | [PDF Banana](aula-00-ambiente-banana.pdf) | [PPTX nativo](aula-00-ambiente.pptx) |
-| Episódio 1 — baseline Core 1.12 | [PPTX Banana](episodio-01-baseline-core-1-12-banana.pptx) | [PDF Banana](episodio-01-baseline-core-1-12-banana.pdf) | [PPTX nativo](episodio-01-baseline-core-1-12.pptx) |
+| Aula | Slides | PowerPoint | PDF |
+|---|---:|---|---|
+| Aula 0 — ambiente | 18 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
+| Episódio 1 — baseline Core 1.12 | 18 | [PPTX](episodio-01-baseline-core-1-12.pptx) | [PDF](episodio-01-baseline-core-1-12.pdf) |
+| Episódio 2 — Gold não é semântica | 20 | [PPTX](episodio-02-gold-nao-e-semantica.pptx) | [PDF](episodio-02-gold-nao-e-semantica.pdf) |
+| Episódio 3 — MetricFlow local | 22 | [PPTX](episodio-03-metricflow-local.pptx) | [PDF](episodio-03-metricflow-local.pdf) |
+| Episódio 4 — semântica interoperável | 20 | [PPTX](episodio-04-semantica-aberta-interoperavel.pptx) | [PDF](episodio-04-semantica-aberta-interoperavel.pdf) |
+| Episódio 5 — contratos e versões | 20 | [PPTX](episodio-05-contratos-versoes.pptx) | [PDF](episodio-05-contratos-versoes.pdf) |
+| Episódio 6 — pirâmide de qualidade | 21 | [PPTX](episodio-06-piramide-qualidade.pptx) | [PDF](episodio-06-piramide-qualidade.pdf) |
+| Episódio 7 — governança como código | 20 | [PPTX](episodio-07-governanca-como-codigo.pptx) | [PDF](episodio-07-governanca-como-codigo.pdf) |
+| Episódio 8 — data products open | 18 | [PPTX](episodio-08-data-products-open.pptx) | [PDF](episodio-08-data-products-open.pdf) |
+| Episódio 9 — state, defer e CI | 20 | [PPTX](episodio-09-ci-state-defer.pptx) | [PDF](episodio-09-ci-state-defer.pdf) |
+| Episódio 10 — FinOps do pipeline | 22 | [PPTX](episodio-10-finops-pipeline.pptx) | [PDF](episodio-10-finops-pipeline.pdf) |
+| Episódio 11 — dbt MCP | 20 | [PPTX](episodio-11-dbt-mcp.pptx) | [PDF](episodio-11-dbt-mcp.pdf) |
+| Episódio 12 — agente governado | 22 | [PPTX](episodio-12-gold-governada-agente-solto.pptx) | [PDF](episodio-12-gold-governada-agente-solto.pdf) |
 
-As versões Banana são as recomendadas para apresentação e gravação. Elas usam uma imagem integral por slide para preservar a fidelidade visual; o texto visível não é editável no PowerPoint. As bases nativas permanecem no repositório para ajustes de conteúdo e possuem texto e formas editáveis.
+## Sistema visual e edição
 
-Todos os PPTX possuem notas do apresentador e um bloco `[Sources]` para afirmações externas. Os arquivos usam proporção 16:9 e a paleta Rescue Point.
+- Texto, código, diagramas simples, legendas e fontes permanecem objetos nativos do PowerPoint.
+- As capas usam ilustrações conceituais autorais produzidas no Hermes com Banana Slides/Nano Banana e revisadas para remover texto, logos e interfaces fictícias.
+- Figuras oficiais vêm do repositório `dbt-labs/docs.getdbt.com` fixado no commit registrado; elas não foram redesenhadas nem recoloridas.
+- As versões antigas com sufixo `-banana` foram removidas para não criar duas apresentações concorrentes; continuam recuperáveis no histórico Git.
+- Este é um curso independente, sem parceria, certificação ou endosso da dbt Labs.
 
-As apresentações não usam logos de terceiros e deixam explícito que o curso é independente. A produção dos outros 11 decks open começa somente depois da aprovação didática deste piloto.
+## Qualidade verificada
 
-## Verificação realizada
+- 261 slides renderizados e inspecionados no PPTX e no PDF.
+- Nenhum overflow detectado pelo validador de apresentações.
+- Mesma contagem de páginas nos dois formatos.
+- Notas, `[Sources]`, checkpoint, CTA, limitações e Radar presentes em todos os decks.
+- Imagens com texto alternativo; ativos com hash, licença, origem e revisão no catálogo.
+- Cada PPTX fica abaixo de 15 MB e cada PDF abaixo de 10 MB.
 
-- 12 slides na Aula 0 e 14 no episódio 1, nas versões nativa e Banana.
-- Renderização individual de todos os slides.
-- Ausência de conteúdo fora do canvas.
-- Inspeção de quebras, contraste, setas, hierarquia e legibilidade.
-- Conversão dos dois PPTX Banana para PDF.
-- Notas e fontes preservadas depois do redesenho.
-- Arquivos otimizados para Git sem depender do Drive ou de credenciais privadas.
-
-## Procedência do redesenho
-
-As versões visuais foram criadas no Hermes com o perfil `rescue`, usando Banana Slides, Nano Banana Pro (`gemini-3-pro-image-preview`) para imagens e Gemini 3 Flash (`gemini-3-flash-preview`) para apoio textual. O conteúdo visível foi fixado a partir dos roteiros do curso e revisado slide a slide; não foram usados logos de terceiros, capturas fictícias de produto nem resultados inventados.
-
-Os identificadores de projeto, modelos, datas e decisões de revisão estão em [provenance.yml](provenance.yml). Nenhuma chave, configuração privada ou credencial foi incorporada aos arquivos.
+Consulte [manifest.yml](manifest.yml) para a matriz de publicação e [provenance.yml](provenance.yml) para a procedência.
 
 ## Material complementar
 
-- [Diretrizes de marca da dbt Labs](https://www.getdbt.com/trademark-guidelines) — dbt Labs, política/EN; uso descritivo de marcas; verificado em 2026-09-01.
-- [Roteiro da Aula 0](../../roteiros/aula-00-ambiente.md) — Rescue Point, roteiro/PT-BR; fonte editorial do deck.
-- [Roteiro do episódio 1](../../roteiros/01-playlist-core-1-12.md) — Rescue Point, roteiro/PT-BR; fonte editorial do deck.
+- [Diretrizes de marca da dbt Labs](https://www.getdbt.com/dbt-assets/dbt-trademark-guidelines) — política/EN; uso descritivo de marcas; verificado em 2026-09-01.
+- [Catálogo visual](../catalog.yml) — origem, licença, hash e texto alternativo de cada imagem.
+- [Roteiros](../../roteiros/) — fonte editorial completa das apresentações.

@@ -1,34 +1,118 @@
-version: 1
+version: 2
 reviewed_at: "2026-09-01"
 authoring_environment:
-  tool: Banana Slides
+  deck_tool: Artifact Tool
+  illustration_tool: Banana Slides / Nano Banana
   host: Hermes
   profile: rescue
   image_model: gemini-3-pro-image-preview
-  text_model: gemini-3-flash-preview
+  banana_project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+  official_docs_commit: 8249c7c904848efa786831381ca1d53b4157e392
   secrets_embedded: false
-assets:
-  - id: aula-00-ambiente-banana
-    project_id: d7e72b9c-2e56-4df6-a997-9612f82b0e8a
-    pptx: assets/decks/aula-00-ambiente-banana.pptx
-    pdf: assets/decks/aula-00-ambiente-banana.pdf
-    source_deck: assets/decks/aula-00-ambiente.pptx
+  course_dependency: none
+quality_assurance:
+  slide_overflow: passed
+  pptx_visual_review: 261_of_261
+  pdf_visual_review: 261_of_261
+  notes_and_sources: passed
+  alt_text: passed
+  official_asset_hashes: passed
+decks:
+  - id: aula-00-ambiente
+    page_id: 055f6cd7-7d9e-422a-a3bd-5169914dea3c
+    image_version: v2
     editorial_source: roteiros/aula-00-ambiente.md
-    slides: 12
-    composition: full-slide-image
-    presenter_notes_preserved: true
-    visual_review: complete
-    third_party_logos: none
-    license_note: Conteúdo autoral Rescue Point assistido por IA; sujeito aos termos aplicáveis do provedor.
-  - id: episodio-01-baseline-core-1-12-banana
-    project_id: df22e996-f04b-434b-87d7-1c557c2e54ad
-    pptx: assets/decks/episodio-01-baseline-core-1-12-banana.pptx
-    pdf: assets/decks/episodio-01-baseline-core-1-12-banana.pdf
-    source_deck: assets/decks/episodio-01-baseline-core-1-12.pptx
+    checkpoint: "01"
+    slides: 18
+    official_assets: []
+  - id: episodio-01-baseline-core-1-12
+    page_id: 9385b9ff-3812-41ce-8dd0-c17e720411ee
+    image_version: v2
     editorial_source: roteiros/01-playlist-core-1-12.md
-    slides: 14
-    composition: full-slide-image
-    presenter_notes_preserved: true
-    visual_review: complete
-    third_party_logos: none
-    license_note: Conteúdo autoral Rescue Point assistido por IA; sujeito aos termos aplicáveis do provedor.
+    checkpoint: "01"
+    slides: 18
+    official_assets: []
+  - id: episodio-02-gold-nao-e-semantica
+    page_id: 575c7fb1-db39-4fdb-8e4a-6d9f407accac
+    image_version: v2
+    editorial_source: roteiros/02-gold-nao-e-semantica.md
+    checkpoint: "02"
+    slides: 20
+    official_assets: [dbt-orders-erd]
+  - id: episodio-03-metricflow-local
+    page_id: c915f400-0d81-4f05-b107-8ccf1452b79d
+    image_version: v2
+    editorial_source: roteiros/03-metricflow-local.md
+    checkpoint: "03"
+    slides: 22
+    official_assets: [dbt-metricflow-schema-example]
+  - id: episodio-04-semantica-aberta-interoperavel
+    page_id: 79308c05-d127-4daa-ae77-733fb4e8ab05
+    image_version: v2
+    editorial_source: roteiros/04-semantica-aberta-interoperavel.md
+    checkpoint: "04"
+    slides: 20
+    official_assets: []
+  - id: episodio-05-contratos-versoes
+    page_id: 49942bdf-c57b-4678-88e7-274452c16aeb
+    image_version: v2
+    editorial_source: roteiros/05-contratos-versoes.md
+    checkpoint: "05"
+    slides: 20
+    official_assets: []
+  - id: episodio-06-piramide-qualidade
+    page_id: 664654ed-873c-40d5-8bb3-a674778e19a7
+    image_version: v2
+    editorial_source: roteiros/06-piramide-qualidade.md
+    checkpoint: "06"
+    slides: 21
+    official_assets: [dbt-unit-test-terminal]
+  - id: episodio-07-governanca-como-codigo
+    page_id: b3de1b00-3370-4d95-8908-3c0a9a74249f
+    image_version: v3
+    editorial_source: roteiros/07-governanca-como-codigo.md
+    checkpoint: "07"
+    slides: 20
+    official_assets: [dbt-dag-exposures]
+  - id: episodio-08-data-products-open
+    page_id: d126be55-b88a-491c-b77a-e4d8f191ca51
+    image_version: v2
+    editorial_source: roteiros/08-data-products-open.md
+    checkpoint: "08"
+    slides: 18
+    official_assets: [dbt-combined-splits]
+  - id: episodio-09-ci-state-defer
+    page_id: a22586be-b9d2-4dad-835a-a3ce994a3453
+    image_version: v2
+    editorial_source: roteiros/09-ci-state-defer.md
+    checkpoint: "09"
+    slides: 20
+    official_assets: [dbt-defer-diagram]
+  - id: episodio-10-finops-pipeline
+    page_id: afada293-0592-4899-8980-afa0b9c14e2d
+    image_version: v2
+    editorial_source: roteiros/10-finops-pipeline.md
+    checkpoint: "10"
+    slides: 22
+    official_assets: [dbt-incremental-diagram, dbt-microbatch-event-time]
+  - id: episodio-11-dbt-mcp
+    page_id: 59b0c660-a025-4f18-9727-bdf4b10f1565
+    image_version: v2
+    editorial_source: roteiros/11-dbt-mcp.md
+    checkpoint: "11"
+    slides: 20
+    official_assets: [dbt-mcp-architecture]
+  - id: episodio-12-gold-governada-agente-solto
+    page_id: fb300e1d-d879-4095-83d2-237fc11937cc
+    image_version: v3
+    editorial_source: roteiros/12-gold-governada-agente-solto.md
+    checkpoint: "12"
+    slides: 22
+    official_assets: [dbt-agent-recommendation]
+publication_rules:
+  composition: native-editable-plus-reviewed-illustrations
+  presenter_notes_preserved: true
+  third_party_logos: none
+  product_interfaces_simulated: false
+  paid_features_executed: false
+  license_note: Conteúdo autoral Rescue Point assistido por IA; figuras oficiais mantêm atribuição e licença próprias.

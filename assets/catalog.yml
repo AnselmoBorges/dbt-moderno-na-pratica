@@ -1,4 +1,4 @@
-version: 1
+version: 2
 last_reviewed: 2026-09-01
 assets:
   - id: dossier-architecture
@@ -156,4 +156,319 @@ assets:
     source_url: internal://lab/agent-benchmark
     episodes: [12]
     alt: Três agentes recebem raw, manifest ou métricas e são avaliados contra o mesmo ground truth.
+    reviewed: true
+  - id: dbt-orders-erd
+    path: assets/official/dbt/orders_erd.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/best-practices/semantic-layer/orders_erd.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: 2b6f7fa568e2b80396139b18ceb0c01d38ea03c9d69cb523e394debe9c9c4d07
+    episodes: [2]
+    alt: Diagrama entidade-relacionamento oficial com pedidos, itens, pagamentos e clientes.
+    reviewed: true
+  - id: dbt-metricflow-schema-example
+    path: assets/official/dbt/MetricFlow-SchemaExample.jpeg
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/docs/building-a-dbt-project/MetricFlow-SchemaExample.jpeg
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: abfff20acf8e829a92a6207cebced703718ae3aaace1d487aff186361584d094
+    episodes: [3]
+    alt: Exemplo oficial de esquema com entidades, dimensões e caminhos de métricas no MetricFlow.
+    reviewed: true
+  - id: dbt-unit-test-terminal
+    path: assets/official/dbt/unit-test-terminal-output.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/blog/2024-05-07-unit-testing/unit-test-terminal-output.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: 376cf74432c7b61efcadd4bdc3080fe8cf181627311bb5a8c0022951a0c5cb9b
+    episodes: [6]
+    alt: Saída oficial de terminal demonstrando a execução de unit tests no dbt.
+    reviewed: true
+  - id: dbt-dag-exposures
+    path: assets/official/dbt/dag-exposures.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/docs/building-a-dbt-project/dag-exposures.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: f77d821fed38a024910d87ed25d1748aa56384363b6627cf67890febe4e21c37
+    episodes: [7]
+    alt: DAG oficial mostrando exposures conectadas aos modelos que alimentam consumidores.
+    reviewed: true
+  - id: dbt-combined-splits
+    path: assets/official/dbt/combined_splits.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/best-practices/how-we-mesh/combined_splits.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: 6018bd969cb86973d8be65eac50bf986a7ac4b802758b466aeae5acb0f830330
+    episodes: [8]
+    alt: Diagrama oficial de separação de projetos e domínios com dependências entre interfaces.
+    reviewed: true
+  - id: dbt-defer-diagram
+    path: assets/official/dbt/defer-diagram.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/docs/reference/defer-diagram.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: 4307b07421e7976d2e6333f7dde0d2a465769ccd53baa267406b558916c4e221
+    episodes: [9]
+    alt: Diagrama oficial do defer resolvendo modelos não selecionados a partir de outro estado.
+    reviewed: true
+  - id: dbt-incremental-diagram
+    path: assets/official/dbt/incremental-diagram.jpg
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/docs/building-a-dbt-project/incremental-diagram.jpg
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: 5ddedfb13447a8892ff4feab7c5d6fd06632607d56c55b9f662fc1be884c0dad
+    episodes: [10]
+    alt: Diagrama oficial comparando o processamento completo com a atualização incremental.
+    reviewed: true
+  - id: dbt-microbatch-event-time
+    path: assets/official/dbt/event_time.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/docs/building-a-dbt-project/microbatch/event_time.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: c45a2d19b8ba0c3408f2026541619444dc759bb6f072b7f2e9c45dcce3e2a16f
+    episodes: [10]
+    alt: Diagrama oficial mostrando event_time e a divisão temporal de lotes microbatch.
+    reviewed: true
+  - id: dbt-mcp-architecture
+    path: assets/official/dbt/mcp_architecture_overview.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/blog/2025-04-18-dbt-mcp-server/mcp_architecture_overview.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: fe81986167e9672ded5533fc15e5249cdef29d5174a198d17a9e773e74a63452
+    episodes: [11]
+    alt: Visão geral oficial da arquitetura MCP conectando clientes a metadados e ferramentas dbt.
+    reviewed: true
+  - id: dbt-agent-recommendation
+    path: assets/official/dbt/recommendation-diagram.png
+    kind: official_image
+    origin: dbt-labs-docs
+    author: dbt Labs documentation contributors
+    license: Apache-2.0
+    source_url: https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/website/static/img/blog/2026-04-07-semantic-layer-vs-text-to-sql-2026/recommendation-diagram.png
+    source_commit: 8249c7c904848efa786831381ca1d53b4157e392
+    sha256: 4a462a0591999536736ec04045b6adad08dafc6f70181d77ae85fc4fee4f8de1
+    episodes: [12]
+    alt: Diagrama oficial de recomendação para escolher entre SQL livre e semântica governada.
+    reviewed: true
+  - id: banana-aula-00
+    path: assets/illustrations/banana/aula-00-ambiente.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/055f6cd7-7d9e-422a-a3bd-5169914dea3c
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 055f6cd7-7d9e-422a-a3bd-5169914dea3c
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 044dfb6e3f5f70c21a50b6cbc9b62570f738681018ed7c03cfe223d3328fdea0
+    episodes: [0]
+    alt: Quatro fluxos luminosos convergem para um núcleo de laboratório local.
+    reviewed: true
+  - id: banana-episodio-01
+    path: assets/illustrations/banana/episodio-01-baseline-core-1-12.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/9385b9ff-3812-41ce-8dd0-c17e720411ee
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 9385b9ff-3812-41ce-8dd0-c17e720411ee
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 98c48bf46e255119bd680a37cc6ea437045f7952ca2218526b499d30772b74a4
+    episodes: [1]
+    alt: Marcos de um pipeline de dados avançam até um artifact iluminado e verificável.
+    reviewed: true
+  - id: banana-episodio-02
+    path: assets/illustrations/banana/episodio-02-gold-nao-e-semantica.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/575c7fb1-db39-4fdb-8e4a-6d9f407accac
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 575c7fb1-db39-4fdb-8e4a-6d9f407accac
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 597e833aa75a5106ce5921150efdc646f4e629688b273e4a59a0d5511d94933b
+    episodes: [2]
+    alt: Camada física de dados e grafo de significado aparecem separados por uma fronteira luminosa.
+    reviewed: true
+  - id: banana-episodio-03
+    path: assets/illustrations/banana/episodio-03-metricflow-local.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/c915f400-0d81-4f05-b107-8ccf1452b79d
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: c915f400-0d81-4f05-b107-8ccf1452b79d
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 5c99886eb6e70c592c3859fffbe2f9621a922c2af1da8de62778d0294d22760e
+    episodes: [3]
+    alt: Rede semântica ramificada conecta nós de entidades, dimensões e métricas.
+    reviewed: true
+  - id: banana-episodio-04
+    path: assets/illustrations/banana/episodio-04-semantica-aberta-interoperavel.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/79308c05-d127-4daa-ae77-733fb4e8ab05
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 79308c05-d127-4daa-ae77-733fb4e8ab05
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 4e5cdbb7444868fd1d07f1399e2566f9cc604b2029c3db2ab44c15a40177654d
+    episodes: [4]
+    alt: Núcleo semântico distribui fluxos para consumidores analíticos e agentes.
+    reviewed: true
+  - id: banana-episodio-05
+    path: assets/illustrations/banana/episodio-05-contratos-versoes.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/49942bdf-c57b-4678-88e7-274452c16aeb
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 49942bdf-c57b-4678-88e7-274452c16aeb
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: a9249fa6667c35c411723004d5f6279aa8449fcbe3057d026eb54b724b02266e
+    episodes: [5]
+    alt: Escudo contratual protege versões coexistentes de um produto de dados.
+    reviewed: true
+  - id: banana-episodio-06
+    path: assets/illustrations/banana/episodio-06-piramide-qualidade.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/664654ed-873c-40d5-8bb3-a674778e19a7
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 664654ed-873c-40d5-8bb3-a674778e19a7
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: dc67fdfb67e0d81e3b7cc1463491a74c5cfd9e5027832c73cfae9f300fbf6fcf
+    episodes: [6]
+    alt: Pirâmide em camadas representa mecanismos complementares de qualidade de dados.
+    reviewed: true
+  - id: banana-episodio-07
+    path: assets/illustrations/banana/episodio-07-governanca-como-codigo.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/b3de1b00-3370-4d95-8908-3c0a9a74249f
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: b3de1b00-3370-4d95-8908-3c0a9a74249f
+    image_version: v3
+    model: gemini-3-pro-image-preview
+    sha256: 11c1e06d87a53dfbd2227106f853d067b6371dede70924f25f314901f4382dd4
+    episodes: [7]
+    alt: Produto de dados central é cercado por órbitas e controles de governança sem rótulos.
+    reviewed: true
+  - id: banana-episodio-08
+    path: assets/illustrations/banana/episodio-08-data-products-open.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/d126be55-b88a-491c-b77a-e4d8f191ca51
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: d126be55-b88a-491c-b77a-e4d8f191ca51
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: f20f7393848ebae385199a27338e97b453fd5d076d2d22005033efb8daacb8cc
+    episodes: [8]
+    alt: Domínios independentes conectam interfaces públicas a um barramento compartilhado.
+    reviewed: true
+  - id: banana-episodio-09
+    path: assets/illustrations/banana/episodio-09-ci-state-defer.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/a22586be-b9d2-4dad-835a-a3ce994a3453
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: a22586be-b9d2-4dad-835a-a3ce994a3453
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 176187e1a2f89f544a30a152a747b09eead2c6bae7a30e0c9cb50f3e4296101a
+    episodes: [9]
+    alt: Um único ramo iluminado destaca o impacto selecionado em um grafo de CI.
+    reviewed: true
+  - id: banana-episodio-10
+    path: assets/illustrations/banana/episodio-10-finops-pipeline.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/afada293-0592-4899-8980-afa0b9c14e2d
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: afada293-0592-4899-8980-afa0b9c14e2d
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 056de66a50e9d389d7c7b873506031838d73f91c7977a07dcac7b098b603afa4
+    episodes: [10]
+    alt: Fluxo completo e lotes menores contrastam custo total e processamento incremental.
+    reviewed: true
+  - id: banana-episodio-11
+    path: assets/illustrations/banana/episodio-11-dbt-mcp.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/59b0c660-a025-4f18-9727-bdf4b10f1565
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: 59b0c660-a025-4f18-9727-bdf4b10f1565
+    image_version: v2
+    model: gemini-3-pro-image-preview
+    sha256: 01ba13354fa7f6e63e278362bc2b703d826a587d42dcd8faf45db70fd5017bd9
+    episodes: [11]
+    alt: Ponte protegida conecta metadados somente leitura a agentes fora da fronteira de escrita.
+    reviewed: true
+  - id: banana-episodio-12
+    path: assets/illustrations/banana/episodio-12-gold-governada-agente-solto.jpg
+    kind: ai_assisted_illustration
+    origin: hermes-banana-slides
+    author: Rescue Point com assistência de Gemini
+    license: Apache-2.0
+    source_url: internal://hermes/project/0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4/page/fb300e1d-d879-4095-83d2-237fc11937cc
+    project_id: 0e5fbef1-664a-434a-aaa6-aa4cc97cb8d4
+    page_id: fb300e1d-d879-4095-83d2-237fc11937cc
+    image_version: v3
+    model: gemini-3-pro-image-preview
+    sha256: 2e8ddb1c4f357379d1711b678248d0007ff51a3af1e4cbca2f47b605c4cb53f3
+    episodes: [12]
+    alt: Três caminhos de agente divergem; o caminho governado termina em um escudo e uma confirmação.
     reviewed: true
