@@ -109,6 +109,15 @@ Checkpoint 01 OK
 
 No Codespaces, não repita `setup` quando o diagnóstico disser **Ambiente preparado**. Se a criação automática tiver sido interrompida, execute `python course.py setup` uma vez e aguarde todas as três etapas; não pressione `Ctrl+C` enquanto `dbt deps` estiver carregando.
 
+O setup instala separadamente o motor Python e a CLI oficial do DuckDB, ambos na versão fixada do curso. Depois de atualizar um Codespace criado anteriormente, execute novamente:
+
+```bash
+python course.py setup
+python course.py paths
+```
+
+O segundo comando deve mostrar `duckdb.executable`. Os comandos do curso usam o caminho completo da `.venv`, portanto não dependem do `PATH`. Se quiser abrir o terminal nativo manualmente, use o caminho exibido ou, com a `.venv ativa`, execute `duckdb`.
+
 ## Explore as tabelas graficamente — opcional
 
 Depois de concluir o checkpoint 01, inicie a interface do DuckDB:
