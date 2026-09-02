@@ -56,7 +56,7 @@ O navegador abrirá um VS Code. Na primeira criação, o GitHub executa automati
 
 ```text
 postCreateCommand: python course.py setup
-postStartCommand:  python course.py doctor
+postStartCommand:  python course.py doctor && python course.py paths
 ```
 
 Não interrompa o primeiro `setup`. O terminal deve terminar com **Ambiente pronto** e o diagnóstico deve mostrar os itens principais como `OK`. Se o terminal não estiver visível, abra **Terminal → New Terminal**.
@@ -68,6 +68,17 @@ O curso **não precisa do dbt Power User**. Essa extensão de terceiros pode cri
 - `dbt-core 1.12.3` no ambiente isolado `lab/dabdbt/.venv`;
 - o perfil versionado em `lab/dabdbt/dbt_profiles`;
 - o launcher `course.py`, que escolhe ambos automaticamente.
+
+Ao reabrir o Codespace, a configuração restaura o `PATH`, aponta para o profile do
+curso e atualiza `build/environment-info.json`. Para ver os caminhos realmente
+detectados do Python, dbt Core, módulo DuckDB, banco, profiles e artifacts, execute:
+
+```bash
+python course.py paths
+```
+
+Os comandos do curso usam esses caminhos diretamente. Não é necessário ativar a
+`.venv`, mesmo depois de parar e iniciar o Codespace novamente.
 
 Se aparecer uma aba **Get Started with dbt Power User**, feche-a sem selecionar versão nem executar **Validate Setup**. Em um Codespace antigo, abra **Extensions**, procure **dbt Power User** e escolha **Disable (Workspace)** ou **Uninstall**. Novos Codespaces criados a partir da configuração atual não instalam essa extensão.
 

@@ -70,6 +70,7 @@ git clone https://github.com/AnselmoBorges/dbt-moderno-na-pratica.git
 cd dbt-moderno-na-pratica
 python course.py doctor
 python course.py setup
+python course.py paths
 python course.py checkpoint 01
 ```
 

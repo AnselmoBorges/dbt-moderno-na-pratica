@@ -105,6 +105,45 @@ def require_environment() -> Path:
     return python
 
 
+def environment_info(*, write_manifest: bool = True) -> dict[str, object]:
+    """Resolve os caminhos reais usados pelo curso sem depender do PATH global."""
+    python = require_environment()
+    duckdb_location = subprocess.run(
+        [str(python), "-c", "import pathlib, duckdb; print(pathlib.Path(duckdb.__file__).resolve())"],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout.strip()
+    info: dict[str, object] = {
+        "course_root": str(ROOT),
+        "virtual_environment": str(VENV),
+        "python": str(python),
+        "dbt_core": {
+            "executable": str(venv_tool("dbt")),
+            "version": package_version("dbt-core"),
+        },
+        "duckdb": {
+            "python_module": duckdb_location,
+            "version": package_version("duckdb"),
+            "database": str(ROOT / "lab" / "data" / "dabdbt.duckdb"),
+        },
+        "dbt_project": str(LAB / "dbt_project.yml"),
+        "profiles_dir": str(LAB / "dbt_profiles"),
+        "artifacts_dir": str(LAB / "target"),
+    }
+    if write_manifest:
+        output = ROOT / "build" / "environment-info.json"
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(info, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    return info
+
+
+def show_paths() -> None:
+    print(json.dumps(environment_info(), ensure_ascii=False, indent=2))
+    print("\nCaminhos atualizados em build/environment-info.json")
+    print("Os comandos course.py usam esses executáveis diretamente; ativar a .venv é opcional.")
+
+
 def setup() -> None:
     require_supported_python()
     ok, _ = doctor()
@@ -117,6 +156,7 @@ def setup() -> None:
     run([python, "-m", "pip", "install", "--disable-pip-version-check", "-r", "requirements-local.txt"], cwd=LAB)
     run([venv_tool("dbt"), "deps", "--profiles-dir", "dbt_profiles", "--target", "local"], cwd=LAB)
     run([venv_tool("dbt"), "debug", "--profiles-dir", "dbt_profiles", "--target", "local"], cwd=LAB)
+    show_paths()
     print("\nAmbiente pronto. Próximo passo: python course.py checkpoint 01")
 
 
@@ -196,6 +236,7 @@ def main() -> int:
     checkpoint_parser.add_argument("number")
     data_ui_parser = subparsers.add_parser("data-ui", help="abre a interface gráfica opcional do DuckDB")
     data_ui_parser.add_argument("--port", type=int, default=4213)
+    subparsers.add_parser("paths", help="mostra os caminhos reais do dbt, DuckDB e arquivos do curso")
     subparsers.add_parser("validate", help="executa toda a validação editorial e técnica")
     subparsers.add_parser("support-report", help="gera diagnóstico sanitizado para pedir ajuda")
     args = parser.parse_args()
@@ -209,6 +250,8 @@ def main() -> int:
         checkpoint(args.number.zfill(2))
     elif args.command == "data-ui":
         data_ui(args.port)
+    elif args.command == "paths":
+        show_paths()
     elif args.command == "validate":
         validate()
     elif args.command == "support-report":

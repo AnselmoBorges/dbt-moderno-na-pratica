@@ -7,7 +7,11 @@
     "storage": "2gb"
   },
   "postCreateCommand": "python course.py setup",
-  "postStartCommand": "python course.py doctor",
+  "postStartCommand": "python course.py doctor && python course.py paths",
+  "remoteEnv": {
+    "PATH": "${containerWorkspaceFolder}/lab/dabdbt/.venv/bin:${containerEnv:PATH}",
+    "DBT_PROFILES_DIR": "${containerWorkspaceFolder}/lab/dabdbt/dbt_profiles"
+  },
   "forwardPorts": [4213],
   "portsAttributes": {
     "4213": {
