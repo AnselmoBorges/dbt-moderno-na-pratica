@@ -1,6 +1,6 @@
 # Aula 0 — Prepare seu laboratório dbt sem sofrer com o ambiente
 
-**Duração alvo:** 20–24 minutos
+**Duração alvo:** 22–26 minutos
 **Nível:** iniciante  
 **Rótulos na tela:** `OPEN`, `Windows`, `macOS`, `Linux`, `Codespaces`, `sem cloud`
 
@@ -82,7 +82,26 @@ python course.py data-ui
 
 “Não estamos usando a DuckDB UI oficial: seu servidor ainda escuta apenas em localhost e há um erro conhecido quando a interface atravessa túnel ou proxy, exatamente o cenário do Codespaces. O explorador do curso existe para oferecer a mesma finalidade didática sem simular uma interface oficial.”
 
-### 17:00–18:00 — Como recuperar uma criação interrompida
+### 17:00–19:00 — Bônus: DuckDB UI oficial por túnel
+
+“A interface oficial pode ser usada, mas o navegador precisa enxergá-la como localhost. Abrir diretamente a porta pelo domínio `app.github.dev` gera o erro `DataView`; isso não significa que o banco esteja corrompido.”
+
+No terminal do Codespaces:
+
+```bash
+python course.py official-data-ui
+```
+
+No computador local, depois de instalar e autenticar o GitHub CLI:
+
+```bash
+gh auth refresh -h github.com -s codespace
+python course.py codespace-ui-tunnel
+```
+
+“A primeira linha concede ao GitHub CLI o escopo necessário para acessar seus Codespaces. A segunda escolhe o ambiente, encaminha a porta 4213 para o computador e abre `http://localhost:4213`. Os dois terminais precisam permanecer abertos. Esta é uma demonstração bônus, não um pré-requisito das próximas aulas.”
+
+### 19:00–20:00 — Como recuperar uma criação interrompida
 
 ```bash
 python course.py setup
@@ -90,7 +109,7 @@ python course.py setup
 
 “Se o terminal fechou ou a preparação automática foi interrompida, execute setup novamente e aguarde as três etapas. `^C` e `KeyboardInterrupt` significam interrupção manual. Quando o ambiente já estiver completo, o setup pula pip e dbt deps em vez de reinstalar tudo.”
 
-### 18:00–19:00 — Como pedir ajuda sem expor segredo
+### 20:00–21:00 — Como pedir ajuda sem expor segredo
 
 ```bash
 python course.py support-report
@@ -98,17 +117,17 @@ python course.py support-report
 
 “Esse relatório mostra apenas sistema, versões e verificações. Ele não coleta variáveis de ambiente, tokens ou caminhos pessoais. Anexe o JSON ao modelo de issue.”
 
-### 19:00–21:00 — Pare o ambiente e preserve a franquia
+### 21:00–23:00 — Pare o ambiente e preserve a franquia
 
 “Abra github.com/codespaces, use o menu de três pontos e selecione Stop codespace. Processamento parado não consome core-hours, mas o armazenamento continua existindo. Exclua apenas quando não precisar mais dos arquivos.”
 
 Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um exemplo genérico da documentação GitHub.
 
-### 21:00–23:00 — Instalação local como alternativa
+### 23:00–25:00 — Instalação local como alternativa
 
 “Se a franquia acabou, a rede bloqueia Codespaces ou você precisa trabalhar offline, siga o guia de Windows, macOS ou Linux. O launcher, o checkpoint e o resultado funcional continuam iguais.”
 
-### 23:00–24:00 — Fechamento
+### 25:00–26:00 — Fechamento
 
 “Você não precisa compreender toda a saída ainda. Precisa apenas saber repetir o ambiente e reconhecer onde está o resultado. No episódio 1 vamos dar significado a cada etapa.”
 
@@ -121,6 +140,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - `setup` instala o motor Python e a CLI oficial `duckdb`, ambos na versão fixada, e `paths` mostra o executável real dentro da `.venv`.
 - `checkpoint 01` termina com `Checkpoint 01 OK`.
 - `data-ui` abre o explorador autoral sobre a cópia somente leitura pela porta privada 4213 e encerra com Ctrl+C.
+- `official-data-ui` inicia a interface oficial no Codespaces; `codespace-ui-tunnel` abre `localhost:4213` no computador local sem passar pelo proxy incompatível.
 - `build/support-report.json` não contém usuário, e-mail, host ou variável de ambiente.
 
 ## Sugestões visuais
