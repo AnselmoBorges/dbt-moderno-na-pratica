@@ -171,11 +171,11 @@ def data_ui(port: int) -> None:
         run(
             [
                 python,
-                ROOT / "scripts" / "start_duckdb_ui.py",
+                ROOT / "scripts" / "start_data_explorer.py",
                 "--source",
                 ROOT / "lab" / "data" / "dabdbt.duckdb",
                 "--snapshot",
-                ROOT / "build" / "duckdb-ui" / "course-snapshot.duckdb",
+                ROOT / "build" / "data-explorer" / "course-snapshot.duckdb",
                 "--port",
                 str(port),
             ]
@@ -187,6 +187,7 @@ def data_ui(port: int) -> None:
 def validate() -> None:
     python = require_environment()
     run([sys.executable, "scripts/verify_editorial.py"], cwd=ROOT)
+    run([python, ROOT / "scripts" / "test_data_explorer.py"], cwd=ROOT)
     run([python, "scripts/validate_all.py"], cwd=LAB)
 
 

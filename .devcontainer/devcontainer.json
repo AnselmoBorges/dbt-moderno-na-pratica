@@ -15,7 +15,7 @@
   "forwardPorts": [4213],
   "portsAttributes": {
     "4213": {
-      "label": "DuckDB UI",
+      "label": "Explorador DuckDB",
       "onAutoForward": "notify",
       "protocol": "http"
     }

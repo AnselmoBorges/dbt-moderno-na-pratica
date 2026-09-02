@@ -48,9 +48,9 @@ Evite pastas sincronizadas com bloqueio agressivo. Espaços e acentos são supor
 
 Feche notebooks, extensões SQL ou outro terminal conectado ao arquivo `lab/data/dabdbt.duckdb` e execute o checkpoint novamente. DuckDB documenta que múltiplos processos gravando no mesmo arquivo não são o modo principal de concorrência.
 
-## DuckDB UI não abre ou mostra dados antigos
+## O navegador mostra `Initialization Error` ou erro de `DataView`
 
-Execute primeiro `python course.py checkpoint 01` e depois `python course.py data-ui`. Mantenha o terminal aberto e, na guia **Ports**, abra **DuckDB UI** na porta privada 4213. Para atualizar os dados, encerre com Ctrl+C e inicie novamente: cada execução cria uma nova cópia segura do banco.
+Esse erro pertence à DuckDB UI oficial quando acessada por túnel/proxy. Atualize o repositório, encerre o processo antigo e execute `python course.py data-ui`. Mantenha o terminal aberto e, na guia **Ports**, abra **Explorador DuckDB** na porta privada 4213. A página correta exibe “interface autoral do curso”. Para atualizar os dados, encerre com Ctrl+C e inicie novamente: cada execução cria uma nova cópia somente leitura.
 
 ## Preciso localizar o dbt, DuckDB ou profile
 
@@ -67,5 +67,6 @@ Execute `python course.py support-report` e abra uma issue usando o [modelo de p
 ## Material complementar
 
 - [Concorrência no DuckDB](https://duckdb.org/docs/stable/connect/concurrency) — DuckDB, documentação/EN; verificado em 2026-09-01.
-- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; verificado em 2026-09-02.
+- [Limitação da DuckDB UI em containers](https://github.com/duckdb/duckdb-ui/issues/22) — DuckDB, issue oficial/EN; verificado em 2026-09-02.
+- [Erro DataView ao usar túnel](https://github.com/duckdb/duckdb-ui/issues/186) — DuckDB, issue oficial/EN; verificado em 2026-09-02.
 - [Ajuda e comunidade dbt](https://docs.getdbt.com/community/resources/getting-help) — dbt Labs, documentação/EN; verificado em 2026-09-01.

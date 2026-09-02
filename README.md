@@ -57,7 +57,7 @@ python course.py checkpoint 01
 
 Não execute assistentes de instalação de extensões dbt: o curso fixa e usa o dbt Core 1.12.3 pelo próprio launcher. O dbt Power User é opcional e não faz parte do ambiente recomendado.
 
-Depois do checkpoint 01, `python course.py data-ui` abre uma exploração gráfica opcional das tabelas em uma porta privada do Codespaces. O comando usa uma cópia do DuckDB para não interferir no pipeline.
+Depois do checkpoint 01, `python course.py data-ui` abre o explorador gráfico autoral do curso em uma porta privada do Codespaces. O comando usa uma cópia somente leitura do DuckDB para não interferir no pipeline. A DuckDB UI oficial não é usada porque seu servidor local ainda possui uma limitação conhecida com túneis e containers.
 
 Veja o [passo a passo ilustrado, limites e como parar o ambiente](docs/codespaces.md).
 

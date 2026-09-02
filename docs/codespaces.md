@@ -117,11 +117,11 @@ Depois de concluir o checkpoint 01, inicie a interface do DuckDB:
 python course.py data-ui
 ```
 
-O Codespaces avisará que a porta **4213** está disponível. Escolha **Open in Browser** ou abra a guia **Ports** e selecione o endereço de **DuckDB UI**. A porta permanece **Private**, exigindo autenticação na sua conta GitHub; não a torne pública.
+O Codespaces avisará que a porta **4213** está disponível. Escolha **Open in Browser** ou abra a guia **Ports** e selecione **Explorador DuckDB**. A porta permanece **Private**, exigindo autenticação na sua conta GitHub; não a torne pública.
 
-A interface mostra schemas, tabelas, colunas e resultados SQL. O comando cria `build/duckdb-ui/course-snapshot.duckdb`, uma cópia do banco didático, para que consultas e notebooks da UI não modifiquem nem bloqueiem o arquivo usado pelo dbt. Para atualizar os dados exibidos, encerre com `Ctrl+C` e execute o comando novamente.
+A interface autoral do curso mostra schemas, tabelas e resultados SQL. O comando cria `build/data-explorer/course-snapshot.duckdb`, uma cópia aberta somente para leitura, para que a exploração não modifique nem bloqueie o arquivo usado pelo dbt. Para atualizar os dados exibidos, encerre com `Ctrl+C` e execute o comando novamente.
 
-Na primeira utilização, a extensão `ui` baixa seus componentes oficiais e precisa de internet. Ela é opcional: os checkpoints e as aulas continuam funcionando sem a interface gráfica. A extensão é distribuída no ecossistema DuckDB, construída pela MotherDuck e classificada pela documentação do DuckDB como extensão de terceiros.
+Essa interface não é a DuckDB UI oficial nem uma reprodução de sua tela. A extensão oficial atualmente escuta apenas em `localhost`; o projeto mantém um issue aberto sobre execução em containers, e há um relato com o mesmo erro `DataView` em acesso por túnel. O explorador do curso liga-se ao endereço aceito pelo encaminhamento de portas do Codespaces e não baixa componentes adicionais. Ele continua opcional: nenhum checkpoint depende da interface gráfica.
 
 ## Passo 5 — pare o ambiente ao terminar
 
@@ -143,7 +143,8 @@ Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambient
 | Power User mostra dbt 1.11, `profiles.yml` ausente ou projeto inválido | Feche o assistente e desabilite a extensão. Execute apenas `python course.py setup`, `python course.py doctor` e `python course.py checkpoint 01`. |
 | O terminal mostra Python diferente de 3.12 | Confirme que o dev container selecionado é `dbt Moderno na Prática` e recrie o Codespace. |
 | O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
-| A DuckDB UI não abre | Confirme que o terminal com `data-ui` continua aberto; na guia **Ports**, abra a porta privada 4213. Execute o checkpoint 01 antes de iniciar a UI. |
+| O explorador não abre | Atualize o repositório, execute novamente `python course.py setup` e mantenha o terminal com `data-ui` aberto. Na guia **Ports**, abra a porta privada 4213. |
+| Aparece `Initialization Error` ou `DataView` | Você abriu a DuckDB UI oficial antiga. Encerre o processo, atualize o repositório e execute `python course.py data-ui`; a tela correta diz **interface autoral do curso**. |
 
 ## Como salvar seu progresso
 
@@ -157,5 +158,7 @@ O Codespace preserva os arquivos enquanto existir. Como alunos não têm permiss
 - [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace) — GitHub, documentação/EN; verificado em 2026-09-01.
 - [Extensão dbt Power User](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) — Altimate AI, marketplace/EN; extensão de terceiros e opcional, não utilizada pelo curso; verificado em 2026-09-01.
 - [Extensão oficial da dbt Labs](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) — dbt Labs, marketplace/EN; usa Fusion e está identificada como preview, portanto permanece fora do ambiente open/stable; verificado em 2026-09-01.
-- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; inicialização, porta 4213, execução local e limitações; verificado em 2026-09-01.
+- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; referência da extensão oficial não utilizada no Codespaces; verificado em 2026-09-02.
+- [Limitação da DuckDB UI em containers](https://github.com/duckdb/duckdb-ui/issues/22) — DuckDB, issue oficial/EN; servidor limitado a localhost; verificado em 2026-09-02.
+- [Erro DataView ao usar túnel](https://github.com/duckdb/duckdb-ui/issues/186) — DuckDB, issue oficial/EN; reprodução do erro observado; verificado em 2026-09-02.
 - [Segurança das portas no Codespaces](https://docs.github.com/en/codespaces/reference/security-in-github-codespaces) — GitHub, documentação/EN; portas encaminhadas são privadas por padrão; verificado em 2026-09-01.

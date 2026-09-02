@@ -8,7 +8,7 @@ Execute na raiz do repositório:
 | Preparar | `python course.py setup` |
 | Conferir caminhos do ambiente | `python course.py paths` |
 | Rodar uma aula | `python course.py checkpoint NN` |
-| Explorar o DuckDB graficamente | `python course.py data-ui` |
+| Abrir o explorador DuckDB do curso | `python course.py data-ui` |
 | Validar tudo | `python course.py validate` |
 | Gerar relatório de ajuda | `python course.py support-report` |
 

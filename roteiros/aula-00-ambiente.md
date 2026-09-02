@@ -70,15 +70,15 @@ python course.py checkpoint 01
 
 “O checkpoint carrega a amostra, faz parse, build, gera documentação e verifica os artifacts. Procure `Checkpoint 01 OK`. Aviso amarelo deve ser lido; erro vermelho precisa ser resolvido.”
 
-### 15:30–17:00 — Explore o resultado na DuckDB UI
+### 15:30–17:00 — Explore o resultado no navegador
 
 ```bash
 python course.py data-ui
 ```
 
-“A guia Ports oferece a porta privada 4213. Abra DuckDB UI no navegador e mantenha este terminal aberto. A interface usa uma cópia do banco produzido pelo checkpoint: explorar não bloqueia nem altera o arquivo usado pelo dbt. Pressione Ctrl+C para encerrar.”
+“A guia Ports oferece a porta privada 4213. Abra Explorador DuckDB no navegador e mantenha este terminal aberto. A interface autoral do curso usa uma cópia somente leitura do banco produzido pelo checkpoint: explorar não bloqueia nem altera o arquivo usado pelo dbt. Pressione Ctrl+C para encerrar.”
 
-Ressaltar que a UI é opcional, instalada na primeira utilização e mantida pela MotherDuck como extensão third-party distribuída pelo DuckDB.
+“Não estamos usando a DuckDB UI oficial: seu servidor ainda escuta apenas em localhost e há um erro conhecido quando a interface atravessa túnel ou proxy, exatamente o cenário do Codespaces. O explorador do curso existe para oferecer a mesma finalidade didática sem simular uma interface oficial.”
 
 ### 17:00–18:00 — Como recuperar uma criação interrompida
 
@@ -117,7 +117,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - `paths` mostra dbt Core 1.12.3, DuckDB, profile, banco e artifacts do curso.
 - `doctor` termina com “Pronto para o setup”.
 - `checkpoint 01` termina com `Checkpoint 01 OK`.
-- `data-ui` abre a cópia do banco pela porta privada 4213 e encerra com Ctrl+C.
+- `data-ui` abre o explorador autoral sobre a cópia somente leitura pela porta privada 4213 e encerra com Ctrl+C.
 - `build/support-report.json` não contém usuário, e-mail, host ou variável de ambiente.
 
 ## Sugestões visuais
@@ -126,7 +126,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - Captura real da configuração `main` + dev container do curso + `2-core`.
 - Captura oficial do GitHub Docs mostrando **Stop codespace**.
 - Destaque grande para o primeiro erro acionável do `doctor`.
-- Captura real da guia **Ports** com `DuckDB UI` na porta privada 4213.
+- Captura real da guia **Ports** com `Explorador DuckDB` na porta privada 4213.
 - Linha do tempo curta: criação → setup → paths/doctor → checkpoint → UI opcional → stop.
 
 ## Limitações
@@ -135,11 +135,11 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - A franquia mensal e as regras de cobrança podem mudar; verifique a fonte oficial antes de gravar.
 - Máquina parada continua consumindo armazenamento enquanto existir.
 - A instalação local permanece necessária quando o aluno precisa trabalhar offline.
-- A DuckDB UI precisa de internet na primeira instalação da extensão e não é requisito dos checkpoints.
+- O explorador é autoral, propositalmente simples e não é requisito dos checkpoints.
 
 ## CTA
 
-“Abra o Codespace em 2-core, confira os caminhos, execute checkpoint 01, explore a cópia na DuckDB UI e pare o ambiente ao terminar. Se a rota cloud não estiver disponível, use o guia local.”
+“Abra o Codespace em 2-core, confira os caminhos, execute checkpoint 01, explore a cópia somente leitura no navegador e pare o ambiente ao terminar. Se a rota cloud não estiver disponível, use o guia local.”
 
 ## Fontes
 
@@ -149,6 +149,8 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 - [Aproveitar melhor a franquia incluída](https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage)
 - [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace)
 - [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui)
+- [Limitação da DuckDB UI em containers](https://github.com/duckdb/duckdb-ui/issues/22)
+- [Erro DataView ao usar túnel](https://github.com/duckdb/duckdb-ui/issues/186)
 - [Segurança das portas no Codespaces](https://docs.github.com/en/codespaces/reference/security-in-github-codespaces)
 - [Jaffle Shop com DuckDB](https://github.com/dbt-labs/jaffle_shop_duckdb)
 - [Guia do aluno](../docs/README.md)
@@ -157,5 +159,5 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 
 - [dbt Learn](https://www.getdbt.com/dbt-learn) — dbt Labs, cursos/EN; referência oficial para continuar após o setup; Aula 0; verificado em 2026-09-01.
 - [Documentação estável do DuckDB](https://duckdb.org/docs/stable/) — DuckDB, documentação/EN; referência do banco local; Aula 0; verificado em 2026-09-01.
-- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; interface local, porta e manutenção da extensão; Aula 0; verificado em 2026-09-02.
+- [Limitação da DuckDB UI em containers](https://github.com/duckdb/duckdb-ui/issues/22) — DuckDB, issue oficial/EN; justifica o explorador autoral; Aula 0; verificado em 2026-09-02.
 - [GitHub Codespaces billing](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces) — GitHub, documentação/EN; limites e cobrança do caminho recomendado; Aula 0; verificado em 2026-09-01.
