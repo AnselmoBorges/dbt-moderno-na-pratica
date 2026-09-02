@@ -26,12 +26,13 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 
 1. Crie o ambiente pela [rota recomendada no Codespaces](codespaces.md). Se preferir trabalhar offline, use a [instalação local](instalacao/README.md).
 2. No Codespaces, aguarde o `setup` automático terminar. Na instalação local, execute `python course.py setup`.
-3. Execute `python course.py doctor` e corrija qualquer item marcado como `ERRO`.
-4. Execute `python course.py checkpoint 01`.
-5. Procure a mensagem `Checkpoint 01 OK`.
-6. Opcionalmente, execute `python course.py data-ui` e explore as tabelas pela porta privada 4213.
-7. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
-8. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
+3. Execute `python course.py paths` para conferir os caminhos detectados do dbt, DuckDB, profile, banco e artifacts.
+4. Execute `python course.py doctor` e corrija qualquer item marcado como `ERRO`.
+5. Execute `python course.py checkpoint 01`.
+6. Procure a mensagem `Checkpoint 01 OK`.
+7. Opcionalmente, execute `python course.py data-ui` e explore a cópia das tabelas pela porta privada 4213.
+8. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
+9. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
 
 ## O que o setup faz
 
@@ -39,6 +40,7 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 - Instala versões fixadas de dbt Core, DuckDB, MetricFlow e dbt MCP.
 - Baixa packages dbt.
 - Testa a conexão com o arquivo DuckDB local.
+- Registra os caminhos efetivos em `build/environment-info.json`; ao reabrir o Codespace, o `postStartCommand` restaura o ambiente e atualiza esse arquivo.
 - Não acessa Databricks e não solicita chaves.
 
 No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateCommand` versionado no repositório.
@@ -52,3 +54,5 @@ No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateComm
 - [Quickstart manual do dbt](https://docs.getdbt.com/guides/manual-install?step=1) — dbt Labs, guia/EN, comparação com a instalação oficial; verificado em 2026-09-01.
 - [Jaffle Shop com DuckDB](https://github.com/dbt-labs/jaffle_shop_duckdb) — dbt Labs, repositório/EN, outro laboratório local oficial; verificado em 2026-09-01.
 - [GitHub Codespaces: criar um ambiente](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository) — GitHub, documentação/EN, base oficial do caminho recomendado; verificado em 2026-09-01.
+- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN, interface gráfica local usada opcionalmente; verificado em 2026-09-02.
+- [Segurança das portas no Codespaces](https://docs.github.com/en/codespaces/reference/security-in-github-codespaces) — GitHub, documentação/EN, portas encaminhadas privadas por padrão; verificado em 2026-09-02.

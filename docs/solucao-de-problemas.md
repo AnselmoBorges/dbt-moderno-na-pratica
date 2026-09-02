@@ -48,6 +48,14 @@ Evite pastas sincronizadas com bloqueio agressivo. Espaços e acentos são supor
 
 Feche notebooks, extensões SQL ou outro terminal conectado ao arquivo `lab/data/dabdbt.duckdb` e execute o checkpoint novamente. DuckDB documenta que múltiplos processos gravando no mesmo arquivo não são o modo principal de concorrência.
 
+## DuckDB UI não abre ou mostra dados antigos
+
+Execute primeiro `python course.py checkpoint 01` e depois `python course.py data-ui`. Mantenha o terminal aberto e, na guia **Ports**, abra **DuckDB UI** na porta privada 4213. Para atualizar os dados, encerre com Ctrl+C e inicie novamente: cada execução cria uma nova cópia segura do banco.
+
+## Preciso localizar o dbt, DuckDB ou profile
+
+Execute `python course.py paths`. O resultado também fica em `build/environment-info.json`. No Codespaces, esses caminhos são atualizados a cada abertura; não crie um segundo profile em `~/.dbt` e não é necessário ativar a `.venv`.
+
 ## Instalação interrompida
 
 Execute novamente `python course.py setup`. O processo é idempotente e reaproveita downloads válidos.
@@ -59,4 +67,5 @@ Execute `python course.py support-report` e abra uma issue usando o [modelo de p
 ## Material complementar
 
 - [Concorrência no DuckDB](https://duckdb.org/docs/stable/connect/concurrency) — DuckDB, documentação/EN; verificado em 2026-09-01.
+- [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; verificado em 2026-09-02.
 - [Ajuda e comunidade dbt](https://docs.getdbt.com/community/resources/getting-help) — dbt Labs, documentação/EN; verificado em 2026-09-01.
