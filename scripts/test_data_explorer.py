@@ -55,6 +55,9 @@ def main() -> int:
                 assert b"interface autoral do curso" in response.read()
             status, catalog = request_json(f"{base}/api/catalog")
             assert status == 200 and catalog == {"g": ["orders"]}
+            status, practices = request_json(f"{base}/api/practices")
+            assert status == 200 and sorted(practices) == [*(f"{number:02}" for number in range(13)), "12-insight"]
+            assert practices["00"]["sql"] == (ROOT / "lab/praticas/00.sql").read_text(encoding="utf-8").strip()
             status, result = request_json(f"{base}/api/query", {"sql": "select * from g.orders"})
             assert status == 200 and result == {"columns": ["order_id", "revenue"], "rows": [[1, "42.5"]]}, result
             status, rejected = request_json(f"{base}/api/query", {"sql": "drop table g.orders"})

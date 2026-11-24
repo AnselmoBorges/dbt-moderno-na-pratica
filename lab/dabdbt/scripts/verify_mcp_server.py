@@ -4,8 +4,8 @@
 from __future__ import annotations
 
 import asyncio
+import json
 import os
-from pathlib import Path
 
 from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
@@ -56,6 +56,10 @@ async def verify() -> None:
             f"MCP inválido: leaked={sorted(leaked)} missing={sorted(missing)} "
             f"unexpected={sorted(unexpected)} rejected_build={rejected} tools={sorted(names)}"
         )
+    target = PROJECT / "target"
+    target.mkdir(exist_ok=True)
+    report = {"tools": sorted(names), "build_rejected": rejected}
+    (target / "mcp_demo.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(f"dbt-mcp OK: {len(names)} ferramentas expostas e chamada build rejeitada.")
 
 

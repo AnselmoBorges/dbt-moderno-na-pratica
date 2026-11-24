@@ -565,3 +565,241 @@ assets:
     caption: Saídas de governança, defer, equivalência do incremental, política MCP e benchmark com fixtures.
     alt: Terminal com os checkpoints 7 a 12 aprovados, relação reaproveitada pelo defer, oito e uma linhas candidatas e benchmark com fixtures.
     reviewed: true
+  - id: duckdb-pratica-00-oficial
+    path: assets/screenshots/duckdb/00-oficial.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://duckdb.org/docs/1.5/core_extensions/ui
+    product: DuckDB UI oficial com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 8b290f7698c4c87b1889fed65281816596e917275985b515c7bbf0a7dbcd1e92
+    episodes: [0]
+    caption: Consulta de pedidos na DuckDB UI oficial
+    alt: Notebook local da DuckDB UI oficial com SQL, quatro pedidos e data de entrega nula de o3.
+    reviewed: true
+  - id: duckdb-pratica-00
+    path: assets/screenshots/duckdb/00.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 534b512f4362e1a8f503e97949492e1b0138c64bf54e9ebe2a2add70ba217bfd
+    episodes: [0]
+    caption: Primeiras linhas dos pedidos
+    alt: Captura real do Explorador DuckDB. O pedido o3 foi cancelado e tem data de entrega vazia.
+    reviewed: true
+  - id: duckdb-pratica-01
+    path: assets/screenshots/duckdb/01.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 6993ed6c3bbb06e8207acd507d4cb1c8cc042db08803e5d59bf220ece29aa06c
+    episodes: [1]
+    caption: A dependência no manifest
+    alt: Captura real do Explorador DuckDB. O manifest aponta order_metrics.v2 como pai de commerce_orders.
+    reviewed: true
+  - id: duckdb-pratica-02
+    path: assets/screenshots/duckdb/02.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: d80b6f10637c4fcdb6dbb37feb4fed71b8b415f1d8fbe6d6e6a5ccf2674f48b7
+    episodes: [2]
+    caption: O efeito do join no valor pago
+    alt: Captura real do Explorador DuckDB. O join com itens aumenta de 8 para 10 linhas e de 740 para 910 no total.
+    reviewed: true
+  - id: duckdb-pratica-03
+    path: assets/screenshots/duckdb/03.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: df8512bcf12b303b0ac5224cc8809aef777820fbfdffb8a8ca797ab355a98fc3
+    episodes: [3]
+    caption: Conferência das métricas mensais
+    alt: Captura real do Explorador DuckDB. Em fevereiro, a amostra tem 2 pedidos, receita bruta de 230 e ticket de 115.
+    reviewed: true
+  - id: duckdb-pratica-04
+    path: assets/screenshots/duckdb/04.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 35426338bdecb4ead9e9f5f98312299b6379ca2f3a19e7f9df003b6af782ca1e
+    episodes: [4]
+    caption: As métricas no arquivo OSI
+    alt: Captura real do Explorador DuckDB. Cinco definições de métricas aparecem no JSON exportado pelo dbt.
+    reviewed: true
+  - id: duckdb-pratica-05
+    path: assets/screenshots/duckdb/05.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 4480481e281ac2d704b0d84a4ba3be767c5c8ed3c11531dd4ad494ca3cfb1494
+    episodes: [5]
+    caption: As duas versões lado a lado
+    alt: Captura real do Explorador DuckDB. A v1 tem 7 colunas. A v2 tem 9 e inclui delivered_revenue.
+    reviewed: true
+  - id: duckdb-pratica-06
+    path: assets/screenshots/duckdb/06.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: f9e71ab4ed34834fb0ea565cd60578403065f4e388ce85653c177a4bfcc6267c
+    episodes: [6]
+    caption: Chaves e receita na verificação de qualidade
+    alt: Captura real do Explorador DuckDB. As 8 linhas são 8 pedidos distintos. Chaves nulas e receita indevida dão zero.
+    reviewed: true
+  - id: duckdb-pratica-07
+    path: assets/screenshots/duckdb/07.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: ba1d799038230f0eaa82ec654d75f42ac4a62364b0d9dbd988e4504b46edc282
+    episodes: [7]
+    caption: Domínio, acesso e exposure no manifest
+    alt: Captura real do Explorador DuckDB. A interface é pública no dbt, pertence a commerce e tem um exposure de consumo.
+    reviewed: true
+  - id: duckdb-pratica-08
+    path: assets/screenshots/duckdb/08.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 73f8aa8ab3444575e4ea91198445b57a0a55537455f2ad80d86ffcdb8f388f6b
+    episodes: [8]
+    caption: A interface do domínio em uso
+    alt: Captura real do Explorador DuckDB. O consumidor encontra 6 pedidos entregues e receita reconhecida de 630.
+    reviewed: true
+  - id: duckdb-pratica-09
+    path: assets/screenshots/duckdb/09.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: 2b0c1d11290f9eb270522be6aa6259e019a93ce2c66d576eb07234ba1112902b
+    episodes: [9]
+    caption: Impacto e relação reaproveitada pelo defer
+    alt: Captura real do Explorador DuckDB. A seleção inclui orders_s e commerce_orders e confirma a relação reutilizada pelo defer.
+    reviewed: true
+  - id: duckdb-pratica-10
+    path: assets/screenshots/duckdb/10.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: eb00e305e83c9558ac2deb9a05e751553cb7eec28a8797f289800f30b66b4f7e
+    episodes: [10]
+    caption: A carga incremental em números
+    alt: Captura real do Explorador DuckDB. A carga completa tem 8 linhas candidatas e a incremental tem 1. O resultado é igual.
+    reviewed: true
+  - id: duckdb-pratica-11
+    path: assets/screenshots/duckdb/11.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: fd357a95ebda3ebafcea4bbd9fb342a728fff0961b4741a516dd980f8f4ae5d7
+    episodes: [11]
+    caption: Ferramentas permitidas no MCP
+    alt: Captura real do Explorador DuckDB. O teste observou cinco ferramentas e confirmou a rejeição de build.
+    reviewed: true
+  - id: duckdb-pratica-12-insight
+    path: assets/screenshots/duckdb/12-insight.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: ca295b54a6ec0acda7ff4d00dc53bffad0236dc4267a577a6aa67b365f8f06e7
+    episodes: [12]
+    caption: Receita bruta e entregue por mês
+    alt: Captura real do Explorador DuckDB. Dos 740 pagos, 630 correspondem a pedidos entregues. Março concentra 80 dos 110 de diferença.
+    reviewed: true
+  - id: duckdb-pratica-12
+    path: assets/screenshots/duckdb/12.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Apache-2.0
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/main/lab/praticas
+    product: Explorador autoral do curso com DuckDB 1.5.5
+    captured_at: 2026-11-24
+    sha256: b0a7cf280d9607bbbf03b7341c706eb87d76fa62505d24d301d7fa773b995411
+    episodes: [12]
+    caption: Os três cenários do benchmark com fixtures
+    alt: Captura real do Explorador DuckDB. As respostas corretas foram 5, 9 e 10 de 10 nos traces gravados.
+    reviewed: true
+  - id: dbt-docs-01-colunas
+    path: assets/screenshots/dbt-docs/01-colunas.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://docs.getdbt.com/reference/commands/cmd-docs
+    product: dbt Docs gerado pelo dbt Core 1.12.7
+    captured_at: 2026-11-24
+    sha256: 9d5299092c43f58abf66057a9417c7c02027b36ad940246bcd6bb3b826254cc1
+    episodes: [1]
+    caption: Ficha da coluna order_id em order_metrics_v2
+    alt: dbt Docs mostra order_id como VARCHAR, com constraint not_null e testes Not Null e Unique.
+    reviewed: true
+  - id: dbt-docs-01-linhagem
+    path: assets/screenshots/dbt-docs/01-linhagem.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://docs.getdbt.com/reference/commands/cmd-docs
+    product: dbt Docs gerado pelo dbt Core 1.12.7
+    captured_at: 2026-11-24
+    sha256: ec67540cffb6d589cfd87521930fb7f688296c6188cd2ca98c26859faee2d2f8
+    episodes: [1]
+    caption: Linhagem de order_metrics até o exposure
+    alt: Grafo real do dbt de pedidos, itens e pagamentos até Silver, versões, commerce_orders, métricas e exposure do agente.
+    reviewed: true

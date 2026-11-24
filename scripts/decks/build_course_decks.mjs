@@ -12,6 +12,8 @@ const ROOT = process.env.COURSE_ROOT
   : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const OUT = path.resolve(process.env.COURSE_DECK_OUTPUT ?? path.join(ROOT, "assets/decks"));
 const BUILD = path.resolve(process.env.COURSE_DECK_QA ?? path.join(ROOT, "build/decks"));
+const PRACTICES = path.join(ROOT, "lab/praticas");
+const LESSONS = JSON.parse(await fs.readFile(path.join(PRACTICES, "aulas.json"), "utf8"));
 
 const C = {
   navy: "#06142E",
@@ -39,6 +41,8 @@ const diagrams = (name) => path.join(ROOT, "assets/diagrams/rendered", name);
 const official = (name) => path.join(ROOT, "assets/official/dbt", name);
 const banana = (name) => path.join(ROOT, "assets/illustrations/banana", name);
 const screenshot = (name) => path.join(ROOT, "assets/screenshots/codespaces", name);
+const practiceCapture = (name) => path.join(ROOT, "assets/screenshots/duckdb", name);
+const docsCapture = (name) => path.join(ROOT, "assets/screenshots/dbt-docs", name);
 const brandLogo = path.join(ROOT, "assets/brand/rescue-point-logo.png");
 const imageContentType = (filePath) => path.extname(filePath).toLowerCase().match(/\.jpe?g$/) ? "image/jpeg" : "image/png";
 let brandLogoBytes;
@@ -48,13 +52,13 @@ const decks = [
     stem: "aula-00-ambiente",
     episode: "AULA 0",
     title: "Prepare seu laboratório dbt no Codespaces",
-    subtitle: "Rota recomendada no navegador; instalação local continua disponível",
-    slides: 22,
+    subtitle: "Conheça os dados e prepare o laboratório no navegador",
+    slides: 24,
     checkpoint: "01",
     script: "roteiros/aula-00-ambiente.md",
     diagram: diagrams("episode-01-lifecycle.png"),
-    hook: "Um ambiente padronizado reduz o suporte e deixa a aula começar pelo dbt — não pela instalação.",
-    objective: ["Criar um Codespace 2-core", "Validar o setup automático", "Fechar o checkpoint 01"],
+    hook: "Quanto dos pagamentos corresponde a pedidos entregues?",
+    objective: ["Reconhecer as fontes do laboratório", "Validar o ambiente", "Consultar os primeiros pedidos"],
     sections: [
       { title: "SQL básico basta para começar", claim: "Terminal, Git, Python e dbt entram passo a passo.", bullets: ["SELECT, JOIN, GROUP BY, SUM e COUNT", "Nenhuma experiência prévia com dbt", "Comandos completos em todas as aulas"], visual: "steps", labels: ["SQL", "Terminal", "Python", "dbt"] },
       { title: "Codespaces é a rota recomendada", claim: "Code → Codespaces → Create codespace on main abre o laboratório no navegador.", bullets: ["Conta pessoal GitHub", "Sem instalar Python ou Git", "Mesmo ambiente para todos"], image: screenshot("01-code-codespaces.png"), imageWide: true, imageAlt: "Menu Code com a guia Codespaces e o botão Create codespace on main", caption: "Captura sanitizada do GitHub.com — 2026-09-01", imageSource: "https://github.com/AnselmoBorges/dbt-moderno-na-pratica" },
@@ -64,7 +68,7 @@ const decks = [
       { title: "DuckDB UI oficial por túnel", claim: "Bônus com GitHub CLI autenticado e uma cópia do repositório no seu computador.", bullets: ["UI oficial dentro do Codespace", "Túnel no computador local", "Navegador em localhost:4213"], commands: [
         ["No Codespace, na raiz do repositório", "python course.py official-data-ui"],
         ["No computador local, na raiz da cópia do repositório", "gh auth refresh -h github.com -s codespace\npython course.py codespace-ui-tunnel"],
-      ], visual: "flow", labels: ["DuckDB", "UI oficial", "túnel", "localhost"] },
+      ], image: practiceCapture("00-oficial.jpg"), imageAlt: "Notebook da DuckDB UI oficial com quatro pedidos e a data de entrega nula de o3.", caption: "DuckDB UI oficial, execução local com DuckDB 1.5.5", imageSource: "https://duckdb.org/docs/1.5/core_extensions/ui" },
     ],
     demo: { groups: [
       ["Configuração manual ou setup interrompido", "python course.py setup"],
@@ -84,7 +88,7 @@ const decks = [
     episode: "EPISÓDIO 1",
     title: "O que a série ensinou — e o que falta provar",
     subtitle: "Baseline aberto e suportado com dbt Core 1.12",
-    slides: 18,
+    slides: 20,
     checkpoint: "01",
     script: "roteiros/01-playlist-core-1-12.md",
     diagram: diagrams("episode-01-lifecycle.png"),
@@ -371,7 +375,7 @@ const decks = [
     episode: "EPISÓDIO 12",
     title: "Gold governada versus agente solto",
     subtitle: "Compare raw, manifest e métricas contra o mesmo ground truth",
-    slides: 22,
+    slides: 24,
     checkpoint: "12",
     script: "roteiros/12-gold-governada-agente-solto.md",
     diagram: diagrams("episode-12-benchmark.png"),
@@ -587,7 +591,7 @@ function addHook(p, layouts, deck, sources) {
 }
 
 const aulaZeroAgenda = [
-  ["00:00", "Objetivo e pré-requisitos"],
+  ["00:00", "A pergunta da temporada e os dados"],
   ["03:30", "Criação do Codespace e franquia"],
   ["09:00", "Setup e diagnóstico do ambiente"],
   ["13:30", "Checkpoint 01 e explorador de dados"],
@@ -621,6 +625,51 @@ function addAgenda(p, layouts, deck, sources, agenda) {
   }
   addChrome(slide, deck, 3, deck.slides, true);
   setNotes(slide, `Objetivos da aula: ${deck.objective.join(", ")}.`, sources);
+}
+
+function addDataIntro(p, layouts, deck, sources, startIndex) {
+  const dataSources = [...sources, "https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce",
+    "repo://lab/dabdbt/src/seeds", "repo://docs/praticas-duckdb.md"];
+  let slide = p.slides.add();
+  slide.setLayout(layouts.light); light(slide);
+  addTitle(slide, "Da origem ao indicador de receita", false,
+    "Um pedido pode ter vários itens e pagamentos. A resposta depende de juntar os dados no nível certo.");
+  const stages = [
+    ["Fontes e Silver", "Reconhecer cada linha e padronizar chaves, status e datas."],
+    ["Gold e métricas", "Somar pagamentos por pedido e aplicar a regra de entrega."],
+    ["Dashboard e agente", "Usar a mesma definição publicada, com testes, contrato e linhagem."],
+  ];
+  stages.forEach(([label, detail], i) => {
+    const top = 283 + i * 95;
+    addText(slide, label, { left: 76, top, width: 335, height: 44 }, { fontSize: 28, bold: true, color: C.blue }, `stage-label-${i}`);
+    addText(slide, detail, { left: 416, top, width: 790, height: 66 }, { fontSize: 25, color: C.ink }, `stage-detail-${i}`);
+  });
+  addChrome(slide, deck, startIndex, deck.slides, false);
+  setNotes(slide, "Pergunte quanto dos pagamentos corresponde a pedidos entregues. Mostre por que precisamos saber o nível de detalhe de cada fonte. Volte à pergunta no episódio final, ao comparar as duas séries no gráfico.", dataSources);
+
+  slide = p.slides.add();
+  slide.setLayout(layouts.light); light(slide);
+  addTitle(slide, "As fontes do laboratório", false,
+    "CSVs versionados no repositório. A amostra de comércio é didática e inspirada no esquema da Olist.");
+  const rows = [
+    ["b.orders", "Pedido", "order_id, status e datas de compra e entrega"],
+    ["b.order_items", "Item do pedido", "order_id, order_item_id, preço e frete"],
+    ["b.order_payments", "Pagamento do pedido", "order_id, sequência, parcelas e valor"],
+    ["b.customers", "Cadastro de cliente", "customer_id, cidade e UF"],
+    ["b.ibge_municipios", "Município", "código, nome, UF e coordenadas"],
+  ];
+  addText(slide, "TABELA", { left: 76, top: 267, width: 260, height: 32 }, { fontSize: 17, bold: true, color: C.blue }, "sources-table-label");
+  addText(slide, "UMA LINHA POR", { left: 345, top: 267, width: 260, height: 32 }, { fontSize: 17, bold: true, color: C.blue }, "sources-grain-label");
+  addText(slide, "COLUNAS EM DESTAQUE", { left: 610, top: 267, width: 590, height: 32 }, { fontSize: 17, bold: true, color: C.blue }, "sources-columns-label");
+  rows.forEach(([resource, grain, columns], i) => {
+    const top = 317 + i * 61;
+    addText(slide, resource, { left: 76, top, width: 260, height: 37 }, { fontFamily: "Courier New", fontSize: 22, bold: true }, `source-table-${i}`);
+    addText(slide, grain, { left: 345, top, width: 260, height: 39 }, { fontSize: 22 }, `source-grain-${i}`);
+    addText(slide, columns, { left: 610, top, width: 598, height: 41 }, { fontSize: 22 }, `source-columns-${i}`);
+  });
+  addChrome(slide, deck, startIndex + 1, deck.slides, false);
+  setNotes(slide, "Abra lab/dabdbt/src/seeds para mostrar os CSVs. Identificadores e status são texto. Datas e valores são usados nos cálculos. Pedido, item e pagamento têm grãos diferentes. A referência municipal apoia as análises geográficas.", dataSources);
+  return startIndex + 2;
 }
 
 function addCommandGroups(slide, groups, { top, labelColor, codeColor, help, helpColor }) {
@@ -661,7 +710,7 @@ function addSectionVisual(p, layouts, deck, section, total, sources, isDark) {
   setNotes(slide, `Use a composição para explicar visualmente: ${section.claim} ${section.bullets.join(" ")}`, sources.concat(imageSources));
 }
 
-function addDemoSlides(p, layouts, deck, sources, startIndex) {
+function addDemoSlides(p, layouts, deck, sources, startIndex, practice) {
   let index = startIndex;
   let slide = p.slides.add();
   slide.setLayout(layouts.dark); dark(slide);
@@ -677,23 +726,65 @@ function addDemoSlides(p, layouts, deck, sources, startIndex) {
   });
   addChrome(slide, deck, index++, deck.slides, true);
   setNotes(slide, `No terminal da raiz, execute os blocos aplicáveis: ${groups.map(([, command]) => command.replace(/\n/g, ", depois ")).join(" | ")}.`, sources);
+  return addPracticeSlides(p, layouts, deck, sources, index, practice);
+}
 
-  slide = p.slides.add();
+function addPracticeSlides(p, layouts, deck, sources, index, practice) {
+  const isInsight = practice.number === "12-insight";
+  let slide = p.slides.add();
   slide.setLayout(layouts.light); light(slide);
-  addTitle(slide, "Demonstração — observe", false);
-  addSteps(slide, deck.demo.observe, false);
+  addTitle(slide, isInsight ? "SQL do gráfico final" : "SQL da prática", false, isInsight
+    ? "No menu Consulta da aula, selecione 12-insight. Execute a consulta para ver a tabela e o gráfico."
+    : "No Explorador, selecione a aula ou cole o SQL. Clique em Executar consulta.");
+  addText(slide, practice.sql, { left: 77, top: 240, width: 1125, height: 256 }, { fontFamily: "Courier New", fontSize: 23, color: C.ink }, "practice-sql");
+  addText(slide, "Explorador após o checkpoint", { left: 77, top: 517, width: 500, height: 30 }, { fontSize: 20, bold: true }, "practice-ui-label");
+  addText(slide, "Mesma consulta pelo terminal", { left: 610, top: 517, width: 560, height: 30 }, { fontSize: 20, bold: true }, "practice-cli-label");
+  addText(slide, "python course.py data-ui", { left: 77, top: 555, width: 520, height: 36 }, { fontFamily: "Courier New", fontSize: 23, color: C.blue }, "practice-ui");
+  addText(slide, `python course.py sql ${practice.number}`, { left: 610, top: 555, width: 530, height: 36 }, { fontFamily: "Courier New", fontSize: 23, color: C.blue }, "practice-cli");
+  addText(slide, "Abra a porta privada 4213 no Codespaces ou localhost:4213 no seu computador.", { left: 77, top: 607, width: 1125, height: 36 }, { fontSize: 19, color: C.muted }, "practice-port");
   addChrome(slide, deck, index++, deck.slides, false);
-  setNotes(slide, `Durante a execução, destaque: ${deck.demo.observe.join("; ")}.`, sources);
+  const practiceSources = [...sources, `repo://lab/praticas/${practice.number}.sql`,
+    "https://github.com/AnselmoBorges/dbt-moderno-na-pratica/blob/main/docs/praticas-duckdb.md"];
+  setNotes(slide, `Depois de ${deck.demo.result}, execute o SQL no Explorador DuckDB. ${practice.highlight}`, practiceSources);
 
   slide = p.slides.add();
   slide.setLayout(layouts.dark); dark(slide);
-  addText(slide, "RESULTADO ESPERADO", { left: 72, top: 138, width: 500, height: 40 }, { fontSize: 18, bold: true, color: C.cyan }, "result-label");
-  addText(slide, deck.demo.result, { left: 72, top: 220, width: 1050, height: 190 }, { fontSize: 46, bold: true, color: C.white }, "result");
-  addText(slide, `Checkpoint ${deck.checkpoint} • evidência reproduzível`, { left: 72, top: 470, width: 760, height: 48 }, { fontSize: 22, color: C.pale }, "result-meta");
-  addGlow(slide, 940, 260, 230);
+  addTitle(slide, practice.topic, true);
+  addText(slide, practice.evidence, { left: 76, top: 265, width: 315, height: 220 }, { fontSize: 29, bold: true, color: C.white }, "practice-evidence");
+  slide.images.add({
+    blob: practice.imageBytes, contentType: "image/jpeg", alt: `Resultado no Explorador DuckDB. ${practice.evidence}`, fit: "contain",
+    position: { left: 396, top: 157, width: 812, height: 455 },
+  });
+  addText(slide, "Captura real do Explorador DuckDB do curso", { left: 396, top: 621, width: 812, height: 32 }, { fontSize: 17, color: C.pale, alignment: "center" }, "image-caption");
   addChrome(slide, deck, index++, deck.slides, true);
-  setNotes(slide, `Confirme o resultado esperado: ${deck.demo.result}. Se o valor divergir, não avance sem investigar.`, sources);
+  setNotes(slide, `${practice.evidence} ${practice.highlight}`, [...practiceSources, `repo://assets/screenshots/duckdb/${practice.number}.jpg`]);
   return index;
+}
+
+async function addDocsSlides(p, layouts, deck, sources, startIndex) {
+  const docsSources = [...sources, "https://docs.getdbt.com/reference/commands/cmd-docs",
+    "https://docs.getdbt.com/docs/build/documentation", "repo://lab/dabdbt/src/docs/overview.md"];
+  let slide = p.slides.add();
+  slide.setLayout(layouts.light); light(slide);
+  addTitle(slide, "A ficha de um modelo no dbt Docs", false);
+  addText(slide, "Depois do checkpoint 01, abra a documentação local.", { left: 76, top: 225, width: 397, height: 82 }, { fontSize: 25, bold: true }, "docs-instructions");
+  addText(slide, "python course.py docs", { left: 76, top: 324, width: 400, height: 44 }, { fontFamily: "Courier New", fontSize: 24, color: C.blue }, "docs-command");
+  addText(slide, "Abra a porta privada 8080 no Codespaces ou localhost:8080 no computador.", { left: 76, top: 384, width: 397, height: 135 }, { fontSize: 24, color: C.ink }, "docs-port");
+  slide.images.add({ blob: await fs.readFile(docsCapture("01-colunas.jpg")), contentType: "image/jpeg", alt: "Ficha real do dbt Docs com tipo VARCHAR, constraint not_null e testes Not Null e Unique em order_id.", fit: "contain", position: { left: 483, top: 176, width: 720, height: 437 } });
+  addText(slide, "order_metrics_v2 · coluna order_id", { left: 483, top: 622, width: 720, height: 30 }, { fontSize: 17, color: C.muted, alignment: "center" }, "image-caption");
+  addChrome(slide, deck, startIndex, deck.slides, false);
+  setNotes(slide, "No menu Database ou Project, abra order_metrics_v2. Em Columns, expanda order_id. Mostre tipo, descrição, constraint e os testes associados. Em Code, compare o SQL do modelo com o SQL compilado quando disponível.", [...docsSources, "repo://assets/screenshots/dbt-docs/01-colunas.jpg"]);
+
+  slide = p.slides.add();
+  slide.setLayout(layouts.light); light(slide);
+  addTitle(slide, "A linhagem do pedido à entrega", false);
+  addText(slide, "Abra View Lineage Graph. Use o filtro do grafo para ver pais e dependentes.", { left: 76, top: 176, width: 1070, height: 40 }, { fontSize: 24 }, "lineage-instructions");
+  addText(slide, "+order_metrics+", { left: 76, top: 222, width: 760, height: 46 }, { fontFamily: "Courier New", fontSize: 25, color: C.blue }, "lineage-selector");
+  slide.images.add({ blob: await fs.readFile(docsCapture("01-linhagem.jpg")), contentType: "image/jpeg", alt: "Grafo real ligando as fontes de itens, pagamentos e pedidos à Silver, às versões de order_metrics, à interface commerce_orders, às métricas e ao exposure do agente.", fit: "contain", position: { left: 72, top: 288, width: 1136, height: 225 } });
+  addText(slide, "Fontes, Silver, versões de pedidos, interface de consumo, métricas e exposure do agente.", { left: 76, top: 546, width: 1120, height: 74 }, { fontSize: 25, bold: true }, "lineage-evidence");
+  addChrome(slide, deck, startIndex + 1, deck.slides, false);
+  setNotes(slide, "Da esquerda para a direita, siga itens, pagamentos e pedidos pelas relações Silver. Chegue a order_metrics_v2, que alimenta commerce_orders. As métricas e o exposure mostram consumidores declarados. A seta documenta uma dependência do projeto. Para entender chaves e agregações, abra o SQL dos modelos.", [...docsSources, "repo://assets/screenshots/dbt-docs/01-linhagem.jpg"]);
+  return startIndex + 2;
 }
 
 function addClosingSlides(p, layouts, deck, sources, startIndex) {
@@ -747,7 +838,18 @@ function addClosingSlides(p, layouts, deck, sources, startIndex) {
   return index;
 }
 
+async function loadPractice(number) {
+  return {
+    ...LESSONS[number],
+    number,
+    sql: (await fs.readFile(path.join(PRACTICES, `${number}.sql`), "utf8")).trim(),
+    imageBytes: new Uint8Array(await fs.readFile(practiceCapture(`${number}.jpg`))),
+  };
+}
+
 async function buildDeck(deck) {
+  const number = deck.stem.split("-")[1];
+  const practice = await loadPractice(number);
   deck.diagramBytes = new Uint8Array(await fs.readFile(deck.diagram));
   try {
     deck.illustrationBytes = new Uint8Array(await fs.readFile(deck.illustration));
@@ -785,6 +887,7 @@ async function buildDeck(deck) {
   addAgenda(p, layouts, deck, sources, await loadAgenda(deck));
 
   let current = 4;
+  if (number === "00") current = addDataIntro(p, layouts, deck, sources, current);
   const allPaired = deck.slides % 2 === 1;
   for (let i = 0; i < deck.sections.length; i++) {
     const section = deck.sections[i];
@@ -792,7 +895,9 @@ async function buildDeck(deck) {
     addSectionConcept(p, layouts, deck, section, i, current++, sources, isDark);
     if (allPaired || i > 0) addSectionVisual(p, layouts, deck, section, current++, sources, !isDark);
   }
-  current = addDemoSlides(p, layouts, deck, sources, current);
+  current = addDemoSlides(p, layouts, deck, sources, current, practice);
+  if (number === "01") current = await addDocsSlides(p, layouts, deck, sources, current);
+  if (number === "12") current = addPracticeSlides(p, layouts, deck, sources, current, await loadPractice("12-insight"));
   current = addClosingSlides(p, layouts, deck, sources, current);
 
   if (p.slides.items.length !== deck.slides) {

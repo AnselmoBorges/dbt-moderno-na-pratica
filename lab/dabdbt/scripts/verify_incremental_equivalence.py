@@ -60,10 +60,15 @@ if full_rows != incremental_rows:
 if len(incremental_rows) != source_rows:
     raise SystemExit("Incremental perdeu ou duplicou pedidos.")
 
-print(json.dumps({
+report = {
     "measurement": "local DuckDB; candidate rows are a deterministic proxy",
     "full_refresh": {"source_candidate_rows": source_rows, "seconds": full["seconds"]},
     "incremental": {"source_candidate_rows": incremental_candidates, "seconds": incremental["seconds"]},
     "result_rows": len(incremental_rows),
     "functional_result_equal": True,
-}, ensure_ascii=False, indent=2))
+}
+target = PROJECT / "target"
+target.mkdir(exist_ok=True)
+report_json = json.dumps(report, ensure_ascii=False, indent=2)
+(target / "incremental_demo.json").write_text(report_json + "\n", encoding="utf-8")
+print(report_json)

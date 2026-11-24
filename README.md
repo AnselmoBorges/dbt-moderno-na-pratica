@@ -18,6 +18,7 @@ A proposta é simples: regras funcionais determinísticas pertencem ao pipeline 
 | [Laboratório](lab/dabdbt/README.md) | Projeto cumulativo com dbt Core, DuckDB, MetricFlow, contratos, testes, governança, CI, FinOps e MCP |
 | [Checkpoints](lab/dabdbt/checkpoints/README.md) | Uma validação executável para cada episódio da primeira temporada |
 | [Resultados no Codespaces](docs/resultados-dos-checkpoints.md) | Capturas reais do terminal e o que conferir em cada aula |
+| [Práticas no DuckDB e no dbt Docs](docs/praticas-duckdb.md) | Origem dos dados, SQL por aula, catálogo, linhagem e gráfico final |
 | [Acesso à Platform](pesquisa/guia-acesso-dbt-platform.md) | Trial, comunidade, preparação editorial e mensagens de contato em português e inglês |
 | [Guia do aluno](docs/README.md) | Instalação multiplataforma, Aula 0, glossário, comandos e suporte |
 | [Apresentações](assets/decks/README.md) | Aula 0 e episódios 1–12 em PPTX/PDF, com roteiro e comandos copiáveis |
