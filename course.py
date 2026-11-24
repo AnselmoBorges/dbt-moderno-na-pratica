@@ -333,6 +333,9 @@ def main() -> int:
     sql_parser.add_argument("number", choices=[*(f"{number:02}" for number in range(13)), "12-insight"])
     docs_parser = subparsers.add_parser("docs", help="abre a documentação HTML gerada pelo dbt")
     docs_parser.add_argument("--port", type=int, default=8080)
+    bonus_parser = subparsers.add_parser("bonus-v2", help="compara Core e dbt OSS v2 em um laboratório separado")
+    bonus_parser.add_argument("action", choices=["setup", "compare", "docs"])
+    bonus_parser.add_argument("--port", type=int, default=8580)
     tunnel_parser = subparsers.add_parser(
         "codespace-ui-tunnel", help="abre no computador local o túnel para a DuckDB UI"
     )
@@ -358,6 +361,9 @@ def main() -> int:
         practice_sql(args.number)
     elif args.command == "docs":
         serve_dbt_docs(args.port)
+    elif args.command == "bonus-v2":
+        bonus_python = require_environment() if args.action == "compare" else sys.executable
+        run([bonus_python, ROOT / "scripts/bonus_v2.py", args.action, "--port", str(args.port)])
     elif args.command == "codespace-ui-tunnel":
         codespace_ui_tunnel(args.codespace, args.port)
     elif args.command == "paths":

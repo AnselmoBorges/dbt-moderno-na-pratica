@@ -42,6 +42,12 @@ A [revisão de novembro de 2026](pesquisa/dossie-tendencias.md#resumo-executivo)
 11. dbt MCP local e somente leitura
 12. Gold governada versus agente solto
 
+### Aula bônus — migração para dbt OSS v2
+
+Compare o mesmo laboratório em **Core 1.12.7** e **dbt OSS 2.0.11**, leia o relatório de compatibilidade e explore o catálogo v2. As duas execuções usam bancos DuckDB separados.
+
+[Roteiro e prática](roteiros/bonus-migracao-v2.md) · [PPTX](assets/decks/bonus-migracao-v2.pptx) · [PDF](assets/decks/bonus-migracao-v2.pdf)
+
 ### Temporada 2 — dbt Platform
 
 Quatro episódios adicionais cobrem Developer/Starter, Semantic Layer gerenciada, Mesh Enterprise e MCP gerenciado. Todo recurso proprietário, pago, beta ou preview é identificado explicitamente e possui uma alternativa documental quando não houver acesso ao produto.

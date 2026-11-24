@@ -18,6 +18,8 @@ python course.py checkpoint 02
 python course.py checkpoint 12
 ```
 
+Após a temporada open, a [aula bônus de migração para dbt OSS v2](../roteiros/bonus-migracao-v2.md) oferece uma comparação isolada com o Core 1.12.7.
+
 Os episódios 13–16 são uma segunda temporada proprietária. Eles não fazem parte da validação local e não serão apresentados como executados sem acesso legítimo.
 
 ## Material complementar

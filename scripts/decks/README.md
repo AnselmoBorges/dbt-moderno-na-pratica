@@ -17,4 +17,6 @@ As notas de cada slide contêm:
 - transição para o próximo slide;
 - bloco `[Sources]` preservado.
 
+O bônus gera as notas diretamente a partir de `roteiros/bonus-migracao-v2.md`. Para regenerar apenas esse deck, passe `bonus-migracao-v2` ao gerador.
+
 O fluxo de edição das notas não altera o conteúdo visível nem exige que o aluno tenha acesso ao Hermes, Banana Slides ou Gemini.

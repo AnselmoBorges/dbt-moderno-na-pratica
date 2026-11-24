@@ -22,6 +22,12 @@ Cada deck traz o slide **SQL da prática**, o comando equivalente no terminal e 
 | Episódio 11 — dbt MCP | 20 | [PPTX](episodio-11-dbt-mcp.pptx) | [PDF](episodio-11-dbt-mcp.pdf) |
 | Episódio 12 — agente governado e gráfico de receita | 24 | [PPTX](episodio-12-gold-governada-agente-solto.pptx) | [PDF](episodio-12-gold-governada-agente-solto.pdf) |
 
+## Aula bônus
+
+| Aula | Slides | Apresentação | PDF |
+|---|---:|---|---|
+| [Migração do Core 1.12 ao dbt OSS v2](../../roteiros/bonus-migracao-v2.md) | 16 | [PPTX](bonus-migracao-v2.pptx) | [PDF](bonus-migracao-v2.pdf) |
+
 ## Sistema visual e edição
 
 - Texto, código, diagramas simples, legendas e fontes permanecem objetos nativos do PowerPoint.

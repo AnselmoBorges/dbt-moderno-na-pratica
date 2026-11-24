@@ -70,6 +70,25 @@ jobs:
           name: support-full-ubuntu
           path: build/support-report.json
 
+  bonus-v2:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            lab/dabdbt/requirements-local.txt
+            lab/bonus-v2/requirements.txt
+      - run: python course.py setup
+      - run: python course.py bonus-v2 setup
+      - run: python course.py bonus-v2 compare
+
   full-cross-platform:
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     strategy:

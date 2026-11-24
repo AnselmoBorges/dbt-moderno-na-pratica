@@ -23,6 +23,10 @@ Antes deles, a [Aula 0](aula-00-ambiente.md) prepara Windows, macOS, Linux ou Co
 | 11 | [dbt MCP local e somente leitura](11-dbt-mcp.md) | 20–23 min |
 | 12 | [Gold governada versus agente solto](12-gold-governada-agente-solto.md) | 23–25 min |
 
+## Aula bônus — open source
+
+[Migração do Core 1.12 ao dbt OSS v2](bonus-migracao-v2.md) · 22 min. O mesmo laboratório executado em duas cópias, com análise de contratos, paridade da Gold e catálogo local.
+
 ## Temporada 2 — dbt Platform e acesso contratado
 
 Estes roteiros só serão gravados depois da temporada open. Todos possuem rota com acesso real e fallback documental; nenhuma tela ou fixture será apresentada como execução do produto.
@@ -46,7 +50,7 @@ Estes roteiros só serão gravados depois da temporada open. Todos possuem rota 
 
 ## Apresentações
 
-O piloto público contém PPTX e PDF da Aula 0 e do episódio 1 em [`assets/decks`](../assets/decks/README.md). Os demais decks serão produzidos somente depois da aprovação visual e didática do piloto.
+A Aula 0, os 12 episódios open e a aula bônus têm PPTX com roteiro por slide e PDF com comandos copiáveis. [Apresentações](../assets/decks/README.md)
 
 ## Material complementar
 

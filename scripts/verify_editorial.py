@@ -66,6 +66,11 @@ for path in episode_files:
     if "pip install --pre" in text or "requirements-fusion" in text:
         raise SystemExit(f"{path.name} tenta executar software preview.")
 
+bonus_script = (SCRIPTS / "bonus-migracao-v2.md").read_text(encoding="utf-8")
+for heading in [*common_headings, "## Checkpoint executável"]:
+    if heading not in bonus_script:
+        raise SystemExit(f"Roteiro da aula bônus sem {heading}.")
+
 markdown_files = [
     *ROOT.glob("*.md"), *ROOT.glob("docs/**/*.md"), *ROOT.glob("pesquisa/*.md"), *ROOT.glob("roteiros/*.md"),
     *ROOT.glob("lab/dabdbt/*.md"), *ROOT.glob("lab/dabdbt/checkpoints/*.md"),
@@ -179,6 +184,10 @@ deck_specs = {
 }
 
 
+bonus_deck = "bonus-migracao-v2"
+bonus_slide_count = 16
+
+
 def native_slide_lines(xml: str) -> set[str]:
     lines = set()
     for shape in ElementTree.fromstring(xml).findall(".//{*}sp"):
@@ -203,7 +212,7 @@ aula_zero_commands = {
     "python course.py codespace-ui-tunnel",
 }
 total_slides = 0
-for stem, expected_slides in deck_specs.items():
+for stem, expected_slides in {**deck_specs, bonus_deck: bonus_slide_count}.items():
     pptx = ROOT / "assets/decks" / f"{stem}.pptx"
     pdf = ROOT / "assets/decks" / f"{stem}.pdf"
     if not pptx.is_file() or not pdf.is_file():
@@ -239,29 +248,41 @@ for stem, expected_slides in deck_specs.items():
     agenda = slide_text[2]
     if "Roteiro da aula" not in agenda or sum(bool(re.fullmatch(r"\d{2}:\d{2}", line)) for line in agenda) < 2:
         raise SystemExit(f"Deck {stem} precisa de um roteiro da aula com tempos em texto no slide 3.")
-    lesson = stem.split("-")[1]
-    checkpoint = f"python course.py checkpoint {lesson if lesson != '00' else '01'}"
-    if not any({"Comandos da prática", checkpoint}.issubset(lines) for lines in slide_text):
-        raise SystemExit(f"Deck {stem} precisa de '{checkpoint}' em texto no slide Comandos da prática.")
-    required_commands = {
-        "00": aula_zero_commands,
-        "01": {"code lab/dabdbt/target/manifest.json", "python course.py docs", "+order_metrics+"},
-    }.get(lesson, set())
-    missing_commands = required_commands.difference(*slide_text)
-    if missing_commands:
-        raise SystemExit(f"Deck {stem} sem comandos copiáveis: {sorted(missing_commands)}.")
-    practice_ids = ["12", "12-insight"] if lesson == "12" else [lesson]
-    for practice in practice_ids:
-        sql = ROOT / f"lab/praticas/{practice}.sql"
-        practice_lines = {line.strip() for line in sql.read_text(encoding="utf-8").splitlines() if line.strip()}
-        practice_lines.update({"python course.py data-ui", f"python course.py sql {practice}"})
-        if not any(practice_lines <= lines for lines in slide_text):
-            raise SystemExit(f"Deck {stem} precisa do SQL completo e dos comandos da prática {practice} em texto.")
-    practice_images = [f"duckdb/{practice}.jpg" for practice in practice_ids]
-    practice_images += {
-        "00": ["duckdb/00-oficial.jpg"],
-        "01": ["dbt-docs/01-colunas.jpg", "dbt-docs/01-linhagem.jpg"],
-    }.get(lesson, [])
+    if stem == bonus_deck:
+        bonus_actions = ("setup", "compare", "docs")
+        bonus_commands = {f"python course.py bonus-v2 {action}" for action in bonus_actions}
+        if any(command not in bonus_script for command in bonus_commands):
+            raise SystemExit("O roteiro bônus deve conter os comandos da prática.")
+        if not bonus_commands.issubset(set().union(*slide_text)):
+            raise SystemExit("O deck bônus deve conter os comandos copiáveis da prática.")
+        sql_lines = {line.strip() for line in (ROOT / "lab/bonus-v2/receita.sql").read_text(encoding="utf-8").splitlines()}
+        if not any(sql_lines <= lines for lines in slide_text):
+            raise SystemExit("O deck bônus deve conter o SQL da receita em texto.")
+        practice_images = ["dbt-docs/bonus-v2-gold.jpg"]
+    else:
+        lesson = stem.split("-")[1]
+        checkpoint = f"python course.py checkpoint {lesson if lesson != '00' else '01'}"
+        if not any({"Comandos da prática", checkpoint}.issubset(lines) for lines in slide_text):
+            raise SystemExit(f"Deck {stem} precisa de '{checkpoint}' em texto no slide Comandos da prática.")
+        required_commands = {
+            "00": aula_zero_commands,
+            "01": {"code lab/dabdbt/target/manifest.json", "python course.py docs", "+order_metrics+"},
+        }.get(lesson, set())
+        missing_commands = required_commands.difference(*slide_text)
+        if missing_commands:
+            raise SystemExit(f"Deck {stem} sem comandos copiáveis: {sorted(missing_commands)}.")
+        practice_ids = ["12", "12-insight"] if lesson == "12" else [lesson]
+        for practice in practice_ids:
+            sql = ROOT / f"lab/praticas/{practice}.sql"
+            practice_lines = {line.strip() for line in sql.read_text(encoding="utf-8").splitlines() if line.strip()}
+            practice_lines.update({"python course.py data-ui", f"python course.py sql {practice}"})
+            if not any(practice_lines <= lines for lines in slide_text):
+                raise SystemExit(f"Deck {stem} precisa do SQL completo e dos comandos da prática {practice} em texto.")
+        practice_images = [f"duckdb/{practice}.jpg" for practice in practice_ids]
+        practice_images += {
+            "00": ["duckdb/00-oficial.jpg"],
+            "01": ["dbt-docs/01-colunas.jpg", "dbt-docs/01-linhagem.jpg"],
+        }.get(lesson, [])
     for picture in practice_images:
         image_path = ROOT / "assets/screenshots" / picture
         if hashlib.sha256(image_path.read_bytes()).hexdigest() not in media_hashes:
@@ -270,7 +291,8 @@ for stem, expected_slides in deck_specs.items():
         pictures = re.findall(r"<p:pic>.*?</p:pic>", xml, flags=re.DOTALL)
         if any(not re.search(r"<p:cNvPr\b[^>]*\bdescr=\"[^\"]{20,}\"", picture) for picture in pictures):
             raise SystemExit(f"Deck {stem}, slide {index}, possui imagem sem texto alternativo útil.")
-    total_slides += len(slides)
+    if stem != bonus_deck:
+        total_slides += len(slides)
     if not pdf.read_bytes().startswith(b"%PDF"):
         raise SystemExit(f"PDF inválido: {pdf.relative_to(ROOT)}")
     pdf_counts = [int(value) for value in re.findall(rb"/Count\s+(\d+)", pdf.read_bytes())]
@@ -286,7 +308,7 @@ if list((ROOT / "assets/decks").glob("*-banana.pptx")) or list((ROOT / "assets/d
 
 provenance = (ROOT / "assets/decks/provenance.yml").read_text(encoding="utf-8")
 manifest = (ROOT / "assets/decks/manifest.yml").read_text(encoding="utf-8")
-for stem, slides in deck_specs.items():
+for stem, slides in {**deck_specs, bonus_deck: bonus_slide_count}.items():
     if f"id: {stem}" not in provenance:
         raise SystemExit(f"Deck sem procedência registrada: {stem}")
     if not re.search(rf"id: {re.escape(stem)}[^\n]*slides: {slides}", manifest):
@@ -319,4 +341,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, {len(entries)} ativos, 13 decks, {total_slides} slides e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, {len(entries)} ativos, {len(deck_specs)} decks principais, {total_slides} slides e 1 bônus com {bonus_slide_count} slides.")
