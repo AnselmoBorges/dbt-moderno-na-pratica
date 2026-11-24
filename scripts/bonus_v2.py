@@ -136,6 +136,7 @@ def compare() -> None:
     original_failed = failed_models(project_v2)
     original_log = (trial / "06-v2-original.log").read_text(encoding="utf-8", errors="replace")
     if original and (not original_failed or MULTI_STATEMENT_ERROR not in original_log):
+        print("\n".join(original_log.splitlines()[-20:]))
         raise SystemExit(f"Resultado v2 original fora do cenário demonstrado. Consulte {trial.relative_to(ROOT)}.")
     shutil.copy2(project_v2 / "target/run_results.json", trial / "06-v2-run-results.json")
 
@@ -153,6 +154,7 @@ def compare() -> None:
     observed_block = (code != 0 and CONTRACT_MODELS <= set(failed)
                       and MULTI_STATEMENT_ERROR in run_log)
     if code != 0 and not observed_block:
+        print("\n".join(run_log.splitlines()[-20:]))
         raise SystemExit(f"Resultado v2 fora do cenário demonstrado. Consulte a saída em {trial.relative_to(ROOT)}.")
 
     core_rows, core_metrics = read_projection(database_core)
