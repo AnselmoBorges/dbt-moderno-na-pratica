@@ -27,6 +27,8 @@ flowchart LR
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–04:00 — Três interfaces, uma fonte de significado
 
 “O YAML versionado declara entidades, dimensões e métricas. MetricFlow recebe uma consulta semântica e compila SQL. A fachada `semantic.commerce_orders` oferece uma tabela estável para ferramentas SQL. O Core 1.12 também gera `osi_document.json`, um documento que representa a semântica de forma interoperável.

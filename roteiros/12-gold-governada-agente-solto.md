@@ -28,6 +28,8 @@ flowchart LR
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–04:00 — A hipótese e os três tratamentos
 
 “A hipótese é: quanto mais governada e compacta a interface, maior a aderência às regras e menor o trabalho do agente. Para testá-la, mantemos perguntas, modelo, parâmetros, pricing e dataset constantes. Variamos apenas o contexto e as ferramentas.

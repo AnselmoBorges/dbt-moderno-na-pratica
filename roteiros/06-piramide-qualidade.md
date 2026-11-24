@@ -26,6 +26,8 @@ flowchart TB
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–04:00 — Cinco perguntas, cinco mecanismos
 
 “Unit test pergunta: com estas entradas pequenas, a lógica SQL produz estas saídas? Contrato pergunta: o modelo produz as colunas e tipos prometidos? Data test pergunta: os dados materializados respeitam uma propriedade? Freshness pergunta: a fonte chegou no prazo? Observabilidade pergunta: o comportamento ao longo do tempo — volume, duração, distribuição e dependências — está saudável?

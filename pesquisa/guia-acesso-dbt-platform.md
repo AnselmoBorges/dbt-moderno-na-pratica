@@ -1,13 +1,13 @@
 # Guia de acesso à dbt Platform para a segunda temporada
 
-**Data de corte:** 1º de setembro de 2026. Confirme preços, limites e disponibilidade imediatamente antes do cadastro e da gravação.
+**Data de corte:** 24 de novembro de 2026. Confirme preços, limites e disponibilidade imediatamente antes do cadastro e da gravação.
 
 ## O que pode ser usado sem contrato Enterprise
 
-Segundo a [página oficial de preços](https://www.getdbt.com/pricing):
+As condições foram consultadas nas páginas oficiais de [preços](https://www.getdbt.com/pricing) e de [cadastro](https://www.getdbt.com/signup).
 
 - **Developer:** gratuito, uma pessoa, um projeto e 3.000 modelos construídos com sucesso por mês.
-- **Trial Starter:** 14 dias; atualmente inclui até cinco seats, um projeto, 15.000 modelos construídos com sucesso, 5.000 métricas consultadas, Semantic Layer básica e API.
+- **Trial Starter:** 14 dias para novas contas, com até cinco colaboradores. A oferta Starter publica um projeto, 15.000 modelos construídos com sucesso e 5.000 métricas consultadas por mês, com Semantic Layer e acesso à API.
 - **Starter após trial:** preço público atual de US$ 100 por usuário/mês.
 - **Enterprise:** preço sob consulta e recursos/limites adicionais, incluindo cenários avançados de múltiplos projetos.
 
@@ -69,7 +69,7 @@ Esses números são fotografia da data de corte. Não devem ser gravados sem rec
 - [Programa dbt Community Champions](https://www.getdbt.com/dbt-champions)
 - [Repositório dbt MCP](https://github.com/dbt-labs/dbt-mcp) e canal comunitário `#tools-dbt-mcp`
 
-Na data de corte, inscrições para Champions estavam fechadas, com reabertura indicada após o dbt Summit. O programa destaca conteúdo comunitário, acesso antecipado e contato com equipes de produto; é o canal mais alinhado a uma série educacional contínua. Não há garantia de trial estendido ou acesso Enterprise.
+Em 24 de novembro, a página do programa apresentava a turma de 2026 e o caminho para participar da comunidade. Consulte o programa para condições de candidatura. Para solicitar um ambiente de demonstração ou acesso educacional, use o canal oficial de contato. [Programa Champions](https://www.getdbt.com/dbt-champions)
 
 ## Checklist para o pedido de acesso
 
@@ -93,17 +93,11 @@ Meu nome é Anselmo Borges e mantenho o canal Rescue Point, com conteúdo em por
 
 Estou preparando uma nova série em duas etapas. A primeira terá 12 episódios totalmente reproduzíveis com dbt Core 1.12, DuckDB, MetricFlow e dbt MCP local. Depois dela, pretendo produzir uma minissérie mostrando, com fronteiras comerciais claras, a dbt Platform, Semantic Layer gerenciada, Mesh e integrações MCP.
 
-Gostaria de saber se existe acesso de creator, ambiente de demonstração ou trial estendido que permita gravar essas capacidades com segurança. O laboratório usa apenas dados públicos do Olist, não requer acesso a dados de clientes e todos os resultados serão identificados como medição própria ou resultado reportado por case.
+Gostaria de saber se existe acesso de creator, ambiente de demonstração ou trial estendido que permita gravar essas capacidades com segurança. O laboratório usa uma amostra didática inspirada no conjunto público da Olist. Temos dados suficientes para a demonstração e os resultados serão identificados como medição própria ou resultado reportado por case.
 
 Posso compartilhar o roteiro editorial, os links da playlist existente e a lista exata de recursos necessários. Também tenho interesse em participar da dbt Community e acompanhar a próxima abertura do programa Community Champions.
 
 Obrigado pela orientação sobre o canal mais adequado.
-
-## Material complementar
-
-- [Preços oficiais](https://www.getdbt.com/pricing) — dbt Labs, página comercial/EN; limites devem ser revistos antes da gravação; episódios 13–16; verificado em 2026-09-01.
-- [dbt Community](https://www.getdbt.com/community/join-the-community) — dbt Labs, comunidade/EN; canal oficial de participação; episódios 13–16; verificado em 2026-09-01.
-- [Diretrizes de marca](https://www.getdbt.com/trademark-guidelines) — dbt Labs, política/EN; revisão obrigatória antes de monetizar; toda a segunda temporada; verificado em 2026-09-01.
 
 Anselmo Borges
 Rescue Point
@@ -118,7 +112,7 @@ My name is Anselmo Borges, and I run Rescue Point, a Portuguese-language data en
 
 I am preparing a new two-part series. The first season will contain 12 fully reproducible episodes using dbt Core 1.12, DuckDB, MetricFlow, and local dbt MCP. After completing the open-source season, I plan to publish a short series covering dbt Platform, the managed Semantic Layer, Mesh, and managed MCP integrations, with clear labels for free, paid, beta, and preview functionality.
 
-Could you advise whether a creator environment, demo access, or an extended trial is available for recording these capabilities safely? The lab uses only the public Olist dataset, requires no customer data, and will clearly distinguish my own measurements from vendor-reported case-study results.
+Could you advise whether a creator environment, demo access, or an extended trial is available for recording these capabilities safely? The lab uses a teaching sample inspired by the public Olist dataset and will distinguish my own measurements from vendor-reported case-study results.
 
 I can share the editorial outline, links to the existing playlist, and the exact feature list needed. I am also interested in contributing to the dbt Community and following the next Community Champions application window.
 
@@ -130,3 +124,9 @@ Rescue Point
 ## Regra operacional
 
 Este arquivo prepara o contato; não o autoriza. Cadastro, envio de mensagem, compartilhamento de material privado ou ativação de trial exigem confirmação explícita do proprietário do canal.
+
+## Material complementar
+
+- [Preços oficiais](https://www.getdbt.com/pricing) — dbt Labs, página comercial/EN; limites devem ser revistos antes da gravação; episódios 13–16; verificado em 2026-11-24.
+- [dbt Community](https://www.getdbt.com/community/join-the-community) — dbt Labs, comunidade/EN; canal oficial de participação; episódios 13–16; verificado em 2026-09-01.
+- [Diretrizes de marca](https://www.getdbt.com/dbt-assets/dbt-trademark-guidelines) — dbt Labs, política/EN; revisão obrigatória antes de monetizar; toda a segunda temporada; verificado em 2026-09-01.

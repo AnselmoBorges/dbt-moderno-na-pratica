@@ -8,6 +8,8 @@ python3.12 --version
 git --version
 ```
 
+Se instalou o Python 3.13, use `python3.13` em todos os comandos abaixo.
+
 3. Baixe e prepare o curso:
 
 ```bash

@@ -28,6 +28,8 @@ Cada deck traz o slide **SQL da prática**, o comando equivalente no terminal e 
 |---|---:|---|---|
 | [Migração do Core 1.12 ao dbt OSS v2](../../roteiros/bonus-migracao-v2.md) | 16 | [PPTX](bonus-migracao-v2.pptx) | [PDF](bonus-migracao-v2.pdf) |
 
+O bônus e a temporada somam **14 pares de arquivos e 287 slides**. Consulte o [escopo da validação](../../docs/validacao-do-curso.md) para entender o que é conferido automaticamente.
+
 ## Sistema visual e edição
 
 - Texto, código, diagramas simples, legendas e fontes permanecem objetos nativos do PowerPoint.
@@ -38,7 +40,7 @@ Cada deck traz o slide **SQL da prática**, o comando equivalente no terminal e 
 
 ## Qualidade verificada
 
-- 271 slides renderizados no PPTX e no PDF, com revisão visual das páginas atualizadas.
+- 271 slides da trilha principal e 16 do bônus, renderizados em PPTX e PDF.
 - Nenhum overflow detectado pelo validador de apresentações.
 - Mesma contagem de páginas nos dois formatos.
 - Cada slide possui fala sugerida, indicação do que destacar, transição, tempo aproximado e `[Sources]` nas notas.

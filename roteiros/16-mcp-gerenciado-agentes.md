@@ -101,7 +101,7 @@ Pré-requisitos: episódios 11–14; acesso Platform compatível; token temporá
 - [dbt State e consumo](https://docs.getdbt.com/docs/deploy/dbt-state-about)
 
 - [dbt MCP](https://docs.getdbt.com/docs/dbt-ai/about-mcp)
-- [Setup self-hosted e requisitos por toolset](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/dbt-ai/setup-local-mcp.md)
+- [Setup self-hosted e requisitos por toolset](https://docs.getdbt.com/docs/dbt-ai/setup-local-mcp)
 - [Tools disponíveis](https://docs.getdbt.com/docs/dbt-ai/mcp-available-tools)
 - [Case impact.com — resultado reportado](https://www.getdbt.com/case-studies/impact.com)
 - [M1 Finance — relato do fornecedor](https://www.getdbt.com/blog/dbt-mcp-server-reliable-ai)

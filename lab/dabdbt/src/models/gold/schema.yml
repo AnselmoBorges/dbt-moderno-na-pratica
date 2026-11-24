@@ -45,7 +45,7 @@ models:
           - not_null
           - unique
       - name: customer_id
-        description: Identificador do cliente (chave estrangeira para `gold.customer_overview`).
+        description: Identificador do cliente usado para consultar `g.customer_overview`.
       - name: order_status
         description: Status atual do pedido.
       - name: order_purchase_timestamp

@@ -44,6 +44,10 @@ Os recortes abaixo mostram saídas de uma execução de 24 de novembro de 2026 n
 | [11 · MCP somente leitura](../lab/dabdbt/checkpoints/11-mcp.md) | `dbt-mcp OK` confirma que o servidor local expôs cinco ferramentas e rejeitou a chamada a `build`. |
 | [12 · Agente governado](../lab/dabdbt/checkpoints/12-agentes.md) | `Ground truth OK` valida as 10 perguntas no DuckDB. `generated_from_fixtures: true` confirma que a comparação usa traces gravados e roda sem chamada a um modelo de IA. |
 
+## Aula bônus — Core 1.12.7 e dbt OSS 2.0.11
+
+Execute `python course.py bonus-v2 compare` após os dois setups indicados no [roteiro](../roteiros/bonus-migracao-v2.md#checkpoint-executável). Abra `build/bonus-v2/resultado.json`. Procure `recorte.linhas_iguais: true`, os oito pedidos e as receitas 740 e 630. Leia `resultado_migracao` separadamente para saber se o build v2 passou no seu ambiente. [Comparação por ambiente](validacao-do-curso.md#evidência-do-bônus)
+
 Se um checkpoint não terminar com `OK`, consulte a [solução de problemas](solucao-de-problemas.md). Para compartilhar um diagnóstico sanitizado, use `python course.py support-report` e siga o [modelo para pedir ajuda](pedir-ajuda.md).
 
 ## Material complementar

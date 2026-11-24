@@ -11,6 +11,7 @@ Correções técnicas, melhorias de clareza e exemplos reproduzíveis são bem-v
 ```bash
 python course.py setup
 python course.py validate
+python scripts/verify_links.py --external
 ```
 
 Não inclua credenciais, identificadores cloud reais, dados privados ou código proprietário. Resultados de fornecedores devem ser descritos como reportados, nunca como resultado geral garantido.

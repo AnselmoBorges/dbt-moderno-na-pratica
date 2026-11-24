@@ -29,6 +29,8 @@ flowchart TB
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–02:00 — O compilador entre pergunta e SQL
 
 “MetricFlow recebe uma consulta em termos de métricas e dimensões e compila o SQL necessário. Ele não é um LLM e não adivinha significado. Sua força vem justamente do contrário: trabalha sobre definições explícitas.
@@ -183,5 +185,5 @@ Por fim, apresento uma convenção de revisão para novas métricas: pergunta de
 
 ## Material complementar
 
-- [README do MetricFlow](https://github.com/dbt-labs/metricflow/blob/main/README.md) — dbt Labs, repositório/EN; visão oficial do motor de compilação; episódio 3; verificado em 2026-09-01.
+- [README do MetricFlow](https://github.com/dbt-labs/metricflow) — dbt Labs, repositório/EN; visão oficial do motor de compilação; episódio 3; verificado em 2026-09-01.
 - [Product Spotlight: Semantic Layer](https://www.youtube.com/watch?v=DS7Ub_CmBR0) — dbt Labs, vídeo/EN, 4 min; contraste com o serviço gerenciado; episódio 3; verificado em 2026-09-01.

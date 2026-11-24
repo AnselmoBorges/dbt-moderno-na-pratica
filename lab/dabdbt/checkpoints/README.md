@@ -1,6 +1,6 @@
 # Checkpoints da temporada
 
-Cada checkpoint é uma porta de qualidade executável. Rode `python course.py checkpoint NN` na raiz do repositório. O projeto é cumulativo: os arquivos representam o estado final, enquanto os checkpoints isolam a capacidade apresentada em cada episódio.
+Na raiz do repositório, rode `python course.py setup` se o ambiente estiver pendente e execute `python course.py checkpoint 01`. Ele cria o banco e os artefatos usados pelas demais aulas. Depois, rode `python course.py checkpoint NN` para o tema escolhido. Os arquivos representam o estado final do curso.
 
 O [guia ilustrado dos checkpoints](../../../docs/resultados-dos-checkpoints.md) mostra os resultados de uma execução no Codespaces e indica o que procurar no terminal.
 
@@ -18,5 +18,7 @@ O [guia ilustrado dos checkpoints](../../../docs/resultados-dos-checkpoints.md) 
 | 10 | FinOps | full/focused builds são medidos e preservam ground truth |
 | 11 | MCP | servidor expõe somente cinco ferramentas de leitura |
 | 12 | Agentes | dez perguntas e três modos de trace são avaliados |
+
+A [aula bônus do dbt OSS v2](../../../roteiros/bonus-migracao-v2.md) usa `python course.py bonus-v2 compare` e tem seu próprio laboratório.
 
 Os resultados de duração variam por máquina. Os custos das fixtures de IA são sintéticos e servem apenas para testar o cálculo; não constituem evidência de economia real.

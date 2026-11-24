@@ -11,7 +11,7 @@ Responda sem executar:
 3. Quando usar `count(*)` e quando usar `count(distinct order_id)`?
 4. Qual a diferença entre filtrar antes e depois de uma agregação?
 
-Se duas ou mais perguntas forem desconhecidas, faça primeiro uma revisão curta de SQL. Isso não impede a Aula 0.
+Você pode começar pela Aula 0 e usar a [introdução de SQL do DuckDB](https://duckdb.org/docs/stable/sql/introduction) para rever os pontos que ficaram em dúvida.
 
 ## Rota recomendada: Codespaces
 
@@ -19,7 +19,7 @@ Se duas ou mais perguntas forem desconhecidas, faça primeiro uma revisão curta
 - Navegador atualizado e conexão com a internet.
 - Nenhuma instalação local de Python, Git ou VS Code.
 
-O curso fixa uma máquina de 2 CPUs e 4 GB de RAM. Consulte a [franquia e o passo a passo do Codespaces](codespaces.md).
+O guia recomenda a opção `2-core` e a configuração do curso declara 2 CPUs e 4 GB de RAM. Consulte a [franquia e o passo a passo do Codespaces](codespaces.md).
 
 ## Rota alternativa: instalação local
 
@@ -28,7 +28,7 @@ O curso fixa uma máquina de 2 CPUs e 4 GB de RAM. Consulte a [franquia e o pass
 - Navegador e terminal.
 - Editor recomendado: VS Code, sem ser obrigatório.
 
-Python 3.11 e 3.14 não são aceitos pelo conjunto fixado. O motivo é compatibilidade de dependências, especialmente do servidor MCP, e não uma limitação geral do dbt.
+O ambiente do curso aceita Python 3.12 e 3.13. Use uma dessas duas versões para reproduzir as dependências e os resultados da CI.
 
 ## Hardware
 

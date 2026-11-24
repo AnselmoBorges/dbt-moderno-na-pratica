@@ -7,9 +7,10 @@ flowchart TB
     E4 --> E5[5. contratos] --> E6[6. qualidade] --> E7[7. governança]
     E7 --> E8[8. produtos] --> E9[9. CI] --> E10[10. FinOps]
     E10 --> E11[11. MCP] --> E12[12. agentes]
+    E12 -.-> B[Bônus opcional · migração para dbt OSS v2]
 ```
 
-Cada checkpoint é cumulativo e usa o estado final do projeto para isolar a capacidade focal:
+Execute `setup` e o checkpoint 01 em um ambiente novo. Ele cria o banco e os artefatos que as outras aulas usam. A partir daí, cada checkpoint focaliza um tema sobre a versão cumulativa do projeto. Você pode repetir as aulas 02–12 na ordem que precisar.
 
 ```bash
 python course.py checkpoint 01
@@ -17,6 +18,8 @@ python course.py checkpoint 02
 # ...
 python course.py checkpoint 12
 ```
+
+O [índice de checkpoints](../lab/dabdbt/checkpoints/README.md) liga cada número ao seu critério de sucesso. Os [roteiros e apresentações](../roteiros/README.md) orientam a demonstração.
 
 Após a temporada open, a [aula bônus de migração para dbt OSS v2](../roteiros/bonus-migracao-v2.md) oferece uma comparação isolada com o Core 1.12.7.
 

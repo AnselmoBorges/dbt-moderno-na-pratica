@@ -9,6 +9,8 @@ py -3.12 --version
 git --version
 ```
 
+Se instalou o Python 3.13, use `py -3.13` em todos os comandos abaixo.
+
 4. Baixe e prepare o curso:
 
 ```powershell

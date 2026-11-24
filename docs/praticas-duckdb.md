@@ -83,6 +83,10 @@ Nesse grafo, `order_metrics_v2` lê os três modelos Silver. Já `g.order_fulfil
 
 ![Grafo real do dbt ligando fontes ao Silver, versões de order_metrics, commerce_orders, métricas e exposure do agente](../assets/screenshots/dbt-docs/01-linhagem.jpg)
 
+### Catálogo da aula bônus
+
+A aula bônus gera outro catálogo. Com a comparação pronta, use `python course.py bonus-v2 docs` e abra a porta privada **8580** no Codespaces ou `http://localhost:8580` localmente. Em **Assets → Models → order_fulfillment_g**, confira a descrição, as colunas e as dependências. O v2 usa um índice em Parquet dentro de `v2/target/info_schema/v1/`, além de artefatos JSON de compatibilidade. [Roteiro do bônus](../roteiros/bonus-migracao-v2.md#checkpoint-executável)
+
 ## O insight que chega ao consumidor
 
 No Explorador, escolha **12-insight · Receita bruta e entregue por mês** e clique em **Executar consulta**. Role até o gráfico. No terminal, use `python course.py sql 12-insight` para obter a tabela que o alimenta.
