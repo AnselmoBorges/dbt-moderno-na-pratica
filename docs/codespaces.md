@@ -59,7 +59,7 @@ postCreateCommand: python course.py setup
 postStartCommand:  python course.py doctor && python course.py paths
 ```
 
-Não interrompa o primeiro `setup`. O terminal deve terminar com **Ambiente pronto** e o diagnóstico deve mostrar os itens principais como `OK`. Se o terminal não estiver visível, abra **Terminal → New Terminal**.
+O editor e um terminal podem abrir enquanto o `setup` ainda instala os pacotes. Aguarde a mensagem **Ambiente pronto** no terminal de configuração do GitHub Codespaces. Se você ainda vir `Running postCreateCommand`, espere a instalação terminar. Em seguida, rode `python course.py doctor` em um terminal na raiz e procure a mensagem **Ambiente preparado**. Se precisar abrir o terminal, use **Terminal → New Terminal**. Veja a [saída real do diagnóstico](resultados-dos-checkpoints.md#aula-0-e-episódio-1--ambiente-e-primeiro-build).
 
 ### Não execute o assistente “Get Started with dbt Power User”
 

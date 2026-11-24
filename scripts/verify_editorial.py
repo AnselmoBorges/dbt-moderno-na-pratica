@@ -8,7 +8,9 @@ import hashlib
 import json
 import re
 import zipfile
+from datetime import date
 from pathlib import Path
+from xml.etree import ElementTree
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "pesquisa/matriz-evidencias.csv"
@@ -89,10 +91,14 @@ for path in markdown_files:
 catalog = ROOT / "assets/catalog.yml"
 catalog_text = catalog.read_text(encoding="utf-8")
 entries = re.split(r"\n  - id: ", catalog_text)[1:]
-if len(entries) != 40:
-    raise SystemExit(f"Catálogo visual deveria conter 40 ativos; contém {len(entries)}.")
+if len(entries) < 40:
+    raise SystemExit(f"Catálogo visual precisa ter pelo menos 40 ativos; contém {len(entries)}.")
+asset_ids = set()
 for entry in entries:
     asset_id = entry.splitlines()[0].strip()
+    if asset_id in asset_ids:
+        raise SystemExit(f"Ativo duplicado no catálogo: {asset_id}.")
+    asset_ids.add(asset_id)
     fields = {}
     for line in entry.splitlines()[1:]:
         match = re.match(r"    ([a-z0-9_]+):\s*(.+)", line)
@@ -130,10 +136,20 @@ for entry in entries:
             raise SystemExit(f"Ilustração assistida {asset_id} sem campos: {sorted(ai_fields - set(fields))}")
         if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
             raise SystemExit(f"Hash divergente na ilustração assistida {asset_id}.")
-    elif fields["kind"] == "product_screenshot":
+    elif fields["kind"] in {"product_screenshot", "lab_screenshot"}:
         screenshot_fields = {"product", "captured_at", "sha256"}
+        if fields["kind"] == "lab_screenshot":
+            screenshot_fields.add("caption")
         if not screenshot_fields.issubset(fields):
             raise SystemExit(f"Screenshot {asset_id} sem campos: {sorted(screenshot_fields - set(fields))}")
+        try:
+            captured_at = date.fromisoformat(fields["captured_at"])
+        except ValueError:
+            raise SystemExit(f"Screenshot {asset_id} precisa de data no formato AAAA-MM-DD.") from None
+        if captured_at.isoformat() != fields["captured_at"]:
+            raise SystemExit(f"Screenshot {asset_id} precisa de data no formato AAAA-MM-DD.")
+        if fields["kind"] == "lab_screenshot" and not fields["source_url"].startswith("https://"):
+            raise SystemExit(f"Screenshot {asset_id} precisa de URL de origem HTTPS.")
         if hashlib.sha256(asset_path.read_bytes()).hexdigest() != fields["sha256"]:
             raise SystemExit(f"Hash divergente no screenshot {asset_id}.")
     elif fields["kind"] == "brand_logo":
@@ -161,6 +177,31 @@ deck_specs = {
     "episodio-11-dbt-mcp": 20,
     "episodio-12-gold-governada-agente-solto": 22,
 }
+
+
+def native_slide_lines(xml: str) -> set[str]:
+    lines = set()
+    for shape in ElementTree.fromstring(xml).findall(".//{*}sp"):
+        properties = shape.find("./{*}nvSpPr/{*}cNvPr")
+        if properties is not None and properties.get("hidden") in {"1", "true"}:
+            continue
+        for paragraph in shape.findall("./{*}txBody/{*}p"):
+            line = "".join(node.text or "" for node in paragraph.findall(".//{*}t"))
+            lines.add(line.strip())
+    return lines
+
+
+aula_zero_commands = {
+    "python course.py setup",
+    "python course.py doctor",
+    "python course.py paths",
+    "python course.py checkpoint 01",
+    "python course.py data-ui",
+    "python course.py support-report",
+    "python course.py official-data-ui",
+    "gh auth refresh -h github.com -s codespace",
+    "python course.py codespace-ui-tunnel",
+}
 total_slides = 0
 for stem, expected_slides in deck_specs.items():
     pptx = ROOT / "assets/decks" / f"{stem}.pptx"
@@ -170,14 +211,19 @@ for stem, expected_slides in deck_specs.items():
     with zipfile.ZipFile(pptx) as archive:
         slides = [name for name in archive.namelist() if re.fullmatch(r"ppt/slides/slide\d+\.xml", name)]
         notes = [name for name in archive.namelist() if re.fullmatch(r"ppt/notesSlides/notesSlide\d+\.xml", name)]
+        if len(slides) != expected_slides or len(notes) != expected_slides:
+            raise SystemExit(f"Deck {stem} sem slides/notas esperados: slides={len(slides)}, notes={len(notes)}")
         note_xml = [archive.read(name).decode("utf-8", errors="ignore") for name in notes]
-        slide_xml = [archive.read(name).decode("utf-8", errors="ignore") for name in slides]
-    if len(slides) != expected_slides or len(notes) != expected_slides:
-        raise SystemExit(f"Deck {stem} sem slides/notas esperados: slides={len(slides)}, notes={len(notes)}")
-    if any("[Sources]" not in xml for xml in note_xml):
-        raise SystemExit(f"Deck {stem} possui slide sem bloco [Sources] nas notas.")
+        slide_xml = [
+            archive.read(f"ppt/slides/slide{index}.xml").decode("utf-8")
+            for index in range(1, expected_slides + 1)
+        ]
     required_note_sections = ("[Roteiro recomendado]", "Fala sugerida:", "O que destacar:", "Transição:")
     for index, xml in enumerate(note_xml, start=1):
+        note_text = "\n".join(node.text or "" for node in ElementTree.fromstring(xml).findall(".//{*}t"))
+        _, marker, sources = note_text.partition("[Sources]")
+        if not marker or not re.search(r"(?m)^\s*-\s+https://[a-z0-9.-]+\.[a-z]{2,}(?:[/?#]\S*)?\s*$", sources, re.I):
+            raise SystemExit(f"Deck {stem}, slide {index}, precisa de uma URL HTTPS no bloco [Sources] das notas.")
         missing_sections = [section for section in required_note_sections if section not in xml]
         if missing_sections:
             raise SystemExit(f"Deck {stem}, slide {index}, sem roteiro completo: {missing_sections}")
@@ -185,6 +231,21 @@ for stem, expected_slides in deck_specs.items():
             raise SystemExit(f"Deck {stem}, slide {index}, sem tempo sugerido.")
         if len(xml) < 750:
             raise SystemExit(f"Deck {stem}, slide {index}, possui notas curtas demais para roteiro recomendado.")
+    slide_text = [native_slide_lines(xml) for xml in slide_xml]
+    agenda = slide_text[2]
+    if "Roteiro da aula" not in agenda or sum(bool(re.fullmatch(r"\d{2}:\d{2}", line)) for line in agenda) < 2:
+        raise SystemExit(f"Deck {stem} precisa de um roteiro da aula com tempos em texto no slide 3.")
+    lesson = stem.split("-")[1]
+    checkpoint = f"python course.py checkpoint {lesson if lesson != '00' else '01'}"
+    if not any({"Comandos da prática", checkpoint}.issubset(lines) for lines in slide_text):
+        raise SystemExit(f"Deck {stem} precisa de '{checkpoint}' em texto no slide Comandos da prática.")
+    required_commands = {
+        "00": aula_zero_commands,
+        "01": {"code lab/dabdbt/target/manifest.json"},
+    }.get(lesson, set())
+    missing_commands = required_commands.difference(*slide_text)
+    if missing_commands:
+        raise SystemExit(f"Deck {stem} sem comandos copiáveis: {sorted(missing_commands)}.")
     for index, xml in enumerate(slide_xml, start=1):
         pictures = re.findall(r"<p:pic>.*?</p:pic>", xml, flags=re.DOTALL)
         if any(not re.search(r"<p:cNvPr\b[^>]*\bdescr=\"[^\"]{20,}\"", picture) for picture in pictures):
@@ -238,4 +299,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, 40 ativos, 13 decks, 265 slides e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, {len(entries)} ativos, 13 decks, 265 slides e sanitização válidos.")

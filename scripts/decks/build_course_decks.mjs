@@ -10,8 +10,8 @@ const execFileAsync = promisify(execFile);
 const ROOT = process.env.COURSE_ROOT
   ? path.resolve(process.env.COURSE_ROOT)
   : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const OUT = path.join(ROOT, "assets/decks");
-const BUILD = path.join(ROOT, "build/decks");
+const OUT = path.resolve(process.env.COURSE_DECK_OUTPUT ?? path.join(ROOT, "assets/decks"));
+const BUILD = path.resolve(process.env.COURSE_DECK_QA ?? path.join(ROOT, "build/decks"));
 
 const C = {
   navy: "#06142E",
@@ -61,9 +61,17 @@ const decks = [
       { title: "2-core preserva a franquia gratuita", claim: "GitHub Free inclui 120 core-hours e 15 GB-mês; em 2-core, são cerca de 60 horas ativas.", bullets: ["Branch main", "Dev container do curso", "Máquina 2-core", "Pare o ambiente ao terminar"], image: screenshot("02-configuracao-2-core.png"), imageWide: true, imageAlt: "Configuração de Codespaces com branch main, dev container do curso e máquina 2-core", caption: "Captura sanitizada do GitHub.com — 2026-09-01", imageSource: "https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687" },
       { title: "O repositório restaura o ambiente", claim: "Setup instala uma vez; a reabertura restaura PATH, profile e caminhos detectados.", bullets: ["Python 3.12 fixado", "dbt Core 1.12.7", "DuckDB 1.5.5", "Sem ativação manual"], visual: "flow", labels: ["Create", "setup", "paths", "checkpoint"] },
       { title: "Parar evita consumo de processamento", claim: "Stop codespace interrompe core-hours; armazenamento continua até excluir o ambiente.", bullets: ["Pare ao terminar cada aula", "Reabra o mesmo ambiente", "Exclua quando não precisar dos arquivos"], image: screenshot("03-parar-codespace.png"), imageWide: true, imageAlt: "Menu oficial de gerenciamento do Codespaces com a opção Stop codespace", caption: "GitHub Docs — CC BY 4.0 — commit 484d28e", imageSource: "https://github.com/github/docs/blob/484d28e95db7c592c368da359ff1a9fecb08a08a/assets/images/help/codespaces/stop-codespace-webui.png" },
-      { title: "Escolha a interface certa para cada ambiente", claim: "O explorador do curso funciona no navegador; a UI oficial exige um túnel que preserve localhost.", bullets: ["Codespaces: python course.py official-data-ui", "Local: gh auth refresh -h github.com -s codespace", "Local: python course.py codespace-ui-tunnel", "Navegador: http://localhost:4213"], visual: "flow", labels: ["DuckDB", "UI oficial", "túnel", "localhost"] },
+      { title: "DuckDB UI oficial por túnel", claim: "Bônus com GitHub CLI autenticado e uma cópia do repositório no seu computador.", bullets: ["UI oficial dentro do Codespace", "Túnel no computador local", "Navegador em localhost:4213"], commands: [
+        ["No Codespace, na raiz do repositório", "python course.py official-data-ui"],
+        ["No computador local, na raiz da cópia do repositório", "gh auth refresh -h github.com -s codespace\npython course.py codespace-ui-tunnel"],
+      ], visual: "flow", labels: ["DuckDB", "UI oficial", "túnel", "localhost"] },
     ],
-    demo: { command: "python course.py paths\npython course.py checkpoint 01\npython course.py data-ui", observe: ["dbt e DuckDB do ambiente isolado", "Seeds e artifacts executados", "Explorador na porta privada 4213"], result: "Checkpoint 01 OK + exploração gráfica opcional" },
+    demo: { groups: [
+      ["Configuração manual ou setup interrompido", "python course.py setup"],
+      ["Validação do ambiente", "python course.py doctor\npython course.py paths\npython course.py checkpoint 01"],
+      ["Opcional após o checkpoint", "python course.py data-ui"],
+      ["Se precisar enviar um diagnóstico", "python course.py support-report"],
+    ], observe: ["dbt e DuckDB do ambiente isolado", "Seeds e artifacts executados", "Explorador na porta privada 4213"], result: "Checkpoint 01 OK + exploração gráfica opcional" },
     impact: ["Governança: ambiente versionado", "FinOps: 2-core + stop", "IA: nenhuma chave necessária"],
     case: { number: "46 recursos", label: "baseline dbt validado localmente", caveat: "Resultado do laboratório, não benchmark de produção." },
     limitations: ["Codespaces exige internet e conta pessoal GitHub", "Franquias e cobrança podem mudar", "Explorador autoral é propositalmente simples", "UI oficial exige GitHub CLI local e escopo codespace"],
@@ -93,7 +101,8 @@ const decks = [
     case: { number: "8 / 740 / 630", label: "pedidos / receita bruta / entregue", caveat: "Ground truth da amostra Olist do curso." },
     limitations: ["Incremental, testes e deploy não estavam implementados na série original", "Artifacts não substituem monitoramento", "Core 2.0 não entra na aceitação"],
     radar: "dbt OSS 2.0 é Apache 2.0. O pacote dbt, antigo Fusion, usa licença de produto.",
-    cta: "Rode o checkpoint 01. Abra lab/dabdbt/target/manifest.json e procure parent_map.",
+    cta: "No manifest, procure parent_map para ver as dependências.",
+    ctaCommand: "code lab/dabdbt/target/manifest.json",
     sources: [CORE_PATCH, V2_GA, V2_DISTRIBUTIONS, "https://docs.getdbt.com/docs/dbt/supported-features", "https://docs.getdbt.com/reference/artifacts/manifest-json", "https://docs.getdbt.com/reference/artifacts/run-results-json", "https://github.com/dbt-labs/jaffle-shop"],
   },
   {
@@ -577,14 +586,52 @@ function addHook(p, layouts, deck, sources) {
   setNotes(slide, `${deck.hook} Use o diagrama para antecipar o problema que será comprovado no laboratório.`, sources);
 }
 
-function addObjective(p, layouts, deck, sources) {
+const aulaZeroAgenda = [
+  ["00:00", "Objetivo e pré-requisitos"],
+  ["03:30", "Criação do Codespace e franquia"],
+  ["09:00", "Setup e diagnóstico do ambiente"],
+  ["13:30", "Checkpoint 01 e explorador de dados"],
+  ["17:00", "Bônus com a DuckDB UI oficial"],
+  ["19:00", "Recuperação do setup e pedido de suporte"],
+  ["21:00", "Encerramento do Codespace e instalação local"],
+];
+
+async function loadAgenda(deck) {
+  if (deck.episode === "AULA 0") return aulaZeroAgenda;
+  const markdown = await fs.readFile(path.join(ROOT, deck.script), "utf8");
+  const spoken = markdown.split(/^## Roteiro falado\s*$/m)[1]?.split(/^## /m)[0] ?? "";
+  const agenda = [...spoken.matchAll(/^### (\d\d:\d\d)[–-]\d\d:\d\d — (.+)$/gm)]
+    .map(([, time, title]) => [time, title.replaceAll("`", "")]);
+  if (agenda.length < 1 || agenda.length > 9) {
+    throw new Error(`${deck.script}: quantidade inválida de etapas do roteiro (${agenda.length}).`);
+  }
+  return agenda;
+}
+
+function addAgenda(p, layouts, deck, sources, agenda) {
   const slide = p.slides.add();
   slide.setLayout(layouts.dark);
   dark(slide);
-  addTitle(slide, "Ao final, você consegue...", true);
-  addSteps(slide, deck.objective, true);
+  addTitle(slide, "Roteiro da aula", true, "Tempos aproximados para acompanhar a gravação");
+  const rowHeight = agenda.length > 7 ? 42 : 50;
+  for (const [index, [time, title]] of agenda.entries()) {
+    const top = 269 + index * rowHeight;
+    addText(slide, time, { left: 78, top, width: 140, height: 37 }, { fontSize: 24, bold: true, color: C.cyan }, `agenda-time-${index + 1}`);
+    addText(slide, title, { left: 228, top, width: 945, height: 37 }, { fontSize: 24, color: C.white }, `agenda-topic-${index + 1}`);
+  }
   addChrome(slide, deck, 3, deck.slides, true);
-  setNotes(slide, `Explique os três resultados observáveis da aula: ${deck.objective.join("; ")}.`, sources);
+  setNotes(slide, `Objetivos da aula: ${deck.objective.join(", ")}.`, sources);
+}
+
+function addCommandGroups(slide, groups, { top, labelColor, codeColor, help, helpColor }) {
+  let y = top;
+  for (const [index, [label, command]] of groups.entries()) {
+    const codeHeight = 32 * command.split("\n").length + 8;
+    addText(slide, label, { left: 80, top: y, width: 1120, height: 28 }, { fontSize: 20, bold: true, color: labelColor }, `command-context-${index + 1}`);
+    addText(slide, command, { left: 80, top: y + 27, width: 1120, height: codeHeight }, { fontFamily: "Courier New", fontSize: 25, bold: true, color: codeColor }, index ? `command-${index + 1}` : "command");
+    y += 27 + codeHeight + 14;
+  }
+  addText(slide, help, { left: 80, top: y + 5, width: 1120, height: 34 }, { fontSize: 19, color: helpColor }, "command-help");
 }
 
 function addSectionConcept(p, layouts, deck, section, index, total, sources, isDark) {
@@ -592,9 +639,13 @@ function addSectionConcept(p, layouts, deck, section, index, total, sources, isD
   slide.setLayout(isDark ? layouts.dark : layouts.light);
   isDark ? dark(slide) : light(slide);
   addTitle(slide, section.title, isDark, section.claim);
-  addBullets(slide, section.bullets, { left: 72, top: 300, width: 620, height: 230 }, isDark, 24);
-  addGlow(slide, 900, 270, 230);
-  addText(slide, String(index + 1).padStart(2, "0"), { left: 1020, top: 330, width: 150, height: 100 }, { fontSize: 62, bold: true, color: isDark ? C.cyan : C.blue, alignment: "center" }, "section-number");
+  if (section.commands) {
+    addCommandGroups(slide, section.commands, { top: 266, labelColor: C.ink, codeColor: C.blue, helpColor: C.muted, help: "Abra http://localhost:4213 no seu navegador. Deixe os dois terminais abertos." });
+  } else {
+    addBullets(slide, section.bullets, { left: 72, top: 300, width: 620, height: 230 }, isDark, 24);
+    addGlow(slide, 900, 270, 230);
+    addText(slide, String(index + 1).padStart(2, "0"), { left: 1020, top: 330, width: 150, height: 100 }, { fontSize: 62, bold: true, color: isDark ? C.cyan : C.blue, alignment: "center" }, "section-number");
+  }
   addChrome(slide, deck, total, deck.slides, isDark);
   setNotes(slide, `${section.claim} Desenvolva os pontos: ${section.bullets.join("; ")}.`, sources);
 }
@@ -614,12 +665,18 @@ function addDemoSlides(p, layouts, deck, sources, startIndex) {
   let index = startIndex;
   let slide = p.slides.add();
   slide.setLayout(layouts.dark); dark(slide);
-  addTitle(slide, "Demonstração — execute", true);
-  addShape(slide, "roundRect", { left: 130, top: 270, width: 1020, height: 190 }, "#031021", { style: "solid", fill: C.cyan, width: 2 }, "code-surface");
-  addText(slide, deck.demo.command, { left: 175, top: 315, width: 930, height: 110 }, { fontFamily: "Courier New", fontSize: 25, bold: true, color: C.cyan }, "command");
-  addText(slide, "Copie exatamente como aparece. O launcher escolhe o ambiente correto.", { left: 175, top: 485, width: 930, height: 48 }, { fontSize: 19, color: C.pale }, "command-help");
+  const isSetup = deck.episode === "AULA 0";
+  const prior = deck.checkpoint === "01"
+    ? "Pré-requisito: ambiente preparado na Aula 0."
+    : "Antes da prática, prepare o ambiente e conclua o checkpoint 01.";
+  const groups = deck.demo.groups ?? [["Comando do checkpoint", deck.demo.command]];
+  addTitle(slide, "Comandos da prática", true, "Use o terminal na raiz do repositório");
+  addCommandGroups(slide, groups, {
+    top: isSetup ? 235 : 308, labelColor: C.white, codeColor: C.cyan, helpColor: C.pale,
+    help: isSetup ? "Use Ctrl+C para encerrar o explorador de dados." : prior,
+  });
   addChrome(slide, deck, index++, deck.slides, true);
-  setNotes(slide, `Execute ${deck.demo.command.replace(/\n/g, " e depois ")}. Pause para o aluno acompanhar o terminal.`, sources);
+  setNotes(slide, `No terminal da raiz, execute os blocos aplicáveis: ${groups.map(([, command]) => command.replace(/\n/g, ", depois ")).join(" | ")}.`, sources);
 
   slide = p.slides.add();
   slide.setLayout(layouts.light); light(slide);
@@ -676,8 +733,15 @@ function addClosingSlides(p, layouts, deck, sources, startIndex) {
   slide = p.slides.add();
   slide.setLayout(layouts.light); light(slide);
   addText(slide, "PRÓXIMO PASSO", { left: 72, top: 140, width: 400, height: 44 }, { fontSize: 18, bold: true, color: C.blue }, "cta-label");
-  addText(slide, deck.cta, { left: 72, top: 220, width: 1020, height: 190 }, { fontSize: 44, bold: true, color: C.ink }, "cta");
-  addText(slide, `Checkpoint ${deck.checkpoint} • roteiro completo no repositório`, { left: 72, top: 500, width: 800, height: 42 }, { fontSize: 20, color: C.muted }, "cta-meta");
+  addText(slide, deck.cta, { left: 72, top: 220, width: 1020, height: deck.ctaCommand ? 145 : 190 }, { fontSize: 44, bold: true, color: C.ink }, "cta");
+  if (deck.ctaCommand) {
+    addCommandGroups(slide, [["Atalho no Codespaces, na raiz do repositório", deck.ctaCommand]], {
+      top: 395, labelColor: C.ink, codeColor: C.blue, helpColor: C.muted,
+      help: "Você também pode abrir o caminho acima pelo explorador de arquivos.",
+    });
+  } else {
+    addText(slide, `Checkpoint ${deck.checkpoint} • roteiro completo no repositório`, { left: 72, top: 500, width: 800, height: 42 }, { fontSize: 20, color: C.muted }, "cta-meta");
+  }
   addChrome(slide, deck, index++, deck.slides, false);
   setNotes(slide, `${deck.cta} Encerre conectando a aula ao próximo checkpoint.`, sources);
   return index;
@@ -718,7 +782,7 @@ async function buildDeck(deck) {
 
   addCover(p, layouts, deck, sources);
   addHook(p, layouts, deck, sources);
-  addObjective(p, layouts, deck, sources);
+  addAgenda(p, layouts, deck, sources, await loadAgenda(deck));
 
   let current = 4;
   const allPaired = deck.slides % 2 === 1;
@@ -764,7 +828,9 @@ async function main() {
     const result = await buildDeck(deck);
     console.log(`${result.stem}: ${result.slides} slides`);
   }
-  await execFileAsync(process.env.PYTHON || "python3", [path.join(ROOT, "scripts/decks/add_pptx_alt_text.py")]);
+  await execFileAsync(process.env.PYTHON || "python3", [path.join(ROOT, "scripts/decks/add_pptx_alt_text.py")], {
+    env: { ...process.env, PPTX_DIR: OUT },
+  });
   console.log("Textos alternativos gravados nos PPTX canônicos.");
 }
 

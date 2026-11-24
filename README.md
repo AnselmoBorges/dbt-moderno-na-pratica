@@ -17,9 +17,10 @@ A proposta é simples: regras funcionais determinísticas pertencem ao pipeline 
 | [Roteiros](roteiros/README.md) | 12 episódios open source/estáveis e 4 episódios posteriores sobre dbt Platform |
 | [Laboratório](lab/dabdbt/README.md) | Projeto cumulativo com dbt Core, DuckDB, MetricFlow, contratos, testes, governança, CI, FinOps e MCP |
 | [Checkpoints](lab/dabdbt/checkpoints/README.md) | Uma validação executável para cada episódio da primeira temporada |
+| [Resultados no Codespaces](docs/resultados-dos-checkpoints.md) | Capturas reais do terminal e o que conferir em cada aula |
 | [Acesso à Platform](pesquisa/guia-acesso-dbt-platform.md) | Trial, comunidade, preparação editorial e mensagens de contato em português e inglês |
 | [Guia do aluno](docs/README.md) | Instalação multiplataforma, Aula 0, glossário, comandos e suporte |
-| [Apresentações](assets/decks/README.md) | Pilotos em PPTX/PDF e padrão visual da série |
+| [Apresentações](assets/decks/README.md) | Aula 0 e episódios 1–12 em PPTX/PDF, com roteiro e comandos copiáveis |
 
 ## Temporadas
 
@@ -50,7 +51,7 @@ Para padronizar o curso entre Windows, macOS e Linux, use o **GitHub Codespaces*
 
 **[Abrir o dbt Moderno na Prática no Codespaces](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687)**
 
-O ambiente instala as dependências automaticamente. Quando o terminal estiver pronto:
+O ambiente instala as dependências automaticamente. Aguarde **Ambiente pronto** no terminal de configuração e execute:
 
 ```bash
 python course.py doctor
