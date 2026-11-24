@@ -2,7 +2,7 @@
 
 **Duração alvo:** 20–23 minutos
 **Nível:** iniciante/intermediário
-**Rótulos na tela:** `OPEN`, `Core 1.12: suportado`, `LAB`, `Radar: beta/preview`
+**Rótulos na tela:** `OPEN`, `Core 1.12.7: laboratório`, `Radar: dbt v2 GA`
 
 ## Gancho
 
@@ -33,9 +33,9 @@ Nos hands-ons, o alcance é menor. Nós configuramos Python, adapter, profile, s
 
 ### 03:30–07:00 — Cinco correções que merecem ficar registradas
 
-“Primeiro: instale o adapter compatível, não um pacote genérico sem versão. Segundo: CTE organiza SQL, mas o ganho de performance depende do engine. Terceiro: snapshot preserva histórico de mudança; não é sinônimo de incremental barato. Quarto: tests reduzem risco, mas não garantem que produção nunca quebra. Quinto: Core open source, plano Developer gratuito, Platform paga e Fusion não são a mesma coisa.
+“O adapter precisa ser compatível com a versão do Core. CTE ajuda a organizar o SQL e o ganho de desempenho depende do banco. Snapshot guarda histórico de mudanças. Testes reduzem risco ao verificar condições específicas. A instalação local e os planos da dbt Platform têm requisitos e licenças próprios.
 
-O nosso baseline é Core 1.12.3 com DuckDB 1.11.0. O projeto exige `>=1.12,<1.13`; uma instalação incompatível falha cedo.”
+O laboratório usa dbt Core 1.12.7, o adaptador `dbt-duckdb` 1.11.1 e o motor DuckDB 1.5.5. Para atualizar um ambiente preparado na Aula 0, rode `python course.py setup` uma vez após atualizar o repositório.”
 
 ### 07:00–10:30 — O projeto privado muda o diagnóstico
 
@@ -48,8 +48,6 @@ As lacunas reais são consistência: métricas ainda não estão como código, v
 ### 10:30–17:30 — Demonstração estável
 
 ```bash
-python course.py doctor
-python course.py setup
 python course.py checkpoint 01
 ```
 
@@ -58,13 +56,15 @@ python course.py checkpoint 01
 - `manifest.json`: DAG, configurações, owners e exposures;
 - `semantic_manifest.json`: representação usada pelo motor semântico;
 - `osi_document.json`: documento semântico interoperável;
-- `run_results.json`: resultado do build.
+- `run_results.json`: resultado do último comando que escreveu esse arquivo. Depois do checkpoint, `args.which` indica `generate`, pois `dbt docs generate` vem depois do build.
 
 O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tests, cinco seeds, um unit test, cinco métricas, um semantic model, uma exposure e um group. O exposure aparece como `NO-OP`, não como erro.”
 
 ### 17:30–20:00 — Por que artifacts importam
 
 “O HTML de documentação é útil para pessoas; artifacts são úteis para automação. A CI compara manifests. O MCP lê manifest. O benchmark descobre o contrato. O episódio nove calcula impacto. Uma única saída do Core alimenta governança, FinOps e IA sem dar ao agente acesso irrestrito ao warehouse.”
+
+Abra `lab/dabdbt/target/manifest.json` no explorador do editor. No Codespaces também vale `code lab/dabdbt/target/manifest.json`. Mostre `parent_map` e busque `semantic_model.dabdbt.commerce_orders`. A declaração descreve quais colunas identificam pedidos e como as métricas podem ser segmentadas. As linhas dos pedidos ficam no DuckDB.
 
 ### 20:00–22:30 — Fechamento
 
@@ -73,9 +73,8 @@ O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tes
 ## Demonstração e resultado esperado
 
 - `python course.py checkpoint 01` retorna sucesso.
-- Core reporta 1.12.3 e DuckDB 1.11.0.
+- Core reporta 1.12.7 e o adaptador DuckDB reporta 1.11.1. O motor DuckDB permanece em 1.5.5.
 - Quatro artifacts obrigatórios existem e são válidos.
-- Não há instalação ou execução de Fusion.
 
 ## Governança, FinOps e IA
 
@@ -92,17 +91,20 @@ O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tes
 
 ## Radar — máximo de dois minutos
 
-“Core 2.0 aberto está beta. dbt v2/Fusion e cada adapter têm maturidade própria e licença distinta. Eles não entram no ambiente, na CI ou no benchmark desta temporada. Consulte a matriz oficial antes de gravar; quando ficarem adequados ao seu adapter, faça uma série específica de migração.”
+“O dbt v2, em Rust, chegou à disponibilidade geral em setembro de 2026 e tem DuckDB para uso local. A distribuição `dbt-oss` é Apache 2.0. A distribuição `dbt`, antes chamada Fusion, tem licença de produto e pode ser usada localmente de graça. O Core 1.12.7 é a versão que validamos para as demonstrações desta temporada.”
 
 ## CTA
 
-“Rode o checkpoint 01 e compare a lista ‘o que eu pensei que já tinha’ com ‘o que meu manifest comprova’. Essa diferença é o backlog real.”
+“Rode o checkpoint 01. Abra `lab/dabdbt/target/manifest.json` e procure `parent_map` para examinar as dependências. Procure por `commerce_orders` para reconhecer o modelo de pedidos que vamos usar nas próximas aulas.”
 
 ## Fontes
 
 - [Auditoria da playlist](../pesquisa/auditoria-playlist.md)
 - [Auditoria anonimizada do projeto](../pesquisa/auditoria-projeto-privado.md)
-- [dbt Core 1.12](https://github.com/dbt-labs/dbt-core/releases/tag/v1.12.0)
+- [Notas do Core 1.12.7](https://github.com/dbt-labs/dbt/releases/tag/v1.12.7)
+- [Diferenças entre dbt e dbt OSS](https://docs.getdbt.com/blog/comparing-dbt-and-dbt-oss)
+- [Manifest](https://docs.getdbt.com/reference/artifacts/manifest-json)
+- [Run results](https://docs.getdbt.com/reference/artifacts/run-results-json)
 - [Matriz oficial de recursos](https://docs.getdbt.com/docs/dbt/supported-features)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/01-core-1-12.md)
 

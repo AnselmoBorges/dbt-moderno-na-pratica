@@ -118,13 +118,15 @@ Também separo três mudanças na tela. Adicionar `item_revenue` é compatível 
 
 ## Radar — máximo de dois minutos
 
-“O Core 1.12 usa `latest_version` como ponteiro da versão padrão. Melhorias futuras de validação serão avaliadas separadamente; não existe motivo para migrar um contrato estável para runtime beta apenas para seguir novidade.”
+“O Core 1.12 usa `latest_version` como ponteiro da versão padrão. O dbt v2 também valida contratos. Ao migrar, teste as mesmas quebras e confirme o comportamento no seu adaptador.”
 
 ## CTA
 
 “Escolha um modelo público, liste seus consumidores e simule a remoção de uma coluna numa branch. Se nada bloquear, você encontrou um risco real para levar à próxima retrospectiva.”
 
 ## Fontes
+
+- [Correções de contratos no dbt-duckdb 1.11.1](https://github.com/duckdb/dbt-duckdb/releases/tag/1.11.1)
 
 - [Model contracts](https://docs.getdbt.com/docs/mesh/govern/model-contracts)
 - [Model versions](https://docs.getdbt.com/docs/mesh/govern/model-versions)

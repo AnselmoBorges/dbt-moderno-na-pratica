@@ -112,13 +112,16 @@ Por fim, salve `manifest.json`, `run_results.json` e logs com identificação do
 
 ## Radar — máximo de dois minutos
 
-“`state:modified` e `--defer` deste vídeo são recursos abertos do Core. O produto chamado dbt State é outra coisa: está em preview e possui oferta própria. Não use o mesmo nome para atribuir preço ao recurso aberto; dbt State aparece apenas no Radar e na segunda temporada.”
+“`state:modified` e `--defer` deste vídeo são recursos abertos do Core. O dbt State está em disponibilidade geral, usa autenticação da plataforma e tem regras próprias de consumo. O laboratório de hoje compara manifests locais e funciona sem conta.”
 
 ## CTA
 
 “Guarde o manifest do seu build principal, altere um modelo e rode `dbt ls state:modified+`. Classifique a saída por tipo de recurso antes de estimar economia.”
 
 ## Fontes
+
+- [dbt State e autenticação da plataforma](https://docs.getdbt.com/docs/deploy/dbt-state-about)
+- [Correção da comparação de manifests no Core 1.12.7](https://github.com/dbt-labs/dbt/releases/tag/v1.12.7)
 
 - [Métodos de seleção](https://docs.getdbt.com/reference/node-selection/methods)
 - [Defer e seus critérios](https://docs.getdbt.com/reference/node-selection/defer)

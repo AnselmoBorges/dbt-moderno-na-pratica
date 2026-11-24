@@ -19,17 +19,17 @@ ROOT = Path(__file__).resolve().parent
 LAB = ROOT / "lab" / "dabdbt"
 VENV = LAB / ".venv"
 SUPPORTED_PYTHON = {(3, 12), (3, 13)}
-EXPECTED_DBT_CORE = "1.12.3"
 EXPECTED_PACKAGES = {
-    "dbt-core": "1.12.3",
-    "dbt-duckdb": "1.11.0",
+    "dbt-core": "1.12.7",
+    "dbt-duckdb": "1.11.1",
     "duckdb": "1.5.5",
     "duckdb-cli": "1.5.5",
-    "dbt-metricflow": "0.14.0",
-    "metricflow": "0.212.0",
+    "dbt-metricflow": "0.16.0",
+    "metricflow": "0.214.0",
     "dbt-mcp": "2.2.0",
     "jsonschema": "4.26.0",
 }
+EXPECTED_DBT_CORE = EXPECTED_PACKAGES["dbt-core"]
 MIN_FREE_BYTES = 2 * 1024**3
 
 
@@ -51,7 +51,7 @@ def version_supported() -> bool:
     return sys.version_info[:2] in SUPPORTED_PYTHON
 
 
-def doctor(*, quiet: bool = False) -> tuple[bool, list[dict[str, str | bool]]]:
+def doctor(*, quiet: bool = False, preparing: bool = False) -> tuple[bool, list[dict[str, str | bool]]]:
     checks: list[dict[str, str | bool]] = []
 
     def add(name: str, ok: bool, detail: str) -> None:
@@ -85,8 +85,8 @@ def doctor(*, quiet: bool = False) -> tuple[bool, list[dict[str, str | bool]]]:
         dbt_version = package_version("dbt-core")
         add(
             "dbt Core do curso",
-            dbt_version == EXPECTED_DBT_CORE,
-            f"{dbt_version}; esperado {EXPECTED_DBT_CORE}"
+            preparing or dbt_version == EXPECTED_DBT_CORE,
+            f"{dbt_version}; execute o setup para instalar {EXPECTED_DBT_CORE}"
             if dbt_version != EXPECTED_DBT_CORE
             else dbt_version,
         )
@@ -171,7 +171,7 @@ def environment_ready() -> bool:
 
 def setup() -> None:
     require_supported_python()
-    ok, _ = doctor()
+    ok, _ = doctor(preparing=True)
     if not ok:
         raise SystemExit("O diagnóstico encontrou bloqueios; corrija-os antes do setup.")
     (ROOT / "lab" / "data").mkdir(parents=True, exist_ok=True)
@@ -186,6 +186,7 @@ def setup() -> None:
     python = venv_tool("python")
     print("\nEtapa 1/3 — instalando as versões fixadas (pode levar alguns minutos)...", flush=True)
     run([python, "-m", "pip", "install", "--quiet", "--disable-pip-version-check", "-r", "requirements-local.txt"], cwd=LAB)
+    run([python, "-m", "pip", "check"], cwd=LAB)
     print("\nEtapa 2/3 — preparando os packages dbt; aguarde a mensagem de conclusão...", flush=True)
     run([venv_tool("dbt"), "deps", "--profiles-dir", "dbt_profiles", "--target", "local"], cwd=LAB)
     print("\nEtapa 3/3 — validando projeto, profile e conexão local...", flush=True)

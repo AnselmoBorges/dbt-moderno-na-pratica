@@ -1,10 +1,19 @@
 # Dossiê — dbt Moderno na Prática: da Gold aos Agentes de IA
 
-**Data de corte:** 1º de setembro de 2026
-**Baseline de produção:** dbt Core 1.12, suportado e estável
+**Auditoria original da playlist:** 1º de setembro de 2026
+
+**Revisão de versões:** 24 de novembro de 2026
+
+**Versão do laboratório:** dbt Core 1.12.7
 **Regra editorial:** primeiro recursos open source e estáveis; serviços proprietários entram somente na segunda temporada. Beta e preview aparecem apenas no quadro “Radar”.
 
 ## Resumo executivo
+
+O Core 1.12.7 corrige, entre outros pontos, falsos positivos de `state:modified` ao comparar manifests de versões diferentes e a recuperação de verificações individuais de freshness quando o cálculo em lote falha. O adaptador `dbt-duckdb` 1.11.1 corrige casos de contratos e chaves estrangeiras. Os patches têm aplicação direta nas aulas 5, 6 e 9. [Core 1.12.7](https://github.com/dbt-labs/dbt/releases/tag/v1.12.7) · [dbt-duckdb 1.11.1](https://github.com/duckdb/dbt-duckdb/releases/tag/1.11.1)
+
+O dbt v2 entrou em disponibilidade geral em setembro. O pacote `dbt-oss` é Apache 2.0 e o pacote `dbt`, anteriormente Fusion, usa licença própria. Na data da revisão, o Core 1.13 está em beta e a linha 1.12 tem suporte ativo até 15 de julho de 2027 segundo o calendário consultado. [Distribuições v2](https://docs.getdbt.com/blog/comparing-dbt-and-dbt-oss) · [Calendário de suporte](https://docs.getdbt.com/docs/dbt-versions)
+
+No piloto local com **dbt OSS 2.0.11**, o parse e a carga dos cinco seeds passaram. A macro de freshness passou na cópia de teste depois que as duas instruções SQL foram separadas. O build ainda encontrou o erro `Cannot prepare multiple statements at once!` em quatro modelos Silver. A migração deve resolver esses pontos e revalidar as interfaces consumidas pelo MetricFlow, pela CI e pelo MCP. A série parte da pilha 1.12.7 já validada.
 
 A revisão do conteúdo real da playlist mudou o ponto de partida. A aula teórica oferece uma boa introdução a modelos, `ref`, seeds, snapshots, testes, documentação, linhagem, perfis e materializações. Os cinco hands-ons, porém, param na configuração local, carga de seeds, criação de modelos Silver/Gold e execução seletiva. Incrementais, testes, documentação, linhagem e deploy aparecem como explicação ou promessa, não como implementação completa.
 
@@ -48,7 +57,7 @@ A auditoria completa, com timestamps e correções, está em [`auditoria-playlis
 - CTE melhora legibilidade e modularização; performance depende do otimizador, materialização e engine.
 - `ref` cria dependência e linhagem de DAG; documentação de tabelas e colunas continua sendo trabalho explícito.
 - Curso Fundamentals e exame de certificação são coisas diferentes; preço e disponibilidade devem ser consultados antes da gravação.
-- Core, Developer gratuito, Platform contratada, Fusion e Core 2.0 precisam ser apresentados como produtos/licenças/maturidades distintas.
+- O Core v1, as distribuições locais do dbt v2 e os planos da dbt Platform têm licenças e formas de acesso distintas.
 
 ## 2. Auditoria anonimizada do projeto privado
 
@@ -109,15 +118,15 @@ A auditoria somente leitura usou o commit `0683a9f50cd156deeeb6649a071de5c008468
 | Capacidade | Maturidade na data de corte | Fronteira |
 |---|---|---|
 | dbt Core 1.12 | suportado/estável | Apache 2.0; baseline da temporada open |
-| MetricFlow 0.212.0 | estável no laboratório | Apache 2.0; motor semântico local |
-| `dbt-metricflow` 0.14.0 | integração instalada | não confundir com a versão do motor MetricFlow |
+| MetricFlow 0.214.0 | estável no laboratório | Apache 2.0; motor semântico local |
+| `dbt-metricflow` 0.16.0 | integração instalada | não confundir com a versão do motor MetricFlow |
 | dbt MCP local | versão estável fixada no laboratório | Apache 2.0; CLI/manifest funcionam sem conta Platform |
 | Developer | serviço proprietário gratuito | uma pessoa/projeto e limites publicados na página de preços |
 | Starter | contratado, com trial | Semantic Layer básica e APIs conforme oferta vigente |
 | Enterprise | contratado | Mesh cross-project, catálogo e governança avançada conforme contrato |
-| Core 2.0 | beta | Apache 2.0; somente radar |
-| dbt v2/Fusion | preview por superfície/adapter | licença própria; somente radar |
-| dbt State | preview e cobrança própria | não confundir com `state:modified`/`defer` abertos |
+| dbt OSS 2.0 | GA | `dbt-oss`, Apache 2.0, com DuckDB local |
+| dbt v2 (antigo Fusion) | GA para DuckDB local | `dbt`, licença de produto, uso local gratuito conforme termos |
+| dbt State | GA | requer conta na plataforma e tem regras de consumo próprias |
 
 O status muda rapidamente. A [matriz oficial de recursos](https://docs.getdbt.com/docs/dbt/supported-features) e a [página de preços](https://www.getdbt.com/pricing) devem ser reconferidas antes de cada gravação.
 
@@ -131,7 +140,7 @@ O status muda rapidamente. A [matriz oficial de recursos](https://docs.getdbt.co
 6. **Qualidade em camadas.** Unit test, data test, contract e freshness respondem perguntas diferentes.
 7. **Governança acionável.** `owner`, `group`, `access`, tags, `meta` e exposures precisam alterar seleção, revisão ou autorização.
 8. **Produto antes de Mesh.** Um projeto aprende fronteiras públicas e packages antes de comprar coordenação cross-project.
-9. **CI por artifacts.** `state:modified+` e defer abertos são separados do produto preview chamado dbt State.
+9. **CI por artifacts.** `state:modified+` e defer abertos rodam localmente. O serviço dbt State usa conta e mede consumo.
 10. **FinOps mensurável.** Incremental exige filtro; microbatch exige `event_time`; toda otimização preserva ground truth.
 11. **MCP com allowlist.** CLI local expõe apenas leitura/compilação; SQL, build e codegen ficam desabilitados.
 12. **Agente como consumidor.** O agente consulta regras aprovadas e é comparado por acurácia, joins, tokens, ferramentas, latência e custo normalizado.
@@ -163,7 +172,7 @@ A formulação editorial será sempre: “a empresa reportou X; este é o mecani
 
 ## 8. Evidência medida no laboratório
 
-O laboratório fixa dbt Core 1.12.3, dbt-duckdb 1.11.0, MetricFlow 0.212.0 e dbt MCP 2.2.0. Ele valida:
+O laboratório fixa dbt Core 1.12.7, dbt-duckdb 1.11.1, MetricFlow 0.214.0 e dbt MCP 2.2.0. Ele valida:
 
 - seeds, parse, compile, build, data tests, unit test e artifacts;
 - `manifest.json`, `semantic_manifest.json`, `osi_document.json` e `run_results.json`;
@@ -183,7 +192,7 @@ Somente após os 12 episódios open:
 1. Developer e Starter trial: IDE, jobs, catálogo, limites e preparação.
 2. Semantic Layer gerenciada: API, cache, exports e consumidores.
 3. Mesh e governança Enterprise: cross-project refs, catálogo e critérios organizacionais.
-4. MCP gerenciado: Discovery, Semantic Layer e SQL tools; dbt State permanece apenas no Radar enquanto preview.
+4. MCP gerenciado: Discovery, Semantic Layer e SQL tools; dbt State permanece como tópico separado de orquestração.
 
 Cada roteiro possui rota com acesso e fallback documental. Uma tela ou fixture nunca será apresentada como execução real da plataforma.
 

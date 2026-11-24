@@ -2,7 +2,7 @@
 
 **Duração alvo:** 21–25 minutos
 **Temporada:** dbt Platform
-**Rótulos na tela:** `PLANO COMPATÍVEL`, `Discovery`, `Semantic Layer`, `SQL desligado por padrão`, `dbt State: PREVIEW`
+**Rótulos na tela:** `PLANO COMPATÍVEL`, `Discovery`, `Semantic Layer`, `SQL desligado por padrão`, `dbt State: GA`
 
 ## Gancho
 
@@ -48,7 +48,7 @@ Pré-requisitos: episódios 11–14; acesso Platform compatível; token temporá
 
 ### 21:00–24:00 — dbt State no lugar correto
 
-“O `state:modified` do episódio 9 é open e compara manifests. O produto dbt State promete reutilização mais avançada e está em preview na data de corte. Ele não entra no benchmark nem na recomendação de produção. Se houver trial separado, avalie em job não bloqueante e meça compute real.”
+“O `state:modified` do episódio 9 é open e compara manifests. O dbt State está em disponibilidade geral e pode reutilizar ou clonar recursos quando código e dados permitem. Ele requer conta na plataforma e tem regras próprias de consumo. Uma demonstração futura deve medir compute em um job separado.”
 
 ### 24:00–25:00 — Fechamento
 
@@ -66,7 +66,7 @@ Pré-requisitos: episódios 11–14; acesso Platform compatível; token temporá
 - diff da lista de tools local versus gerenciada;
 - diagrama de identidade por toolset;
 - relatório `agent_benchmark_report.json` filtrado por modo;
-- selo PREVIEW sobre dbt State.
+- selo GA sobre dbt State.
 
 ## Cases
 
@@ -86,17 +86,19 @@ Pré-requisitos: episódios 11–14; acesso Platform compatível; token temporá
 - Não reutilizar token pessoal de desenvolvimento.
 - Não publicar trace com dados ou IDs sensíveis.
 - Não chamar fixture de benchmark real.
-- Não confundir dbt State pago/preview com state selection aberto.
+- Diferencie o serviço dbt State da seleção aberta por manifest.
 
 ## Radar — máximo de dois minutos
 
-“Acompanhe dbt State, LSP/Fusion tools e novos clientes MCP. Enquanto preview, execute isoladamente e nunca torne a CI dependente. Atualize a matriz de evidências antes de cada gravação.”
+“Acompanhe as integrações entre dbt State, o LSP do dbt v2 e clientes MCP. Revise a disponibilidade específica de cada integração antes de gravar.”
 
 ## CTA
 
 “Publique a lista exata de tools habilitadas e as negativas testadas. Segurança demonstrável é uma parte do resultado, não nota de rodapé.”
 
 ## Fontes
+
+- [dbt State e consumo](https://docs.getdbt.com/docs/deploy/dbt-state-about)
 
 - [dbt MCP](https://docs.getdbt.com/docs/dbt-ai/about-mcp)
 - [Setup self-hosted e requisitos por toolset](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/dbt-ai/setup-local-mcp.md)
