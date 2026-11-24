@@ -4,7 +4,7 @@
 
 ## Gancho
 
-“O número de receita bateu no motor novo. Você liberaria a migração? Nesta aula o número bate, mas o contrato de dados barra a promoção. Vamos descobrir por quê no laboratório de pedidos.”
+“O número de receita bateu no motor novo. Você liberaria a migração? No teste do Mac, o número bateu e duas versões com contrato falharam. Vamos descobrir por quê no laboratório de pedidos.”
 
 ## Objetivo e pré-requisitos
 
@@ -92,7 +92,7 @@
 
 ### 08 · Parse e seeds passaram
 
-**Fala sugerida:** “O parse carrega a definição do projeto. Seed carrega os CSVs. A execução dos modelos é outra etapa. Na comparação desta aula, os dois primeiros passos do v2 passaram, mas a seleção da Gold com a configuração original encontrou um erro na Silver.”
+**Fala sugerida:** “O parse carrega a definição do projeto. Seed carrega os CSVs. A execução dos modelos é outra etapa. Na comparação no Mac, os dois primeiros passos do v2 passaram, mas a seleção da Gold com a configuração original encontrou um erro na Silver. Abra o seu relatório para ver o que ocorreu no seu ambiente.”
 
 **O que destacar:** Abra os logs 04, 05 e 06. Leia o nome da etapa antes da mensagem.
 
@@ -100,7 +100,7 @@
 
 ### 09 · Um ajuste controlado
 
-**Fala sugerida:** “Na cópia do v2, desligamos persist_docs para separar a gravação de comentários físicos da criação das tabelas. O laboratório preserva as descrições YAML e as regras funcionais. Com outro banco novo, a Gold de pedidos ficou disponível, mas as duas versões de order_metrics com contrato ainda deram erro. Temos um problema reproduzível, e o log é a evidência.”
+**Fala sugerida:** “Na cópia do v2, desligamos persist_docs para separar a gravação de comentários físicos da criação das tabelas. O laboratório preserva as descrições YAML e as regras funcionais. No teste do Mac, a Gold de pedidos ficou disponível no outro banco novo e as duas versões de order_metrics com contrato ainda deram erro. Temos um problema reproduzível, e o log é a evidência.”
 
 **O que destacar:** Use o antes e depois na cópia. Preserve constraints e contratos, inclusive no segundo build.
 
@@ -108,7 +108,7 @@
 
 ### 10 · Leia a falha pelo nome
 
-**Fala sugerida:** “No resultado JSON, modelos com erro lista as duas versões. No log 07, o DuckDB reporta que não pode preparar várias instruções de uma vez. A observação identifica onde investigar a combinação entre execução, materialização e adaptador. A mensagem sozinha não confirma a causa raiz.”
+**Fala sugerida:** “No resultado JSON da demonstração no Mac, modelos com erro lista as duas versões. No log 07 dessa execução, o DuckDB reporta que não pode preparar várias instruções de uma vez. A observação identifica onde investigar a combinação entre execução, materialização e adaptador. A mensagem sozinha não confirma a causa raiz.”
 
 **O que destacar:** O cenário é específico das versões e do projeto testados. Guarde log e versão do motor ao reportar.
 
@@ -124,7 +124,7 @@
 
 ### 12 · Paridade de um recorte
 
-**Fala sugerida:** “O script verifica igualdade linha a linha em cinco campos: ID, status, data do pedido, pagamento total e prazo. Os dois motores trazem oito pedidos, 740 de receita bruta e 630 de receita entregue. O relatório de migração segue bloqueado pelo erro nos contratos. É assim que uma evidência positiva convive com um bloqueio de release.”
+**Fala sugerida:** “O script verifica igualdade linha a linha em cinco campos: ID, status, data do pedido, pagamento total e prazo. Os dois motores trazem oito pedidos, 740 de receita bruta e 630 de receita entregue. Na execução do Mac, o relatório de migração segue bloqueado pelo erro nos contratos. É assim que uma evidência positiva convive com um bloqueio de release.”
 
 **O que destacar:** Mostre `recorte.linhas_iguais` e `resultado_migracao` juntos. Valores pertencem à amostra didática.
 
@@ -176,7 +176,7 @@ python course.py bonus-v2 docs
 Use o primeiro comando somente se o laboratório principal ainda estiver pendente. No Windows, `py -3.12` é a alternativa se `python` estiver indisponível. Em macOS/Linux, use `python3.12` se necessário.
 
 1. Leia `build/bonus-v2/resultado.json` e procure o identificador `execucao`. Cada comparação cria uma pasta nova em `build/bonus-v2/`.
-2. Abra a pasta registrada. Compare `06-v2-original.log` e `07-v2-isolado.log`, e verifique `core/target/` e `v2/target/`. Os arquivos `06-v2-run-results.json` e `07-v2-run-results.json` preservam os resultados dos builds; o comando de documentação pode atualizar os artefatos em `target/`. A primeira versão da cópia v2 usa o `persist_docs` original. A segunda desativa os comentários físicos só para investigar a falha.
+2. Abra a pasta registrada. Compare `06-v2-original.log` e `07-v2-isolado.log`, e verifique `core/target/` e `v2/target/`. Os arquivos `06-v2-run-results.json` e `07-v2-run-results.json` preservam os resultados dos builds. A geração do catálogo exporta o índice já escrito pelo build. O primeiro build v2 usa o `persist_docs` original e seleciona apenas os testes cujas dependências estejam no recorte (`--indirect-selection cautious`). A segunda desativa os comentários físicos só para investigar a falha.
 3. Em `core.duckdb` e `v2.duckdb`, consulte `g.order_fulfillment` com o [SQL da receita](../lab/bonus-v2/receita.sql). O [SQL de comparação](../lab/bonus-v2/comparacao.sql) lê o JSON usando a raiz do repositório como diretório de trabalho.
 4. Com a documentação em execução, abra a porta privada **8580** na aba **Portas** do Codespaces ou `http://localhost:8580` em uma instalação local. Se a porta estiver ocupada, use `python course.py bonus-v2 docs --port 8581`.
 
@@ -187,11 +187,13 @@ Use o primeiro comando somente se o laboratório principal ainda estiver pendent
 | Verificação | Resultado esperado na amostra |
 |---|---|
 | Core 1.12.7 | Build completo |
-| dbt OSS 2.0.11, mantendo `persist_docs` | Parse e seeds concluídos, falha ao criar modelos Silver |
-| dbt OSS 2.0.11, comentários físicos desativados na cópia | Gold de pedidos disponível; versões do modelo `order_metrics` com erro |
+| dbt OSS 2.0.11, mantendo `persist_docs` | Parse e seeds concluídos; no teste do Mac, falha ao criar modelos Silver |
+| dbt OSS 2.0.11, comentários físicos desativados na cópia | Gold de pedidos disponível; no teste do Mac, versões do modelo `order_metrics` com erro |
 | Linhas comparadas | 8 equivalentes em cinco campos |
 | Receita bruta / receita entregue | 740 / 630 em ambos |
-| Decisão | Migração integral bloqueada na combinação testada |
+| Decisão | Leia `resultado_migracao` e compare com os logs da sua execução |
+
+O relatório usa `bloqueada` quando reproduz a falha de instruções múltiplas nos modelos com contrato. Se o build v2 terminar com sucesso, registra `build_aprovado_aguarda_paridade_completa`. O sucesso do build e a paridade da Gold são evidências para seguir a avaliação.
 
 ## Limitações, governança e FinOps
 

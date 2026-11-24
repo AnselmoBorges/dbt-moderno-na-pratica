@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import platform
 import re
 import shutil
 import subprocess
@@ -132,7 +133,8 @@ def compare() -> None:
     run_dbt(candidate, project_v2, "04-v2-parse", "parse", "--no-manage-state")
     run_dbt(candidate, project_v2, "05-v2-seed", "seed", "--no-manage-state")
     original = run_dbt(candidate, project_v2, "06-v2-original", "build", "--select",
-                       "+order_fulfillment_g", "--no-manage-state", allowed_failure=True)
+                       "+order_fulfillment_g", "--indirect-selection", "cautious",
+                       "--no-manage-state", allowed_failure=True)
     original_failed = failed_models(project_v2)
     original_log = (trial / "06-v2-original.log").read_text(encoding="utf-8", errors="replace")
     if original and (not original_failed or MULTI_STATEMENT_ERROR not in original_log):
@@ -164,9 +166,9 @@ def compare() -> None:
         raise SystemExit(f"O recorte Gold divergiu. Consulte {trial.relative_to(ROOT)}.")
 
     shutil.copy2(project_v2 / "target/run_results.json", trial / "07-v2-run-results.json")
-    run_dbt(candidate, project_v2, "08-v2-docs", "docs", "generate", "--select",
-            "+order_fulfillment_g", "--no-manage-state")
+    run_dbt(candidate, project_v2, "08-v2-docs", "docs", "generate", "--no-compile", "--no-manage-state")
     report = {
+        "sistema": platform.system(),
         "core": CORE_VERSION,
         "dbt_oss": V2_VERSION,
         "execucao": trial.name,

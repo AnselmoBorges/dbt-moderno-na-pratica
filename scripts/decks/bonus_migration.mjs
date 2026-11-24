@@ -65,7 +65,7 @@ export async function addBonusSlides({ root, presentation, addText, addShape, ad
       hint(slide, "O mesmo laboratório Olist em dois motores", 478, C.pale);
     }},
     { title: "A receita bateu. Você migraria?", source: contracts, body(slide) {
-      statement(slide, "A Gold respondeu certo. Duas versões de um modelo com contrato falharam.");
+      statement(slide, "No teste do Mac, a Gold respondeu certo e duas versões com contrato falharam.");
       cards(slide, [["Resultado", "O que o consumidor vê"], ["Teste", "O que o pipeline verifica"], ["Contrato", "O que a interface promete"]]);
     }},
     { title: "Roteiro da aula", source: migration, body(slide) {
@@ -99,14 +99,14 @@ export async function addBonusSlides({ root, presentation, addText, addShape, ad
       hint(slide, "A instalação inicial e a resolução de pacotes usam internet.", 553);
     }},
     { title: "Parse e seeds passaram", source: migration, body(slide) {
-      statement(slide, "O primeiro build v2 parou antes de chegar à Gold.");
+      statement(slide, "No teste do Mac, o primeiro build v2 parou antes de chegar à Gold.");
       cards(slide, [["Parse · OK", "Carregou as definições"], ["Seeds · OK", "Carregou os CSVs"], ["Silver · erro", "Consulte 06-v2-original.log"]]);
     }},
     { title: "Altere uma configuração na cópia", source: persist, body(slide) {
       statement(slide, "O teste desativa a gravação de comentários físicos e preserva os contratos.");
-      cards(slide, [["Antes", "persist_docs ativo\nFalha na Silver"], ["Depois", "persist_docs desativado\nGold disponível; contratos com erro"]]);
+      cards(slide, [["Antes · teste no Mac", "persist_docs ativo\nFalha na Silver"], ["Depois · teste no Mac", "persist_docs desativado\nGold disponível; contratos com erro"]]);
     }},
-    { title: "Onde o v2 falhou", source: contracts, body(slide) {
+    { title: "Onde o v2 falhou no Mac", source: contracts, body(slide) {
       code(slide, "Cannot prepare multiple statements at once!", 234, 104, 24);
       text(slide, "order_metrics.v1\norder_metrics.v2", 74, 386, 1120, 110, { fontSize: 32, bold: true });
       hint(slide, "Logs em build/bonus-v2/. Veja o nome da execução em resultado.json.");
@@ -125,7 +125,7 @@ export async function addBonusSlides({ root, presentation, addText, addShape, ad
           top + 12, [480, 236, 220][cell], 43,
           { bold: index === 0, color: index === 0 ? C.white : C.ink }));
       });
-      hint(slide, "Paridade em cinco campos da Gold. A migração integral continua bloqueada.", 554);
+      hint(slide, "Paridade em cinco campos da Gold. Confira o estado da migração no seu resultado.json.", 554);
     }},
     { title: "Explore o dbt Docs v2", source: distributions, body(slide) {
       code(slide, "python course.py bonus-v2 docs", 190, 86, 25);
