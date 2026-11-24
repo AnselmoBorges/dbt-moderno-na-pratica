@@ -125,3 +125,12 @@ publication_rules:
   product_interfaces_simulated: false
   paid_features_executed: false
   license_note: Conteúdo autoral Rescue Point assistido por IA; figuras oficiais mantêm atribuição e licença próprias.
+bonus:
+  - id: bonus-migracao-v2
+    authoring: Artifact Tool
+    editorial_source: roteiros/bonus-migracao-v2.md
+    checkpoint: python course.py bonus-v2 compare
+    slides: 16
+    reviewed_at: "2026-11-24"
+    official_assets: []
+    screenshots: [dbt-docs-bonus-v2-gold]

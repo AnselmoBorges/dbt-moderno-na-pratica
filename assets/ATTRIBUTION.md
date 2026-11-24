@@ -35,3 +35,5 @@ Hermes, Gemini, Banana Slides ou Nano Banana podem ser usados privadamente como 
 As ilustrações conceituais das capas da Aula 0 e dos episódios 1–12 foram produzidas dessa forma e passaram por revisão humana. As primeiras versões com texto indevido foram rejeitadas; somente as versões corrigidas `v2` ou `v3` foram incorporadas. A procedência, o modelo, o projeto, a página, a versão e o hash estão registrados em `catalog.yml` e `decks/provenance.yml`.
 
 Essas ilustrações não reproduzem interfaces, logos, resultados ou diagramas oficiais. O texto, os comandos, as fontes e os diagramas técnicos críticos permanecem editáveis e baseados nas evidências do curso.
+
+A [captura da aula bônus](screenshots/dbt-docs/bonus-v2-gold.jpg) mostra o dbt Docs v2 da execução local do laboratório, com os direitos sobre a interface preservados.

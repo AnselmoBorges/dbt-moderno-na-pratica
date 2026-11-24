@@ -4,6 +4,7 @@ import { execFile } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import { Presentation, PresentationFile } from "@oai/artifact-tool";
+import { addBonusSlides, bonusStem } from "./bonus_migration.mjs";
 
 const execFileAsync = promisify(execFile);
 
@@ -437,7 +438,7 @@ function addBrandLogo(slide) {
 }
 
 function addChrome(slide, deck, index, total, isDark = true) {
-  addText(slide, `${deck.episode}  •  OPEN / CORE 1.12`, { left: 72, top: 28, width: 540, height: 28 }, { fontSize: 14, bold: true, color: isDark ? C.cyan : C.blue }, "eyebrow");
+  addText(slide, `${deck.episode}  •  ${deck.track ?? "OPEN / CORE 1.12"}`, { left: 72, top: 28, width: 540, height: 28 }, { fontSize: 14, bold: true, color: isDark ? C.cyan : C.blue }, "eyebrow");
   addBrandLogo(slide);
   addShape(slide, "line", { left: 72, top: 675, width: 1136, height: 0 }, "none", { style: "solid", fill: isDark ? "#FFFFFF30" : "#1565C035", width: 1 }, "footer-rule");
   addText(slide, "dbt Moderno na Prática • Rescue Point • curso independente", { left: 72, top: 682, width: 880, height: 22 }, { fontSize: 11, color: isDark ? "#FFFFFF88" : "#0B1F3A88" }, "footer");
@@ -904,7 +905,11 @@ async function buildDeck(deck) {
     throw new Error(`${deck.stem}: esperado ${deck.slides} slides, criado ${p.slides.items.length}`);
   }
 
-  const qaDir = path.join(BUILD, deck.stem);
+  return exportDeck(p, deck.stem);
+}
+
+async function exportDeck(p, deckStem) {
+  const qaDir = path.join(BUILD, deckStem);
   await fs.mkdir(qaDir, { recursive: true });
   for (const [i, slide] of p.slides.items.entries()) {
     const stem = `slide-${String(i + 1).padStart(2, "0")}`;
@@ -916,10 +921,10 @@ async function buildDeck(deck) {
   const montage = await p.export({ format: "webp", montage: true, scale: 1 });
   await fs.writeFile(path.join(qaDir, "montage.webp"), new Uint8Array(await montage.arrayBuffer()));
   const inspect = await p.inspect({ kind: "slide,textbox,shape,image,notes,layout", maxChars: 1000000 });
-  await fs.writeFile(path.join(OUT, `${deck.stem}.pptx.inspect.ndjson`), inspect.ndjson);
+  await fs.writeFile(path.join(OUT, `${deckStem}.pptx.inspect.ndjson`), inspect.ndjson);
   const pptx = await PresentationFile.exportPptx(p);
-  await pptx.save(path.join(OUT, `${deck.stem}.pptx`));
-  return { stem: deck.stem, slides: p.slides.items.length };
+  await pptx.save(path.join(OUT, `${deckStem}.pptx`));
+  return { stem: deckStem, slides: p.slides.items.length };
 }
 
 async function main() {
@@ -928,9 +933,16 @@ async function main() {
   brandLogoBytes = new Uint8Array(await fs.readFile(brandLogo));
   const requested = process.argv.slice(2);
   const selected = requested.length ? decks.filter((d) => requested.includes(d.stem)) : decks;
-  if (!selected.length) throw new Error("Nenhum deck selecionado.");
+  const includeBonus = !requested.length || requested.includes(bonusStem);
+  if (!selected.length && !includeBonus) throw new Error("Nenhum deck selecionado.");
   for (const deck of selected) {
     const result = await buildDeck(deck);
+    console.log(`${result.stem}: ${result.slides} slides`);
+  }
+  if (includeBonus) {
+    const presentation = Presentation.create({ slideSize: { width: 1280, height: 720 } });
+    await addBonusSlides({ root: ROOT, presentation, addText, addShape, addChrome, setNotes, colors: C });
+    const result = await exportDeck(presentation, bonusStem);
     console.log(`${result.stem}: ${result.slides} slides`);
   }
   await execFileAsync(process.env.PYTHON || "python3", [path.join(ROOT, "scripts/decks/add_pptx_alt_text.py")], {

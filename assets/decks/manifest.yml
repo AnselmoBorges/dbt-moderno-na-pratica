@@ -19,6 +19,8 @@ decks:
   - {id: episodio-10-finops-pipeline, script: roteiros/10-finops-pipeline.md, checkpoint: "10", slides: 22, qa: complete}
   - {id: episodio-11-dbt-mcp, script: roteiros/11-dbt-mcp.md, checkpoint: "11", slides: 20, qa: complete}
   - {id: episodio-12-gold-governada-agente-solto, script: roteiros/12-gold-governada-agente-solto.md, checkpoint: "12", slides: 24, qa: complete}
+bonus:
+  - {id: bonus-migracao-v2, script: roteiros/bonus-migracao-v2.md, checkpoint: "bonus-v2 compare", slides: 16, qa: complete}
 formats:
   pptx: assets/decks/{id}.pptx
   pdf: assets/decks/{id}.pdf

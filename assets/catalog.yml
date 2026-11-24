@@ -803,3 +803,17 @@ assets:
     caption: Linhagem de order_metrics até o exposure
     alt: Grafo real do dbt de pedidos, itens e pagamentos até Silver, versões, commerce_orders, métricas e exposure do agente.
     reviewed: true
+  - id: dbt-docs-bonus-v2-gold
+    path: assets/screenshots/dbt-docs/bonus-v2-gold.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://docs.getdbt.com/blog/comparing-dbt-and-dbt-oss
+    product: dbt Docs v2 gerado por dbt OSS 2.0.11
+    captured_at: 2026-11-24
+    sha256: ee5732debf90d6558c5af637e9304092f27c19369be28159e3e377c32894fac8
+    episodes: [bonus-migracao-v2]
+    caption: Ficha do modelo order_fulfillment_g no dbt Docs v2
+    alt: Ficha real da Gold com a versão da execução, abas General e Columns, descrição do modelo e início da linhagem.
+    reviewed: true
