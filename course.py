@@ -27,6 +27,7 @@ EXPECTED_PACKAGES = {
     "dbt-metricflow": "0.16.0",
     "metricflow": "0.214.0",
     "dbt-mcp": "2.2.0",
+    "pydantic": "2.13.5",
     "jsonschema": "4.26.0",
 }
 EXPECTED_DBT_CORE = EXPECTED_PACKAGES["dbt-core"]

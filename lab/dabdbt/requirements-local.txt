@@ -5,4 +5,6 @@ duckdb-cli==1.5.5
 dbt-metricflow==0.16.0
 metricflow==0.214.0
 dbt-mcp==2.2.0
+# dbt-mcp 2.2.0 imports eval_type_backport from a Pydantic internal module.
+pydantic==2.13.5
 jsonschema==4.26.0
