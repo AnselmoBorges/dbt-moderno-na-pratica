@@ -4,7 +4,7 @@
 
 | Material | Ambiente e artefatos |
 |---|---|
-| Aula 0 e episódios 1–12 | Core 1.12.7, adaptador `dbt-duckdb` 1.11.1 e DuckDB 1.5.5. São 13 apresentações, com 271 slides. |
+| Aula 0 e episódios 1–12 | Core 1.12.7, adaptador `dbt-duckdb` 1.11.1 e DuckDB 1.5.5. São 13 apresentações, com 272 slides. |
 | Aula bônus | Core 1.12.7 e dbt OSS 2.0.11 em bancos e ambientes separados. Apresentação de 16 slides. |
 | Segunda temporada | Quatro roteiros sobre dbt Platform, com demonstrações documentais e trilhas ao vivo condicionadas ao acesso. |
 

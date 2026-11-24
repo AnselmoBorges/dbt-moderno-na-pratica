@@ -1,6 +1,6 @@
 # Apresentações da temporada open
 
-Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 271 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
+Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 272 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
 
 O slide **Roteiro da aula** mostra as etapas e os tempos aproximados. Em **Comandos da prática**, selecione o texto no PPTX ou PDF e cole no terminal na raiz do repositório. Na Aula 0, os blocos indicam quando usar o setup, o explorador ou o túnel oficial. Os [roteiros completos](../../roteiros/) trazem os comandos extras de demonstração. Confira sua saída com o [guia ilustrado dos checkpoints](../../docs/resultados-dos-checkpoints.md).
 
@@ -8,7 +8,7 @@ Cada deck traz o slide **SQL da prática**, o comando equivalente no terminal e 
 
 | Aula | Slides | PowerPoint | PDF |
 |---|---:|---|---|
-| Aula 0 — dados, ambiente e Codespaces | 24 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
+| Aula 0 — instrutor, dados e Codespaces | 25 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
 | Episódio 1 — baseline Core 1.12 e dbt Docs | 20 | [PPTX](episodio-01-baseline-core-1-12.pptx) | [PDF](episodio-01-baseline-core-1-12.pdf) |
 | Episódio 2 — Gold não é semântica | 20 | [PPTX](episodio-02-gold-nao-e-semantica.pptx) | [PDF](episodio-02-gold-nao-e-semantica.pdf) |
 | Episódio 3 — MetricFlow local | 22 | [PPTX](episodio-03-metricflow-local.pptx) | [PDF](episodio-03-metricflow-local.pdf) |
@@ -28,7 +28,7 @@ Cada deck traz o slide **SQL da prática**, o comando equivalente no terminal e 
 |---|---:|---|---|
 | [Migração do Core 1.12 ao dbt OSS v2](../../roteiros/bonus-migracao-v2.md) | 16 | [PPTX](bonus-migracao-v2.pptx) | [PDF](bonus-migracao-v2.pdf) |
 
-O bônus e a temporada somam **14 pares de arquivos e 287 slides**. Consulte o [escopo da validação](../../docs/validacao-do-curso.md) para entender o que é conferido automaticamente.
+O bônus e a temporada somam **14 pares de arquivos e 288 slides**. Consulte o [escopo da validação](../../docs/validacao-do-curso.md) para entender o que é conferido automaticamente.
 
 ## Sistema visual e edição
 
@@ -40,7 +40,7 @@ O bônus e a temporada somam **14 pares de arquivos e 287 slides**. Consulte o [
 
 ## Qualidade verificada
 
-- 271 slides da trilha principal e 16 do bônus, renderizados em PPTX e PDF.
+- 272 slides da trilha principal e 16 do bônus, renderizados em PPTX e PDF.
 - Nenhum overflow detectado pelo validador de apresentações.
 - Mesma contagem de páginas nos dois formatos.
 - Cada slide possui fala sugerida, indicação do que destacar, transição, tempo aproximado e `[Sources]` nas notas.
