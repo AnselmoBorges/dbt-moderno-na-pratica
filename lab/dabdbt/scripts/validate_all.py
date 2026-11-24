@@ -33,6 +33,7 @@ COMMANDS = [
     [PYTHON, "scripts/benchmark_state.py"],
     [PYTHON, "scripts/verify_incremental_equivalence.py"],
     [PYTHON, "scripts/benchmark_finops.py"],
+    [PYTHON, "scripts/verify_practice_queries.py"],
 ]
 
 for command in COMMANDS:

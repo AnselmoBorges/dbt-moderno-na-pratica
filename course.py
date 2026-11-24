@@ -232,6 +232,33 @@ def official_data_ui(port: int) -> None:
         pass
 
 
+def practice_sql(number: str) -> None:
+    require_environment()
+    database = ROOT / "lab" / "data" / "dabdbt.duckdb"
+    if not database.is_file():
+        raise SystemExit("Banco ainda não existe. Execute: python course.py checkpoint 01")
+    query = ROOT / "lab" / "praticas" / f"{number}.sql"
+    run([venv_tool("duckdb"), "-readonly", database, "-f", query])
+
+
+def serve_dbt_docs(port: int) -> None:
+    require_environment()
+    if not 1024 <= port <= 65535:
+        raise SystemExit("A porta deve estar entre 1024 e 65535.")
+    missing = [name for name in ("index.html", "manifest.json", "catalog.json")
+               if not (LAB / "target" / name).is_file()]
+    if missing:
+        raise SystemExit("Gere a documentação primeiro: python course.py checkpoint 01")
+    in_codespaces = os.environ.get("CODESPACES") == "true"
+    host = "0.0.0.0" if in_codespaces else "127.0.0.1"
+    print(f"Abra a porta privada {port} no Codespaces." if in_codespaces else f"Abra http://localhost:{port}.")
+    try:
+        run([venv_tool("dbt"), "docs", "serve", "--profiles-dir", "dbt_profiles",
+             "--target", "local", "--host", host, "--port", str(port), "--no-browser"], cwd=LAB)
+    except KeyboardInterrupt:
+        pass
+
+
 def codespace_ui_tunnel(codespace: str | None, port: int) -> None:
     command: list[str | Path] = [
         sys.executable,
@@ -302,6 +329,10 @@ def main() -> int:
         "official-data-ui", help="inicia a DuckDB UI oficial para acesso por túnel"
     )
     official_ui_parser.add_argument("--port", type=int, default=4213)
+    sql_parser = subparsers.add_parser("sql", help="roda o SQL da aula no DuckDB pelo terminal")
+    sql_parser.add_argument("number", choices=[*(f"{number:02}" for number in range(13)), "12-insight"])
+    docs_parser = subparsers.add_parser("docs", help="abre a documentação HTML gerada pelo dbt")
+    docs_parser.add_argument("--port", type=int, default=8080)
     tunnel_parser = subparsers.add_parser(
         "codespace-ui-tunnel", help="abre no computador local o túnel para a DuckDB UI"
     )
@@ -323,6 +354,10 @@ def main() -> int:
         data_ui(args.port)
     elif args.command == "official-data-ui":
         official_data_ui(args.port)
+    elif args.command == "sql":
+        practice_sql(args.number)
+    elif args.command == "docs":
+        serve_dbt_docs(args.port)
     elif args.command == "codespace-ui-tunnel":
         codespace_ui_tunnel(args.codespace, args.port)
     elif args.command == "paths":

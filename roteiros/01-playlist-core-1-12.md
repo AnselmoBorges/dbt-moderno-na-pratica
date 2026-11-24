@@ -51,12 +51,13 @@ As lacunas reais são consistência: métricas ainda não estão como código, v
 python course.py checkpoint 01
 ```
 
-“O checkpoint carrega os seeds, cria uma fonte de freshness com horário atual, faz parse e build. Ele termina verificando quatro contratos de máquina:
+“O checkpoint carrega os seeds, cria uma fonte de freshness com horário atual, faz parse e build. Ele gera a documentação e verifica cinco arquivos:
 
 - `manifest.json`: DAG, configurações, owners e exposures;
 - `semantic_manifest.json`: representação usada pelo motor semântico;
 - `osi_document.json`: documento semântico interoperável;
-- `run_results.json`: resultado do último comando que escreveu esse arquivo. Depois do checkpoint, `args.which` indica `generate`, pois `dbt docs generate` vem depois do build.
+- `run_results.json`: resultado do último comando que escreveu esse arquivo. Depois do checkpoint, `args.which` indica `generate`, pois `dbt docs generate` vem depois do build;
+- `catalog.json`: catálogo de relações, colunas e tipos consultados no DuckDB.
 
 O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tests, cinco seeds, um unit test, cinco métricas, um semantic model, uma exposure e um group. O exposure aparece como `NO-OP`, não como erro.”
 
@@ -66,6 +67,12 @@ O esperado é `Checkpoint 01 OK`. No build completo são 14 modelos, 25 data tes
 
 Abra `lab/dabdbt/target/manifest.json` no explorador do editor. No Codespaces também vale `code lab/dabdbt/target/manifest.json`. Mostre `parent_map` e busque `semantic_model.dabdbt.commerce_orders`. A declaração descreve quais colunas identificam pedidos e como as métricas podem ser segmentadas. As linhas dos pedidos ficam no DuckDB.
 
+```bash
+python course.py docs
+```
+
+“Abra a porta 8080. Na ficha de `order_metrics_v2`, expanda `order_id` em Columns. Leia tipo, descrição, constraint e testes. Depois amplie View Lineage Graph e use `+order_metrics+` no filtro. Siga as fontes até as versões, a interface de pedidos, as métricas e o exposure. Para descobrir como os modelos integram essas fontes, abra Code.” [Passos e capturas do dbt Docs](../docs/praticas-duckdb.md#documentação-e-linhagem-geradas-pelo-dbt)
+
 ### 20:00–22:30 — Fechamento
 
 “A regra desta temporada é simples: só chamamos de coberto aquilo que roda. E só chamamos de estável o que entra na CI. No próximo episódio vamos separar Gold de camada semântica usando regras que já existem no cenário real.”
@@ -74,7 +81,7 @@ Abra `lab/dabdbt/target/manifest.json` no explorador do editor. No Codespaces ta
 
 - `python course.py checkpoint 01` retorna sucesso.
 - Core reporta 1.12.7 e o adaptador DuckDB reporta 1.11.1. O motor DuckDB permanece em 1.5.5.
-- Quatro artifacts obrigatórios existem e são válidos.
+- Cinco artifacts passam na validação e a documentação abre com ficha de modelo e grafo.
 
 ## Governança, FinOps e IA
 

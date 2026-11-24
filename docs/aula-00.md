@@ -4,6 +4,8 @@
 
 Ao final, você terá criado o laboratório padronizado no GitHub Codespaces, validado o ambiente e executado o primeiro checkpoint sem conta cloud. A instalação local permanece como alternativa.
 
+A temporada começa com uma pergunta: **quanto dos pagamentos corresponde a pedidos entregues?** Conheça os CSVs de pedidos, itens, pagamentos, clientes e municípios e veja o que cada linha representa. [Dicionário de dados e primeira consulta](praticas-duckdb.md#de-onde-vêm-os-dados)
+
 ```mermaid
 flowchart LR
     A[GitHub Codespaces recomendado] --> B[setup automático]
@@ -30,10 +32,10 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 4. Execute `python course.py paths` para conferir os caminhos detectados do dbt, DuckDB, profile, banco e artifacts.
 5. Execute `python course.py checkpoint 01`.
 6. Procure a mensagem `Checkpoint 01 OK`.
-7. Opcionalmente, execute `python course.py data-ui` e use o explorador autoral do curso sobre a cópia somente leitura, pela porta privada 4213.
+7. Execute `python course.py data-ui` e abra a porta privada 4213. Selecione **00 · Primeiras linhas dos pedidos** e clique em **Executar consulta**. Pelo terminal, use `python course.py sql 00`.
 8. Como bônus avançado, use `official-data-ui` no Codespaces e `codespace-ui-tunnel` no computador local para abrir a DuckDB UI oficial em `localhost`.
-8. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
-9. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
+9. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
+10. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
 
 ## O que o setup faz
 
@@ -52,7 +54,7 @@ No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateComm
 
 > O dbt Power User não é necessário. Se o editor abrir o assistente dessa extensão, feche-o e siga apenas os comandos `course.py`. O [guia de Codespaces](codespaces.md) explica por que o dbt 1.11 mostrado pelo assistente não é o dbt 1.12.7 do laboratório.
 
-> O explorador DuckDB é uma interface autoral e opcional do curso. Ele opera sobre uma cópia somente leitura, não substitui os comandos dbt e não é necessário para concluir nenhum checkpoint. A DuckDB UI oficial não é usada no Codespaces por sua limitação documentada com túneis e containers.
+> A prática usa o Explorador DuckDB do curso, com uma cópia somente leitura do banco. A UI oficial também pode ser usada pelo túnel descrito no [guia do Codespaces](codespaces.md).
 
 ## Material complementar
 

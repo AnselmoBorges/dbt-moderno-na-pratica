@@ -71,7 +71,7 @@ models:
             data_type: decimal(18,2)
             description: Soma dos preços dos itens, separada do pagamento para evitar ambiguidade.
   - name: commerce_orders
-    description: Fachada semântica estável sobre a versão vigente da API de pedidos.
+    description: "{{ doc('commerce_orders_interface') }}"
     config:
       group: commerce
       access: public

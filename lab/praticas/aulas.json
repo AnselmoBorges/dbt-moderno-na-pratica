@@ -1,0 +1,86 @@
+{
+  "00": {
+    "topic": "Primeiras linhas dos pedidos",
+    "evidence": "O pedido o3 foi cancelado e tem data de entrega vazia.",
+    "highlight": "Mostre pedido, status e as duas datas. A amostra tem eventos incompletos que a regra de receita precisa respeitar.",
+    "expected": [["o1", "delivered", "2024-01-01", "2024-01-05"], ["o2", "delivered", "2024-01-10", "2024-01-15"], ["o3", "canceled", "2024-02-01", null], ["o4", "delivered", "2024-02-05", "2024-02-09"]]
+  },
+  "01": {
+    "topic": "A dependência no manifest",
+    "evidence": "O manifest aponta order_metrics.v2 como pai de commerce_orders.",
+    "highlight": "A coluna pais descreve a linhagem. Os registros de pedidos ficam nas tabelas do DuckDB.",
+    "expected": [["dabdbt", "1.12.7", "[\"model.dabdbt.order_metrics.v2\"]"]]
+  },
+  "02": {
+    "topic": "O efeito do join no valor pago",
+    "evidence": "O join com itens aumenta de 8 para 10 linhas e de 740 para 910 no total.",
+    "highlight": "O pedido pode ter vários itens. Repetir o valor do pedido em cada item infla o total nesta amostra.",
+    "expected": [["Gold", 8, 740], ["Gold + itens", 10, 910]]
+  },
+  "03": {
+    "topic": "Conferência das métricas mensais",
+    "evidence": "Em fevereiro, a amostra tem 2 pedidos, receita bruta de 230 e ticket de 115.",
+    "highlight": "Compare com a saída do MetricFlow no checkpoint 03. A consulta SQL é uma conferência independente na mesma relação.",
+    "expected": [["2024-01", 2, 150, 150, 75], ["2024-02", 2, 230, 200, 115], ["2024-03", 2, 150, 70, 75], ["2024-04", 2, 210, 210, 105]]
+  },
+  "04": {
+    "topic": "As métricas no arquivo OSI",
+    "evidence": "Cinco definições de métricas aparecem no JSON exportado pelo dbt.",
+    "highlight": "O DuckDB lista os nomes no documento interoperável. Os valores dependem da consulta sobre a base.",
+    "expected": [["average_delivery_days"], ["average_order_value"], ["delivered_revenue"], ["gross_revenue"], ["orders"]]
+  },
+  "05": {
+    "topic": "As duas versões lado a lado",
+    "evidence": "A v1 tem 7 colunas. A v2 tem 9 e inclui delivered_revenue.",
+    "highlight": "Confira o que mudou no catálogo. O checkpoint testa separadamente a quebra de contrato em uma cópia.",
+    "expected": [["order_metrics_v1", 7, false], ["order_metrics_v2", 9, true]]
+  },
+  "06": {
+    "topic": "Chaves e receita na verificação de qualidade",
+    "evidence": "As 8 linhas são 8 pedidos distintos. Chaves nulas e receita indevida dão zero.",
+    "highlight": "Uma checagem SQL explica a regra nos dados. O checkpoint também cobre testes unitários e freshness.",
+    "expected": [[8, 8, 0, 0]]
+  },
+  "07": {
+    "topic": "Domínio, acesso e exposure no manifest",
+    "evidence": "A interface é pública no dbt, pertence a commerce e tem um exposure de consumo.",
+    "highlight": "O campo access regula referências no dbt. Permissão no banco continua sendo uma configuração separada.",
+    "expected": [["commerce", "public", "exposure.dabdbt.governed_commerce_agent"]]
+  },
+  "08": {
+    "topic": "A interface do domínio em uso",
+    "evidence": "O consumidor encontra 6 pedidos entregues e receita reconhecida de 630.",
+    "highlight": "Mostre o consumo pelo nome estável semantic.commerce_orders. A consulta usa a regra de receita já publicada pelo domínio.",
+    "expected": [["canceled", 1, 0], ["delivered", 6, 630], ["shipped", 1, 0]]
+  },
+  "09": {
+    "topic": "Impacto e relação reaproveitada pelo defer",
+    "evidence": "A seleção inclui orders_s e commerce_orders. O defer reutiliza a versão 2 dos pedidos.",
+    "highlight": "O relatório veio da execução dbt em uma cópia de trabalho. O SQL lê a seleção e a relação documentada pelo experimento.",
+    "expected": [[true, true, "semantic.order_metrics_v2"]]
+  },
+  "10": {
+    "topic": "A carga incremental em números",
+    "evidence": "A carga completa tem 8 linhas candidatas e a incremental tem 1. O resultado é igual.",
+    "highlight": "A comparação conta linhas candidatas nesta amostra. Para duração, veja os tempos de cada execução no terminal.",
+    "expected": [[8, 1, true]]
+  },
+  "11": {
+    "topic": "Ferramentas permitidas no MCP",
+    "evidence": "O teste observou cinco ferramentas e confirmou a rejeição de build.",
+    "highlight": "O SQL lê o relatório do teste MCP. A enumeração e a rejeição são realizadas pelo checkpoint.",
+    "expected": [["compile", true], ["get_lineage_dev", true], ["get_node_details_dev", true], ["list", true], ["parse", true]]
+  },
+  "12": {
+    "topic": "Os três cenários do benchmark com fixtures",
+    "evidence": "As respostas corretas foram 5, 9 e 10 de 10 nos traces gravados.",
+    "highlight": "fixtures = true identifica resultados do exercício. O checkpoint pontua traces gravados, sem chamar um modelo de IA.",
+    "expected": [["raw_schema", 5, 1, true], ["manifest_context", 9, 1, true], ["semantic_mcp", 10, 0, true]]
+  },
+  "12-insight": {
+    "topic": "Receita bruta e entregue por mês",
+    "evidence": "Dos 740 pagos, 630 correspondem a pedidos entregues. Março concentra 80 dos 110 de diferença.",
+    "highlight": "Leia o mês por data de compra. A receita entregue usa o status atual do pedido. Essa é a regra didática que o dashboard ou agente pode consumir.",
+    "expected": [["2024-01", 150, 150], ["2024-02", 230, 200], ["2024-03", 150, 70], ["2024-04", 210, 210]]
+  }
+}

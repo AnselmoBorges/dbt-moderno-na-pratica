@@ -87,6 +87,14 @@ O relatório combinado também é validado por `benchmark-report.schema.json`. A
 
 O aceite do checkpoint é o avaliador funcionar e todas as perguntas estarem presentes. Não é provar que o modo C sempre vence. Essa conclusão só pode vir de traces reais, repetidos e controlados.”
 
+Mostre a pergunta da Aula 0. No Explorador DuckDB, escolha **12-insight** e execute. A tabela e o gráfico usam a mesma consulta:
+
+```bash
+python course.py sql 12-insight
+```
+
+“Dos 740 pagos, 630 correspondem a pedidos entregues. Março concentra 80 dos 110 de diferença. Isso aparece porque agrupamos pelo mês da compra e seguimos a regra de status entregue da Gold. Um painel pode desenhar as duas séries. Um agente pode usar as métricas publicadas para responder e explicar a diferença.” [SQL e gráfico do laboratório](../docs/praticas-duckdb.md#o-insight-que-chega-ao-consumidor)
+
 ### 19:00–22:00 — O que os cases sugerem
 
 “A Bilt descreve uma camada conversacional conectada a LLMs e reporta redução de custo em sua plataforma analítica. A impact.com apresenta a Semantic Layer como interface para agentes. Uma entrevista com a Ramp relata que chamadas MCP diretas ao Gong consumiam de dez a cinquenta mil tokens e que uma camada semântica reduziu o payload em cerca de vinte vezes.

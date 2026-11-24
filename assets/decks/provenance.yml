@@ -1,5 +1,5 @@
 version: 2
-reviewed_at: "2026-09-01"
+reviewed_at: "2026-11-24"
 authoring_environment:
   deck_tool: Artifact Tool
   illustration_tool: Banana Slides / Nano Banana
@@ -12,12 +12,17 @@ authoring_environment:
   course_dependency: none
 quality_assurance:
   slide_overflow: passed
-  pptx_visual_review: 265_of_265
-  pdf_visual_review: 265_of_265
+  pptx_visual_review: 271_of_271
+  pdf_visual_review: 271_of_271
   notes_and_sources: passed
-  recommended_speaker_script: 265_of_265
+  recommended_speaker_script: 271_of_271
   alt_text: passed
   official_asset_hashes: passed
+praticas_visuais:
+  consultas: lab/praticas/
+  guia: docs/praticas-duckdb.md
+  capturas: assets/screenshots/duckdb/
+  documentacao_dbt: assets/screenshots/dbt-docs/
 decks:
   - id: aula-00-ambiente
     page_id: 055f6cd7-7d9e-422a-a3bd-5169914dea3c

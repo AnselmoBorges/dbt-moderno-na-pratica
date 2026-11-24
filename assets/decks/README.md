@@ -1,13 +1,15 @@
 # Apresentações da temporada open
 
-Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 265 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
+Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 271 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
 
 O slide **Roteiro da aula** mostra as etapas e os tempos aproximados. Em **Comandos da prática**, selecione o texto no PPTX ou PDF e cole no terminal na raiz do repositório. Na Aula 0, os blocos indicam quando usar o setup, o explorador ou o túnel oficial. Os [roteiros completos](../../roteiros/) trazem os comandos extras de demonstração. Confira sua saída com o [guia ilustrado dos checkpoints](../../docs/resultados-dos-checkpoints.md).
 
+Cada deck traz o slide **SQL da prática**, o comando equivalente no terminal e a captura da consulta executada no Explorador DuckDB. A Aula 0 apresenta as fontes. O Episódio 1 mostra ficha e linhagem no dbt Docs. O Episódio 12 fecha com um gráfico montado sobre as regras de receita. [Guia das práticas visuais](../../docs/praticas-duckdb.md)
+
 | Aula | Slides | PowerPoint | PDF |
 |---|---:|---|---|
-| Aula 0 — ambiente e Codespaces | 22 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
-| Episódio 1 — baseline Core 1.12 | 18 | [PPTX](episodio-01-baseline-core-1-12.pptx) | [PDF](episodio-01-baseline-core-1-12.pdf) |
+| Aula 0 — dados, ambiente e Codespaces | 24 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |
+| Episódio 1 — baseline Core 1.12 e dbt Docs | 20 | [PPTX](episodio-01-baseline-core-1-12.pptx) | [PDF](episodio-01-baseline-core-1-12.pdf) |
 | Episódio 2 — Gold não é semântica | 20 | [PPTX](episodio-02-gold-nao-e-semantica.pptx) | [PDF](episodio-02-gold-nao-e-semantica.pdf) |
 | Episódio 3 — MetricFlow local | 22 | [PPTX](episodio-03-metricflow-local.pptx) | [PDF](episodio-03-metricflow-local.pdf) |
 | Episódio 4 — semântica interoperável | 20 | [PPTX](episodio-04-semantica-aberta-interoperavel.pptx) | [PDF](episodio-04-semantica-aberta-interoperavel.pdf) |
@@ -18,7 +20,7 @@ O slide **Roteiro da aula** mostra as etapas e os tempos aproximados. Em **Coman
 | Episódio 9 — state, defer e CI | 20 | [PPTX](episodio-09-ci-state-defer.pptx) | [PDF](episodio-09-ci-state-defer.pdf) |
 | Episódio 10 — FinOps do pipeline | 22 | [PPTX](episodio-10-finops-pipeline.pptx) | [PDF](episodio-10-finops-pipeline.pdf) |
 | Episódio 11 — dbt MCP | 20 | [PPTX](episodio-11-dbt-mcp.pptx) | [PDF](episodio-11-dbt-mcp.pdf) |
-| Episódio 12 — agente governado | 22 | [PPTX](episodio-12-gold-governada-agente-solto.pptx) | [PDF](episodio-12-gold-governada-agente-solto.pdf) |
+| Episódio 12 — agente governado e gráfico de receita | 24 | [PPTX](episodio-12-gold-governada-agente-solto.pptx) | [PDF](episodio-12-gold-governada-agente-solto.pdf) |
 
 ## Sistema visual e edição
 
@@ -30,7 +32,7 @@ O slide **Roteiro da aula** mostra as etapas e os tempos aproximados. Em **Coman
 
 ## Qualidade verificada
 
-- 265 slides renderizados e inspecionados no PPTX e no PDF.
+- 271 slides renderizados no PPTX e no PDF, com revisão visual das páginas atualizadas.
 - Nenhum overflow detectado pelo validador de apresentações.
 - Mesma contagem de páginas nos dois formatos.
 - Cada slide possui fala sugerida, indicação do que destacar, transição, tempo aproximado e `[Sources]` nas notas.

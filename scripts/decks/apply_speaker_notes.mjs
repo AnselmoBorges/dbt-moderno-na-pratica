@@ -7,6 +7,7 @@ const ROOT = process.env.COURSE_ROOT
   ? path.resolve(process.env.COURSE_ROOT)
   : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
 const DECK_DIR = path.resolve(process.env.COURSE_DECK_OUTPUT ?? path.join(ROOT, "assets/decks"));
+const LESSONS = JSON.parse(await fs.readFile(path.join(ROOT, "lab/praticas/aulas.json"), "utf8"));
 const OUTPUT_DIR = process.env.SPEAKER_NOTES_OUTPUT
   ? path.resolve(process.env.SPEAKER_NOTES_OUTPUT)
   : path.join(ROOT, "build/notes-runtime/output");
@@ -65,6 +66,10 @@ function classify(records) {
   const names = new Set(records.map((record) => record.name));
   if (names.has("cover-title")) return "cover";
   if (names.has("hook")) return "hook";
+  if (names.has("practice-sql")) return "practice-sql";
+  if (names.has("practice-evidence")) return "practice-evidence";
+  if (names.has("stage-label-0") || names.has("sources-table-label")) return "data-intro";
+  if (names.has("docs-command") || names.has("lineage-selector")) return "dbt-docs";
   if (names.has("cta")) return "cta";
   if (names.has("command")) return "demo-command";
   if (names.has("result")) return "demo-result";
@@ -100,7 +105,7 @@ function slideContent(records, slideRecord, previous) {
   return { title, subtitle, items };
 }
 
-function recommendedScript({ role, content, records, deckTitle, episode, checkpoint, nextTitle, isLast }) {
+function recommendedScript({ role, content, records, deckTitle, episode, checkpoint, nextTitle, isLast, practice, authoredNote }) {
   const { title, subtitle, items } = content;
   const itemSpeech = naturalList(items);
   const commands = getTexts(records, (record) => /^command(?:-\d+)?$/.test(record.name || ""));
@@ -118,6 +123,7 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
   const timings = {
     cover: "00:45", hook: "01:00", objectives: "01:00", concept: "01:10", visual: "00:55",
     "demo-command": "01:20", "demo-observe": "01:10", "demo-result": "00:45", impact: "01:00",
+    "practice-sql": "01:10", "practice-evidence": "00:45", "data-intro": "00:40", "dbt-docs": "01:00",
     case: "00:55", limitations: "01:00", radar: "00:55", cta: "00:40",
   };
 
@@ -161,6 +167,24 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
     case "demo-observe":
       talk = `Enquanto a execução acontece, não olhe apenas para a mensagem final. Observe ${lowerFirst(itemSpeech)}. Cada sinal responde a uma pergunta diferente sobre o pipeline. Se um deles divergir, interrompa a demonstração e investigue; o objetivo do hands-on é produzir evidência, não apenas chegar rapidamente a uma tela verde.`;
       highlight = "Marque cada observação quando ela aparecer no terminal ou no artifact correspondente.";
+      break;
+    case "practice-sql":
+      talk = title === "SQL do gráfico final"
+        ? "No Explorador DuckDB, selecione 12-insight e clique em Executar consulta. Leia a tabela e role até o gráfico. A consulta agrupa por mês da compra e usa os valores já definidos na interface semântica."
+        : "Conclua o checkpoint e abra o explorador em um terminal. No Codespaces, abra a porta privada 4213 na guia Portas. Selecione a aula ou cole o SQL no editor e clique em Executar consulta. Se já estava com o explorador aberto antes do checkpoint, reinicie-o para atualizar a cópia do banco.";
+      highlight = `Mostre o botão Executar consulta e o comando ${getText(records, "practice-cli")}, que roda a mesma consulta no terminal.`;
+      break;
+    case "practice-evidence":
+      talk = `${practice.evidence} ${practice.highlight}`;
+      highlight = "Aponte as colunas da grade que sustentam o resultado e compare com a execução do aluno.";
+      break;
+    case "data-intro":
+      talk = authoredNote;
+      highlight = "Aponte a diferença entre uma linha por pedido e várias linhas de itens ou pagamentos.";
+      break;
+    case "dbt-docs":
+      talk = authoredNote;
+      highlight = "Navegue no HTML local. Aponte onde o aluno encontra o campo ou a dependência mostrada no slide.";
       break;
     case "demo-result":
       talk = `Este é o ponto de parada da demonstração: ${sentence(result)} Esse resultado confirma que a etapa executada produziu a evidência esperada para o checkpoint ${checkpoint}. Se o valor, o status ou o artifact estiver diferente, não trate a divergência como detalhe de ambiente. Use o diagnóstico do curso e só avance quando a causa estiver compreendida.`;
@@ -233,6 +257,7 @@ function renderNotes(script, sources) {
 }
 
 async function processDeck(stem) {
+  const practice = LESSONS[stem.split("-")[1]];
   const sourcePath = path.join(DECK_DIR, `${stem}.pptx`);
   const outputPath = path.join(OUTPUT_DIR, `${stem}.pptx`);
   const presentation = await PresentationFile.importPptx(await FileBlob.load(sourcePath));
@@ -269,6 +294,7 @@ async function processDeck(stem) {
   for (let index = 1; index <= presentation.slides.items.length; index += 1) {
     const recordsForSlide = textBySlide.get(index) || [];
     const role = classify(recordsForSlide);
+    const rawNotes = noteRecords.get(index)?.text || "";
     const script = recommendedScript({
       role,
       content: contents[index - 1],
@@ -278,8 +304,10 @@ async function processDeck(stem) {
       checkpoint,
       nextTitle: contents[index]?.title || "encerramento",
       isLast: index === presentation.slides.items.length,
+      practice: Object.values(LESSONS).find((item) => item.topic === contents[index - 1].title) ?? practice,
+      authoredNote: rawNotes.split("[Sources]")[0].trim(),
     });
-    const sources = sourcesFrom(noteRecords.get(index)?.text || "");
+    const sources = sourcesFrom(rawNotes);
     const notes = renderNotes(script, sources);
     const slide = presentation.slides.items[index - 1];
     slide.speakerNotes.textFrame.setText(notes);

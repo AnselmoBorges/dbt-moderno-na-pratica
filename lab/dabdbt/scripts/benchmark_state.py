@@ -72,10 +72,13 @@ required = {"orders_s", "order_fulfillment_g", "commerce_orders"}
 if not required.issubset(set(selected)):
     raise SystemExit(f"Seleção state incompleta. Esperado {sorted(required)}, obtido {selected}")
 
-print(json.dumps({
+report = {
     "baseline_parse_seconds": round(baseline_seconds, 4),
     "selected_count": len(selected),
     "selected_nodes": selected,
     "defer_build_status": sorted(defer_statuses),
     "deferred_parent_relation": "semantic.order_metrics_v2",
-}, indent=2))
+}
+report_json = json.dumps(report, indent=2)
+(BASELINE.parent / "state_demo.json").write_text(report_json + "\n", encoding="utf-8")
+print(report_json)

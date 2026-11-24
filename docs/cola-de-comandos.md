@@ -16,4 +16,8 @@ Comandos dbt mostrados nas aulas são executados pelo launcher, mas continuam di
 
 ## Material complementar
 
+- `python course.py data-ui` abre o Explorador DuckDB. `python course.py sql 02` roda o SQL da aula 02 no terminal.
+- `python course.py docs` serve a documentação gerada pelo checkpoint 01 na porta 8080.
+- [Consultas, prints e gráfico das aulas](praticas-duckdb.md) — passos de execução e como ler os resultados.
+
 - [Referência de comandos dbt](https://docs.getdbt.com/reference/dbt-commands) — dbt Labs, documentação/EN; verificado em 2026-09-01.

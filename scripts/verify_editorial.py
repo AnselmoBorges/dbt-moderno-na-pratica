@@ -163,8 +163,8 @@ for entry in entries:
         raise SystemExit(f"Tipo visual não reconhecido em {asset_id}: {fields['kind']}")
 
 deck_specs = {
-    "aula-00-ambiente": 22,
-    "episodio-01-baseline-core-1-12": 18,
+    "aula-00-ambiente": 24,
+    "episodio-01-baseline-core-1-12": 20,
     "episodio-02-gold-nao-e-semantica": 20,
     "episodio-03-metricflow-local": 22,
     "episodio-04-semantica-aberta-interoperavel": 20,
@@ -175,7 +175,7 @@ deck_specs = {
     "episodio-09-ci-state-defer": 20,
     "episodio-10-finops-pipeline": 22,
     "episodio-11-dbt-mcp": 20,
-    "episodio-12-gold-governada-agente-solto": 22,
+    "episodio-12-gold-governada-agente-solto": 24,
 }
 
 
@@ -218,6 +218,10 @@ for stem, expected_slides in deck_specs.items():
             archive.read(f"ppt/slides/slide{index}.xml").decode("utf-8")
             for index in range(1, expected_slides + 1)
         ]
+        media_hashes = {
+            hashlib.sha256(archive.read(name)).hexdigest()
+            for name in archive.namelist() if name.startswith("ppt/media/") and not name.endswith("/")
+        }
     required_note_sections = ("[Roteiro recomendado]", "Fala sugerida:", "O que destacar:", "Transição:")
     for index, xml in enumerate(note_xml, start=1):
         note_text = "\n".join(node.text or "" for node in ElementTree.fromstring(xml).findall(".//{*}t"))
@@ -241,11 +245,27 @@ for stem, expected_slides in deck_specs.items():
         raise SystemExit(f"Deck {stem} precisa de '{checkpoint}' em texto no slide Comandos da prática.")
     required_commands = {
         "00": aula_zero_commands,
-        "01": {"code lab/dabdbt/target/manifest.json"},
+        "01": {"code lab/dabdbt/target/manifest.json", "python course.py docs", "+order_metrics+"},
     }.get(lesson, set())
     missing_commands = required_commands.difference(*slide_text)
     if missing_commands:
         raise SystemExit(f"Deck {stem} sem comandos copiáveis: {sorted(missing_commands)}.")
+    practice_ids = ["12", "12-insight"] if lesson == "12" else [lesson]
+    for practice in practice_ids:
+        sql = ROOT / f"lab/praticas/{practice}.sql"
+        practice_lines = {line.strip() for line in sql.read_text(encoding="utf-8").splitlines() if line.strip()}
+        practice_lines.update({"python course.py data-ui", f"python course.py sql {practice}"})
+        if not any(practice_lines <= lines for lines in slide_text):
+            raise SystemExit(f"Deck {stem} precisa do SQL completo e dos comandos da prática {practice} em texto.")
+    practice_images = [f"duckdb/{practice}.jpg" for practice in practice_ids]
+    practice_images += {
+        "00": ["duckdb/00-oficial.jpg"],
+        "01": ["dbt-docs/01-colunas.jpg", "dbt-docs/01-linhagem.jpg"],
+    }.get(lesson, [])
+    for picture in practice_images:
+        image_path = ROOT / "assets/screenshots" / picture
+        if hashlib.sha256(image_path.read_bytes()).hexdigest() not in media_hashes:
+            raise SystemExit(f"Deck {stem} não contém a captura catalogada {picture}.")
     for index, xml in enumerate(slide_xml, start=1):
         pictures = re.findall(r"<p:pic>.*?</p:pic>", xml, flags=re.DOTALL)
         if any(not re.search(r"<p:cNvPr\b[^>]*\bdescr=\"[^\"]{20,}\"", picture) for picture in pictures):
@@ -259,8 +279,8 @@ for stem, expected_slides in deck_specs.items():
     if pptx.stat().st_size > 15 * 1024 * 1024 or pdf.stat().st_size > 10 * 1024 * 1024:
         raise SystemExit(f"Deck {stem} ultrapassa o limite de tamanho editorial.")
 
-if total_slides != 265:
-    raise SystemExit(f"Temporada deveria conter 265 slides; contém {total_slides}.")
+if total_slides != 271:
+    raise SystemExit(f"Temporada deveria conter 271 slides; contém {total_slides}.")
 if list((ROOT / "assets/decks").glob("*-banana.pptx")) or list((ROOT / "assets/decks").glob("*-banana.pdf")):
     raise SystemExit("Há variantes -banana concorrendo com os arquivos canônicos.")
 
@@ -299,4 +319,4 @@ for path in lab_root.rglob("*"):
     if any(pattern.search(content) for pattern in sensitive_patterns):
         raise SystemExit(f"Possível identificador sensível no laboratório: {path}")
 
-print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, {len(entries)} ativos, 13 decks, 265 slides e sanitização válidos.")
+print(f"Editorial OK: {len(rows)} evidências, 6 vídeos, 16 roteiros, {len(entries)} ativos, 13 decks, {total_slides} slides e sanitização válidos.")

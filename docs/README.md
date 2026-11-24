@@ -7,7 +7,7 @@ Este guia leva uma pessoa com SQL básico do computador recém-configurado ao pr
 1. Leia os [pré-requisitos e faça a autoavaliação](pre-requisitos.md).
 2. Abra o [laboratório recomendado no GitHub Codespaces](codespaces.md). Não é necessário instalar Python ou Git localmente.
 3. Faça a [Aula 0](aula-00.md).
-4. Consulte o [mapa do curso](mapa-do-curso.md) e use o [guia ilustrado dos checkpoints](resultados-dos-checkpoints.md) para conferir sua execução.
+4. Consulte o [mapa do curso](mapa-do-curso.md), siga as [práticas no DuckDB e no dbt Docs](praticas-duckdb.md) e compare sua execução com o [guia dos checkpoints](resultados-dos-checkpoints.md).
 5. Se algo falhar, use o [guia de solução de problemas](solucao-de-problemas.md).
 
 Se você precisa trabalhar offline ou prefere controlar o ambiente no próprio computador, use a [instalação local para Windows, macOS ou Linux](instalacao/README.md).

@@ -14,13 +14,13 @@ Criar um Codespace de 2 núcleos, validar o laboratório preparado automaticamen
 
 ## Roteiro falado
 
-### 00:00–02:00 — O resultado antes das ferramentas
+### 00:00–02:00 — A pergunta da temporada
 
-“Ao final desta aula você terá um banco DuckDB local, um projeto dbt compilado, testes executados e artifacts que poderá abrir. Nenhuma conta cloud e nenhuma chave de IA.”
+“Quanto dos pagamentos corresponde a pedidos entregues? Essa pergunta volta no episódio final, em um gráfico e em uma consulta que um dashboard ou agente pode reutilizar. Primeiro entendemos cada linha do dado bruto. Depois padronizamos chaves, datas e status, somamos os pagamentos por pedido, definimos receita entregue e testamos a regra. O contrato e a documentação dão ao consumidor um lugar confiável de onde partir.”
 
-### 02:00–03:30 — O que você precisa saber
+### 02:00–03:30 — De onde vêm os dados
 
-“SQL básico é suficiente. Vamos ensinar os comandos de terminal, a função do Git, por que existe um ambiente Python e o que cada comando dbt produz.”
+“Abra os [CSVs do laboratório](../lab/dabdbt/src/seeds/). Os arquivos de comércio usam uma estrutura inspirada na Olist e registros didáticos. A tabela de pedidos tem identificador, status e datas. Itens e pagamentos usam o identificador do pedido, mas podem ter várias linhas para ele. O cadastro traz cidade e UF, e o CSV de municípios dá apoio às análises geográficas. SQL básico é suficiente para acompanhar.”
 
 ### 03:30–07:00 — Codespaces como caminho recomendado
 
@@ -78,9 +78,13 @@ python course.py checkpoint 01
 python course.py data-ui
 ```
 
-“A guia Ports oferece a porta privada 4213. Abra Explorador DuckDB no navegador e mantenha este terminal aberto. A interface autoral do curso usa uma cópia somente leitura do banco produzido pelo checkpoint: explorar não bloqueia nem altera o arquivo usado pelo dbt. Pressione Ctrl+C para encerrar.”
+“Na guia Portas, abra a porta privada 4213. Escolha ‘00 · Primeiras linhas dos pedidos’ e execute. Mostre as colunas de compra e entrega. O pedido o3 foi cancelado. A data de entrega está vazia. O que aconteceria se um dashboard confundisse pagamento com entrega? Na última aula vamos responder com números.”
 
-“Não estamos usando a DuckDB UI oficial: seu servidor ainda escuta apenas em localhost e há um erro conhecido quando a interface atravessa túnel ou proxy, exatamente o cenário do Codespaces. O explorador do curso existe para oferecer a mesma finalidade didática sem simular uma interface oficial.”
+```bash
+python course.py sql 00
+```
+
+“Esse comando executa o mesmo SQL no terminal. O Explorador usa uma cópia de leitura. Feche-o com Ctrl+C quando terminar e reabra depois dos novos builds.”
 
 ### 17:00–19:00 — Bônus: DuckDB UI oficial por túnel
 

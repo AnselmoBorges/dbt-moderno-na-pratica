@@ -12,10 +12,15 @@
     "PATH": "${containerWorkspaceFolder}/lab/dabdbt/.venv/bin:${containerEnv:PATH}",
     "DBT_PROFILES_DIR": "${containerWorkspaceFolder}/lab/dabdbt/dbt_profiles"
   },
-  "forwardPorts": [4213],
+  "forwardPorts": [4213, 8080],
   "portsAttributes": {
     "4213": {
       "label": "Explorador DuckDB",
+      "onAutoForward": "notify",
+      "protocol": "http"
+    },
+    "8080": {
+      "label": "Documentação dbt",
       "onAutoForward": "notify",
       "protocol": "http"
     }

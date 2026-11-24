@@ -1,32 +1,32 @@
 {% docs source_olist_catalog %}
-### Catálogo externo `olist`
+### Fontes de comércio
 
-Tabelas operacionais disponibilizadas pelo Azure SQL `sqlolistdev` por meio do *foreign catalog* `sqlpoclf` no Unity Catalog. Essa camada fornece leitura federada para que os modelos dbt processem os dados sem impactar o banco transacional da operação Rescue Point.
+No laboratório DuckDB, as tabelas do schema `b` vêm de CSVs didáticos versionados em `src/seeds`. A estrutura é inspirada na publicação da Olist. O caminho Databricks usa fontes parametrizadas e fica separado da prática local.
 {% enddocs %}
 
 
 {% docs source_olist_customers %}
 ### Fonte `olist.customers`
 
-Cadastro mestre vindo do Azure SQL. Mantém os identificadores técnicos e globais necessários para reconciliar clientes entre diferentes marketplaces antes de avançar para a camada silver.
+Uma linha por identificador técnico de cliente no cadastro da amostra. Contém identificador de cliente, identificador persistente, prefixo de CEP, cidade e UF.
 {% enddocs %}
 
 {% docs source_olist_orders %}
 ### Fonte `olist.orders`
 
-Registro transacional de pedidos, com todos os marcos logísticos e de pagamento. É usado como base bruta para consolidar status e timelines no modelo silver correspondente.
+Uma linha por pedido. Traz cliente, status e datas de compra, aprovação, despacho, entrega e previsão. Datas de eventos ainda não concluídos podem estar vazias.
 {% enddocs %}
 
 {% docs source_olist_order_items %}
 ### Fonte `olist.order_items`
 
-Detalha cada item dos pedidos (produto, vendedor, preço, frete). A camada silver utiliza esse insumo para análises de composição de pedido e custos logísticos.
+Uma linha por item do pedido. Identificadores de pedido, item, produto e vendedor acompanham preço, frete e data limite de envio.
 {% enddocs %}
 
 {% docs source_olist_order_payments %}
 ### Fonte `olist.order_payments`
 
-Histórico financeiro dos pedidos: formas de pagamento, parcelas e valores. Alimenta os modelos silver voltados para conciliações e indicadores de cobrança.
+Uma linha por ocorrência de pagamento de um pedido. Informa sequência do pagamento, meio, parcelas e valor. A Gold agrega as ocorrências por pedido antes de calcular receita.
 {% enddocs %}
 
 {% docs silver_customers %}

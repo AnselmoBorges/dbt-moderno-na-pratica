@@ -24,6 +24,10 @@ O guia dos checkpoints inclui três recortes do terminal do VS Code no Codespace
 
 Produto, data, origem, licença e hash das capturas estão registrados em `catalog.yml`.
 
+## Consultas e documentação do laboratório
+
+As capturas em `assets/screenshots/duckdb/` mostram as consultas e o gráfico executados no Explorador DuckDB autoral. O arquivo `00-oficial.jpg` registra a DuckDB UI oficial, com a cópia de demonstração anexada somente para leitura. Os recortes em `assets/screenshots/dbt-docs/` mostram o catálogo e a linhagem gerados pelo dbt Core 1.12.7 para o projeto público. Os direitos sobre interfaces de terceiros permanecem com seus titulares. Consulte `catalog.yml` para a atribuição de cada imagem.
+
 ## Conteúdo assistido por IA
 
 Hermes, Gemini, Banana Slides ou Nano Banana podem ser usados privadamente como ferramentas de autoria. Nenhuma chave ou configuração privada é publicada. Todo ativo final precisa de revisão humana técnica, editorial e de licença.
