@@ -6,7 +6,7 @@ import { FileBlob, PresentationFile } from "@oai/artifact-tool";
 const ROOT = process.env.COURSE_ROOT
   ? path.resolve(process.env.COURSE_ROOT)
   : path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
-const DECK_DIR = path.join(ROOT, "assets/decks");
+const DECK_DIR = path.resolve(process.env.COURSE_DECK_OUTPUT ?? path.join(ROOT, "assets/decks"));
 const OUTPUT_DIR = process.env.SPEAKER_NOTES_OUTPUT
   ? path.resolve(process.env.SPEAKER_NOTES_OUTPUT)
   : path.join(ROOT, "build/notes-runtime/output");
@@ -65,13 +65,13 @@ function classify(records) {
   const names = new Set(records.map((record) => record.name));
   if (names.has("cover-title")) return "cover";
   if (names.has("hook")) return "hook";
+  if (names.has("cta")) return "cta";
   if (names.has("command")) return "demo-command";
   if (names.has("result")) return "demo-result";
   if (names.has("case-number")) return "case";
   if (names.has("radar-text")) return "radar";
-  if (names.has("cta")) return "cta";
   const title = getText(records, "slide-title");
-  if (title === "Ao final, você consegue...") return "objectives";
+  if (title === "Roteiro da aula" || title === "Ao final, você consegue...") return "objectives";
   if (title === "Demonstração — observe") return "demo-observe";
   if (title === "O mesmo recurso afeta três decisões") return "impact";
   if (title === "Limitações que precisam permanecer visíveis") return "limitations";
@@ -96,14 +96,14 @@ function slideContent(records, slideRecord, previous) {
     || getText(records, "cta")
     || getText(records, "case-label")
     || (previous?.title === title ? previous.subtitle : "");
-  const items = getTexts(records, (record) => /^(bullets|step-label-|flow-|status-label-|compare-(left|right)-title)/.test(record.name || ""));
+  const items = getTexts(records, (record) => /^(bullets|agenda-topic-|step-label-|flow-|status-label-|compare-(left|right)-title)/.test(record.name || ""));
   return { title, subtitle, items };
 }
 
 function recommendedScript({ role, content, records, deckTitle, episode, checkpoint, nextTitle, isLast }) {
   const { title, subtitle, items } = content;
   const itemSpeech = naturalList(items);
-  const command = getText(records, "command");
+  const commands = getTexts(records, (record) => /^command(?:-\d+)?$/.test(record.name || ""));
   const result = getText(records, "result");
   const caveat = getText(records, "case-caveat");
   const caseLabel = getText(records, "case-label");
@@ -133,8 +133,8 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
       highlight = "Dê uma pausa depois da provocação e use o diagrama como mapa do problema, sem explicar todas as etapas ainda.";
       break;
     case "objectives":
-      talk = `Ao final desta aula, você deverá conseguir ${lowerFirst(itemSpeech)}. Esses resultados formam uma sequência: primeiro entendemos a regra, depois observamos sua representação no projeto e, por fim, comprovamos o comportamento no checkpoint. Se alguma dessas três partes não estiver clara, volte ao slide correspondente antes de executar a demonstração.`;
-      highlight = "Percorra os objetivos da esquerda para a direita e apresente-os como resultados observáveis, não como uma agenda abstrata.";
+      talk = `O roteiro de hoje passa por ${lowerFirst(itemSpeech)}. Os tempos ajudam a encontrar cada parte na gravação. Na demonstração, deixe o terminal do projeto aberto para executar a prática junto comigo.`;
+      highlight = "Percorra as etapas e aponte o momento em que começa a demonstração.";
       break;
     case "concept":
       talk = `A mensagem principal deste slide é: ${sentence(subtitle || title)} Para tornar isso concreto, observe ${lowerFirst(itemSpeech)}. Esses pontos devem ser entendidos em conjunto; não são funcionalidades isoladas. No projeto, essa combinação transforma uma convenção informal em algo que pode ser revisado, testado ou consumido de maneira consistente.`;
@@ -147,8 +147,16 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
         : "Acompanhe o fluxo ou a comparação com o cursor e preserve a ordem de leitura do slide.";
       break;
     case "demo-command":
-      talk = `Agora vamos sair da explicação e comprovar o comportamento. Execute os comandos exatamente como aparecem: ${sentence(command.replace(/\n/g, ", depois "))} Não é necessário ativar o ambiente virtual manualmente; o launcher do curso seleciona o ambiente correto. Antes de avançar, confirme que o comando iniciou sem erro e dê tempo para o aluno acompanhar a mesma etapa.`;
-      highlight = "Mostre o comando completo, execute uma linha por vez quando houver mais de uma e mantenha o terminal visível.";
+      if (title === "DuckDB UI oficial por túnel") {
+        talk = "Este bônus usa dois terminais. No Codespace, inicie a DuckDB UI oficial. No seu computador, confira se o GitHub CLI está autenticado, autorize o escopo de Codespaces e abra o túnel. Use localhost na porta 4213 no navegador do seu computador. Deixe os dois processos ativos durante a demonstração.";
+        highlight = "Aponte os dois blocos e mostre em qual máquina cada um é executado.";
+      } else if (isLesson) {
+        talk = "Na raiz do repositório, rode o setup se a configuração for manual ou se o setup automático tiver sido interrompido. Depois confira o diagnóstico e os caminhos e execute o checkpoint. O explorador é opcional e fica rodando até você pressionar Ctrl+C. Use o relatório de suporte se precisar anexar um diagnóstico.";
+        highlight = "Mostre a diferença entre os comandos de validação e os blocos opcionais.";
+      } else {
+        talk = `Abra o terminal na raiz do repositório. Copie e execute ${sentence(commands.join(", depois "))} O course.py usa as dependências do laboratório. Acompanhe as etapas no terminal até aparecer a confirmação do checkpoint.`;
+        highlight = "Mostre a pasta atual no terminal e deixe o aluno copiar a linha inteira.";
+      }
       break;
     case "demo-observe":
       talk = `Enquanto a execução acontece, não olhe apenas para a mensagem final. Observe ${lowerFirst(itemSpeech)}. Cada sinal responde a uma pergunta diferente sobre o pipeline. Se um deles divergir, interrompa a demonstração e investigue; o objetivo do hands-on é produzir evidência, não apenas chegar rapidamente a uma tela verde.`;
@@ -234,12 +242,14 @@ async function processDeck(stem) {
     maxChars: 5_000_000,
   });
   const records = snapshot.ndjson.split("\n").filter(Boolean).map((line) => JSON.parse(line));
-  const slideRecords = new Map(records.filter((record) => record.kind === "slide").map((record) => [record.slide, record]));
-  const noteRecords = new Map(records.filter((record) => record.kind === "notes").map((record) => [record.slide, record]));
+  const slideNumber = (record) => Number.isInteger(record.slideIndex) ? record.slideIndex + 1 : record.slide;
+  const slideRecords = new Map(records.filter((record) => record.kind === "slide").map((record) => [slideNumber(record), record]));
+  const noteRecords = new Map(records.filter((record) => record.kind === "notes").map((record) => [slideNumber(record), record]));
   const textBySlide = new Map();
   for (const record of records.filter((item) => item.kind === "textbox")) {
-    if (!textBySlide.has(record.slide)) textBySlide.set(record.slide, []);
-    textBySlide.get(record.slide).push(record);
+    const number = slideNumber(record);
+    if (!textBySlide.has(number)) textBySlide.set(number, []);
+    textBySlide.get(number).push(record);
   }
 
   const firstRecords = textBySlide.get(1) || [];

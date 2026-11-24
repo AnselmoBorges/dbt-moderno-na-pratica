@@ -2,6 +2,8 @@
 
 Cada checkpoint é uma porta de qualidade executável. Rode `python course.py checkpoint NN` na raiz do repositório. O projeto é cumulativo: os arquivos representam o estado final, enquanto os checkpoints isolam a capacidade apresentada em cada episódio.
 
+O [guia ilustrado dos checkpoints](../../../docs/resultados-dos-checkpoints.md) mostra os resultados de uma execução no Codespaces e indica o que procurar no terminal.
+
 | # | Capacidade comprovada | Critério automático |
 |---|---|---|
 | 01 | Playlist auditada/Core 1.12 | seed, parse, build e artifacts estáveis |

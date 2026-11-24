@@ -34,7 +34,7 @@ Mostrar as capturas `01-code-codespaces.png` e `02-configuracao-2-core.png` sem 
 
 ### 09:00–11:00 — Preparação automática e caminhos persistentes
 
-“O arquivo `.devcontainer/devcontainer.json` é parte do curso. Na primeira criação, `postCreateCommand` executa o setup. A cada abertura, `postStartCommand` executa o diagnóstico, restaura o PATH do ambiente isolado e registra os caminhos efetivos. Nenhuma ativação manual de virtualenv é necessária.”
+“O arquivo `.devcontainer/devcontainer.json` é parte do curso. Na primeira criação, `postCreateCommand` executa o setup. O editor pode abrir enquanto a instalação ainda está em andamento. Espere a mensagem ‘Ambiente pronto’ antes de rodar os comandos. A cada abertura, o Codespaces deixa o ambiente isolado no PATH e executa o diagnóstico e a consulta dos caminhos. Nenhuma ativação manual de virtualenv é necessária.”
 
 ```mermaid
 flowchart LR
@@ -182,6 +182,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 
 ## Material complementar
 
+- [Resultados da Aula 0 e do episódio 1 no Codespaces](../docs/resultados-dos-checkpoints.md#aula-0-e-episódio-1--ambiente-e-primeiro-build) — print da validação e do primeiro checkpoint para acompanhar a demonstração.
 - [dbt Learn](https://www.getdbt.com/dbt-learn) — dbt Labs, cursos/EN; referência oficial para continuar após o setup; Aula 0; verificado em 2026-09-01.
 - [Documentação estável do DuckDB](https://duckdb.org/docs/stable/) — DuckDB, documentação/EN; referência do banco local; Aula 0; verificado em 2026-09-01.
 - [Limitação da DuckDB UI em containers](https://github.com/duckdb/duckdb-ui/issues/22) — DuckDB, issue oficial/EN; justifica o explorador autoral; Aula 0; verificado em 2026-09-02.

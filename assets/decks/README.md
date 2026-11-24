@@ -2,6 +2,8 @@
 
 Os 13 decks canônicos da Aula 0 e dos episódios 1–12 estão publicados em PowerPoint editável e PDF. Eles somam 265 slides, usam proporção 16:9, fonte Arial, roteiro recomendado nas notas do apresentador e um bloco `[Sources]` em todas as páginas.
 
+O slide **Roteiro da aula** mostra as etapas e os tempos aproximados. Em **Comandos da prática**, selecione o texto no PPTX ou PDF e cole no terminal na raiz do repositório. Na Aula 0, os blocos indicam quando usar o setup, o explorador ou o túnel oficial. Os [roteiros completos](../../roteiros/) trazem os comandos extras de demonstração. Confira sua saída com o [guia ilustrado dos checkpoints](../../docs/resultados-dos-checkpoints.md).
+
 | Aula | Slides | PowerPoint | PDF |
 |---|---:|---|---|
 | Aula 0 — ambiente e Codespaces | 22 | [PPTX](aula-00-ambiente.pptx) | [PDF](aula-00-ambiente.pdf) |

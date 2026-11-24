@@ -20,7 +20,9 @@ A Aula 0 contém duas capturas sanitizadas da interface do GitHub.com, feitas em
 
 A captura de **Stop codespace** vem do repositório oficial `github/docs`, fixado no commit `484d28e95db7c592c368da359ff1a9fecb08a08a`. O conteúdo da pasta `assets` desse repositório é disponibilizado sob CC BY 4.0. O arquivo é usado sem alteração de conteúdo, além de escala na composição.
 
-Produto, data, página de origem, titular, licença e hash das três capturas estão registrados em `catalog.yml`.
+O guia dos checkpoints inclui três recortes do terminal do VS Code no Codespaces, capturados em 2026-11-24 durante a execução do laboratório no commit `079a54e`. O texto exibido vem do diagnóstico e dos checkpoints do curso. Os recortes preservam a saída selecionada e removem a identificação da conta e do ambiente. Os direitos sobre a interface permanecem com seus titulares.
+
+Produto, data, origem, licença e hash das capturas estão registrados em `catalog.yml`.
 
 ## Conteúdo assistido por IA
 

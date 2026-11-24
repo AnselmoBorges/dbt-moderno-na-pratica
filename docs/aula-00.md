@@ -25,7 +25,7 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 ## Passo a passo
 
 1. Crie o ambiente pela [rota recomendada no Codespaces](codespaces.md). Se preferir trabalhar offline, use a [instalação local](instalacao/README.md).
-2. No Codespaces, aguarde o `setup` automático terminar. Na instalação local, execute `python course.py setup`.
+2. No Codespaces, aguarde **Ambiente pronto** no terminal de configuração. O editor pode aparecer antes de o `setup` terminar. Na instalação local, execute `python course.py setup`.
 3. Execute `python course.py doctor`. Se aparecer **Ambiente preparado**, não execute `setup` novamente; corrija apenas itens marcados como `ERRO`.
 4. Execute `python course.py paths` para conferir os caminhos detectados do dbt, DuckDB, profile, banco e artifacts.
 5. Execute `python course.py checkpoint 01`.
@@ -36,6 +36,8 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 9. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
 
 ## O que o setup faz
+
+Compare sua saída com a [captura real do diagnóstico e do primeiro checkpoint](resultados-dos-checkpoints.md#aula-0-e-episódio-1--ambiente-e-primeiro-build).
 
 - Cria um ambiente Python isolado dentro do laboratório.
 - Instala versões fixadas de dbt Core, DuckDB, MetricFlow e dbt MCP.

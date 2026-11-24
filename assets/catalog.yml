@@ -523,3 +523,45 @@ assets:
     episodes: [0]
     alt: Lista de Codespaces com o menu de um ambiente aberto e a opção Stop codespace selecionada.
     reviewed: true
+  - id: codespaces-checkpoint-ambiente-artifacts
+    path: assets/screenshots/codespaces/checkpoints/01-ambiente-e-artifacts.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/079a54effcf443e44cbc762c6591513c4529aaed
+    product: VS Code no GitHub Codespaces com dbt Core 1.12.7
+    captured_at: 2026-11-24
+    sha256: 74fc1ef3ba8191c6c69f4afa9c6d80bf19633dbe3370f31d82def8d8bb37309f
+    episodes: [0, 1]
+    caption: Diagnóstico do ambiente e verificação dos artifacts do primeiro checkpoint.
+    alt: Terminal do Codespaces com Python 3.12.11, dbt Core 1.12.7, Ambiente preparado, Artifacts OK e Checkpoint 01 OK.
+    reviewed: true
+  - id: codespaces-checkpoint-metricas-qualidade
+    path: assets/screenshots/codespaces/checkpoints/02-metricas-e-qualidade.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/079a54effcf443e44cbc762c6591513c4529aaed
+    product: VS Code no GitHub Codespaces com dbt Core 1.12.7
+    captured_at: 2026-11-24
+    sha256: cb072670d7eb890151bc5f8f7812c138db9258c88ef961dfd98c4f73bc39705a
+    episodes: [2, 3, 4, 5, 6]
+    caption: Métricas mensais e saídas dos testes de contrato e freshness na amostra do laboratório.
+    alt: Terminal com quatro meses de métricas da amostra Olist, quebra de contrato bloqueada e teste de freshness aprovado.
+    reviewed: true
+  - id: codespaces-checkpoint-governanca-ci-agentes
+    path: assets/screenshots/codespaces/checkpoints/03-governanca-ci-e-agentes.jpg
+    kind: lab_screenshot
+    origin: instructor-capture
+    author: Rescue Point
+    license: Direitos da interface preservados
+    source_url: https://github.com/AnselmoBorges/dbt-moderno-na-pratica/tree/079a54effcf443e44cbc762c6591513c4529aaed
+    product: VS Code no GitHub Codespaces com dbt Core 1.12.7
+    captured_at: 2026-11-24
+    sha256: 7b5c00fd76509326583d2ac9aa79190de44a52070e92e20e98627f69897f4cf8
+    episodes: [7, 8, 9, 10, 11, 12]
+    caption: Saídas de governança, defer, equivalência do incremental, política MCP e benchmark com fixtures.
+    alt: Terminal com os checkpoints 7 a 12 aprovados, relação reaproveitada pelo defer, oito e uma linhas candidatas e benchmark com fixtures.
+    reviewed: true
