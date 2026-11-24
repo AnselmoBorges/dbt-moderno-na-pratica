@@ -135,7 +135,7 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 
 - O Codespaces seleciona o dev container do curso e a máquina `2-core`.
 - O setup automático termina com “Ambiente pronto”.
-- `paths` mostra dbt Core 1.12.3, DuckDB, profile, banco e artifacts do curso.
+- `paths` mostra dbt Core 1.12.7, DuckDB, profile, banco e artifacts do curso.
 - `doctor` termina com “Ambiente preparado. Você já pode executar o checkpoint”.
 - `setup` instala o motor Python e a CLI oficial `duckdb`, ambos na versão fixada, e `paths` mostra o executável real dentro da `.venv`.
 - `checkpoint 01` termina com `Checkpoint 01 OK`.

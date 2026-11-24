@@ -2,7 +2,7 @@
 
 **Duração alvo:** 22–25 minutos
 **Nível:** intermediário
-**Rótulos na tela:** `OPEN`, `MetricFlow 0.212.0`, `dbt-metricflow 0.14.0: integração`, `Core 1.12`
+**Rótulos na tela:** `OPEN`, `MetricFlow 0.214.0`, `dbt-metricflow 0.16.0: integração`, `Core 1.12`
 
 ## Gancho
 
@@ -33,7 +33,7 @@ flowchart TB
 
 “MetricFlow recebe uma consulta em termos de métricas e dimensões e compila o SQL necessário. Ele não é um LLM e não adivinha significado. Sua força vem justamente do contrário: trabalha sobre definições explícitas.
 
-O motor instalado é `metricflow 0.212.0`, aberto sob Apache 2.0. O comando `mf --version` mostra `dbt-metricflow 0.14.0`, que é o pacote de integração; não é a versão do motor. A Semantic Layer gerenciada acrescenta operação, autenticação, APIs, cache e integrações. Neste episódio ficamos do lado aberto.”
+O motor instalado é `metricflow 0.214.0`, aberto sob Apache 2.0. O comando `mf --version` mostra `dbt-metricflow 0.16.0`, que é o pacote de integração; não é a versão do motor. A Semantic Layer gerenciada acrescenta operação, autenticação, APIs, cache e integrações. Neste episódio ficamos do lado aberto.”
 
 **Visual:** `mf query -> grafo semântico -> SQL -> DuckDB`.
 
@@ -164,13 +164,16 @@ Por fim, apresento uma convenção de revisão para novas métricas: pergunta de
 
 ## Radar — máximo de dois minutos
 
-“A especificação semântica ainda evolui e a matriz de suporte do Core 2.0/Fusion não é igual à do Core 1.12. O Radar acompanha mudanças de schema e referências cross-project; o YAML executado no vídeo permanece o baseline estável.”
+“A especificação semântica ainda evolui e a matriz de suporte do dbt v2 não é igual à do Core 1.12. O Radar acompanha mudanças de schema e referências cross-project; o YAML executado no vídeo permanece o baseline estável.”
 
 ## CTA
 
 “Implemente uma métrica simples e uma razão, rode a validação e publique o YAML junto com uma consulta de reconciliação. No comentário, diga qual dimensão temporal causou mais discussão.”
 
 ## Fontes
+
+- [Motor MetricFlow 0.214.0](https://pypi.org/project/metricflow/0.214.0/)
+- [CLI dbt-metricflow 0.16.0](https://pypi.org/project/dbt-metricflow/0.16.0/)
 
 - [Repositório MetricFlow — Apache 2.0](https://github.com/dbt-labs/metricflow)
 - [Especificação recente de métricas](https://docs.getdbt.com/docs/build/latest-metrics-spec)

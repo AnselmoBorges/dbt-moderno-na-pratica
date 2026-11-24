@@ -30,6 +30,10 @@ const C = {
 
 const DOCS_COMMIT = "8249c7c904848efa786831381ca1d53b4157e392";
 const DBT_DOCS = "https://docs.getdbt.com";
+const V2_GA = `${DBT_DOCS}/blog/dbt-v2-is-ga`;
+const V2_DISTRIBUTIONS = `${DBT_DOCS}/blog/comparing-dbt-and-dbt-oss`;
+const CORE_PATCH = "https://github.com/dbt-labs/dbt/releases/tag/v1.12.7";
+const DBT_STATE = `${DBT_DOCS}/docs/deploy/dbt-state-about`;
 
 const diagrams = (name) => path.join(ROOT, "assets/diagrams/rendered", name);
 const official = (name) => path.join(ROOT, "assets/official/dbt", name);
@@ -55,7 +59,7 @@ const decks = [
       { title: "SQL básico basta para começar", claim: "Terminal, Git, Python e dbt entram passo a passo.", bullets: ["SELECT, JOIN, GROUP BY, SUM e COUNT", "Nenhuma experiência prévia com dbt", "Comandos completos em todas as aulas"], visual: "steps", labels: ["SQL", "Terminal", "Python", "dbt"] },
       { title: "Codespaces é a rota recomendada", claim: "Code → Codespaces → Create codespace on main abre o laboratório no navegador.", bullets: ["Conta pessoal GitHub", "Sem instalar Python ou Git", "Mesmo ambiente para todos"], image: screenshot("01-code-codespaces.png"), imageWide: true, imageAlt: "Menu Code com a guia Codespaces e o botão Create codespace on main", caption: "Captura sanitizada do GitHub.com — 2026-09-01", imageSource: "https://github.com/AnselmoBorges/dbt-moderno-na-pratica" },
       { title: "2-core preserva a franquia gratuita", claim: "GitHub Free inclui 120 core-hours e 15 GB-mês; em 2-core, são cerca de 60 horas ativas.", bullets: ["Branch main", "Dev container do curso", "Máquina 2-core", "Pare o ambiente ao terminar"], image: screenshot("02-configuracao-2-core.png"), imageWide: true, imageAlt: "Configuração de Codespaces com branch main, dev container do curso e máquina 2-core", caption: "Captura sanitizada do GitHub.com — 2026-09-01", imageSource: "https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=1354054687" },
-      { title: "O repositório restaura o ambiente", claim: "Setup instala uma vez; a reabertura restaura PATH, profile e caminhos detectados.", bullets: ["Python 3.12 fixado", "dbt Core 1.12.3", "DuckDB 1.5.5", "Sem ativação manual"], visual: "flow", labels: ["Create", "setup", "paths", "checkpoint"] },
+      { title: "O repositório restaura o ambiente", claim: "Setup instala uma vez; a reabertura restaura PATH, profile e caminhos detectados.", bullets: ["Python 3.12 fixado", "dbt Core 1.12.7", "DuckDB 1.5.5", "Sem ativação manual"], visual: "flow", labels: ["Create", "setup", "paths", "checkpoint"] },
       { title: "Parar evita consumo de processamento", claim: "Stop codespace interrompe core-hours; armazenamento continua até excluir o ambiente.", bullets: ["Pare ao terminar cada aula", "Reabra o mesmo ambiente", "Exclua quando não precisar dos arquivos"], image: screenshot("03-parar-codespace.png"), imageWide: true, imageAlt: "Menu oficial de gerenciamento do Codespaces com a opção Stop codespace", caption: "GitHub Docs — CC BY 4.0 — commit 484d28e", imageSource: "https://github.com/github/docs/blob/484d28e95db7c592c368da359ff1a9fecb08a08a/assets/images/help/codespaces/stop-codespace-webui.png" },
       { title: "Escolha a interface certa para cada ambiente", claim: "O explorador do curso funciona no navegador; a UI oficial exige um túnel que preserve localhost.", bullets: ["Codespaces: python course.py official-data-ui", "Local: gh auth refresh -h github.com -s codespace", "Local: python course.py codespace-ui-tunnel", "Navegador: http://localhost:4213"], visual: "flow", labels: ["DuckDB", "UI oficial", "túnel", "localhost"] },
     ],
@@ -63,9 +67,9 @@ const decks = [
     impact: ["Governança: ambiente versionado", "FinOps: 2-core + stop", "IA: nenhuma chave necessária"],
     case: { number: "46 recursos", label: "baseline dbt validado localmente", caveat: "Resultado do laboratório, não benchmark de produção." },
     limitations: ["Codespaces exige internet e conta pessoal GitHub", "Franquias e cobrança podem mudar", "Explorador autoral é propositalmente simples", "UI oficial exige GitHub CLI local e escopo codespace"],
-    radar: "Core 2.0 e Fusion ficam apenas no Radar; a aula executa Core 1.12 estável.",
+    radar: "O dbt v2 está em disponibilidade geral. Neste curso, o setup instala o Core 1.12.7.",
     cta: "Abra o Codespace em 2-core, execute checkpoint 01 e use a UI oficial por túnel somente como bônus.",
-    sources: ["https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository", "https://docs.github.com/en/billing/concepts/product-billing/github-codespaces", "https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage", "https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace", "https://docs.github.com/en/codespaces/reference/security-in-github-codespaces", "https://cli.github.com/manual/gh_codespace_ports_forward", "https://duckdb.org/docs/current/core_extensions/ui", "https://github.com/duckdb/duckdb-ui/issues/22", "https://github.com/duckdb/duckdb-ui/issues/186", "https://docs.getdbt.com/guides/manual-install?step=1", "https://github.com/dbt-labs/jaffle_shop_duckdb"],
+    sources: [CORE_PATCH, V2_GA, "https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository", "https://docs.github.com/en/billing/concepts/product-billing/github-codespaces", "https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage", "https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace", "https://docs.github.com/en/codespaces/reference/security-in-github-codespaces", "https://cli.github.com/manual/gh_codespace_ports_forward", "https://duckdb.org/docs/current/core_extensions/ui", "https://github.com/duckdb/duckdb-ui/issues/22", "https://github.com/duckdb/duckdb-ui/issues/186", "https://docs.getdbt.com/guides/manual-install?step=1", "https://github.com/dbt-labs/jaffle_shop_duckdb"],
   },
   {
     stem: "episodio-01-baseline-core-1-12",
@@ -80,17 +84,17 @@ const decks = [
     objective: ["Auditar a série original", "Separar implementado de conceitual", "Reconstruir o baseline suportado"],
     sections: [
       { title: "A base original continua valiosa", claim: "Ambiente, seeds, ref, table, view e primeira Gold foram demonstrados.", bullets: ["Fundamentos bem posicionados", "Materializações básicas", "Primeiro fluxo Silver → Gold"], visual: "compare", labels: ["Implementado", "Conceitual"] },
-      { title: "Produção começa no suportado", claim: "Core 1.12 e DuckDB estável formam a trilha executável.", bullets: ["Dependências fixadas", "CI determinística", "Preview sem comando obrigatório"], visual: "status", labels: ["OPEN", "STABLE", "LOCAL"] },
+      { title: "Versões do laboratório", claim: "O Core executa o projeto e se conecta ao DuckDB pelo adaptador.", bullets: ["dbt Core 1.12.7", "Adaptador dbt-duckdb 1.11.1", "Banco DuckDB 1.5.5"], visual: "status", labels: ["Core 1.12.7", "Adaptador 1.11.1", "DuckDB 1.5.5"] },
       { title: "ref transforma SQL em um grafo", claim: "Dependências explícitas habilitam ordem, seleção e linhagem.", bullets: ["source → staging", "staging → Gold", "Gold → consumidor"], visual: "flow", labels: ["source", "staging", "Gold", "consumer"] },
-      { title: "Artifacts respondem perguntas diferentes", claim: "Manifest descreve o projeto; run_results registra a execução.", bullets: ["O que existe", "O que depende do quê", "O que passou ou falhou"], visual: "compare", labels: ["Build", "Artifacts"] },
+      { title: "O mapa do projeto e o resultado da execução", claim: "O manifest descreve recursos e dependências. Run results registra o comando executado.", bullets: ["manifest.json", "Recursos e dependências", "run_results.json", "Status e duração"], visual: "compare", labels: ["Projeto", "Execução"] },
     ],
     demo: { command: "python course.py checkpoint 01", observe: ["8 pedidos na amostra", "Manifest e catálogo gerados", "Semantic manifest e OSI válidos"], result: "Baseline reproduzido" },
     impact: ["Governança: artifact auditável", "FinOps: versões reproduzíveis", "IA: contexto antes de SQL"],
     case: { number: "8 / 740 / 630", label: "pedidos / receita bruta / entregue", caveat: "Ground truth da amostra Olist do curso." },
     limitations: ["Incremental, testes e deploy não estavam implementados na série original", "Artifacts não substituem monitoramento", "Core 2.0 não entra na aceitação"],
-    radar: "Novidade não substitui maturidade: Core 2.0 e Fusion aparecem sem recomendação de produção.",
-    cta: "Reproduza o checkpoint e abra manifest.json antes do episódio 2.",
-    sources: ["https://docs.getdbt.com/docs/dbt/supported-features", "https://github.com/dbt-labs/dbt-core/releases/tag/v1.12.0", "https://github.com/dbt-labs/jaffle-shop"],
+    radar: "dbt OSS 2.0 é Apache 2.0. O pacote dbt, antigo Fusion, usa licença de produto.",
+    cta: "Rode o checkpoint 01. Abra lab/dabdbt/target/manifest.json e procure parent_map.",
+    sources: [CORE_PATCH, V2_GA, V2_DISTRIBUTIONS, "https://docs.getdbt.com/docs/dbt/supported-features", "https://docs.getdbt.com/reference/artifacts/manifest-json", "https://docs.getdbt.com/reference/artifacts/run-results-json", "https://github.com/dbt-labs/jaffle-shop"],
   },
   {
     stem: "episodio-02-gold-nao-e-semantica",
@@ -114,9 +118,9 @@ const decks = [
     impact: ["Governança: nomes e owners", "FinOps: menos joins exploratórios", "IA: menos decisões probabilísticas"],
     case: { number: "83 métricas", label: "centralizadas pela Inventa", caveat: "90% de redução de manutenção reportada pela empresa/dbt Labs." },
     limitations: ["YAML não resolve desacordo de negócio", "Semântica não corrige fonte atrasada", "Distinct não é cura para cardinalidade"],
-    radar: "A sintaxe executada é a spec suportada no Core 1.12; cross-project futuro fica no Radar.",
+    radar: "O dbt v2 está em disponibilidade geral. A aula usa a especificação semântica do Core 1.12.",
     cta: "Documente nome, pergunta, grão, filtro, data e owner de três métricas.",
-    sources: ["https://docs.getdbt.com/docs/build/latest-metrics-spec", "https://github.com/dbt-labs/metricflow", "https://www.getdbt.com/case-studies/inventa"],
+    sources: [V2_GA, "https://docs.getdbt.com/docs/build/latest-metrics-spec", "https://github.com/dbt-labs/metricflow", "https://www.getdbt.com/case-studies/inventa"],
   },
   {
     stem: "episodio-03-metricflow-local",
@@ -141,9 +145,9 @@ const decks = [
     impact: ["Governança: Git e ownership", "FinOps: reuso com cardinalidade", "IA: nomes em vez de joins inventados"],
     case: { number: "2 → 13", label: "contribuidores reportados pela Inventa", caveat: "O laboratório comprova apenas validação, SQL e reconciliação." },
     limitations: ["MetricFlow não decide a definição da métrica", "Alta cardinalidade ainda custa", "Biblioteca aberta não é o serviço hospedado"],
-    radar: "A matriz de suporte do Core 2.0/Fusion não é assumida igual ao Core 1.12.",
+    radar: "MetricFlow 0.214.0 é o motor. A CLI mf vem do pacote dbt-metricflow 0.16.0.",
     cta: "Implemente uma métrica simples e uma razão e reconcilie os valores.",
-    sources: ["https://github.com/dbt-labs/metricflow", "https://docs.getdbt.com/docs/build/latest-metrics-spec", "https://www.getdbt.com/case-studies/inventa"],
+    sources: ["https://pypi.org/project/dbt-metricflow/0.16.0/", "https://pypi.org/project/metricflow/0.214.0/", "https://github.com/dbt-labs/metricflow", "https://docs.getdbt.com/docs/build/latest-metrics-spec", "https://www.getdbt.com/case-studies/inventa"],
   },
   {
     stem: "episodio-04-semantica-aberta-interoperavel",
@@ -167,9 +171,9 @@ const decks = [
     impact: ["Governança: fórmula versionada", "FinOps: reuso mensurável", "IA: contexto mais curto"],
     case: { number: "83 métricas", label: "mantidas pela Inventa", caveat: "Resultado reportado; o mecanismo é centralização com ownership." },
     limitations: ["OSI continua evoluindo", "Export exige freshness e lineage", "API local não é a Semantic Layer gerenciada"],
-    radar: "APIs, cache e integrações hospedadas ficam para a temporada de plataforma.",
+    radar: "O dbt v2 oferece artifacts Parquet. Nesta aula, vamos abrir o JSON OSI gerado pelo Core 1.12.",
     cta: "Prove a mesma métrica via MetricFlow e SQL sem copiar a fórmula.",
-    sources: ["https://github.com/open-semantic-interchange/OSI", "https://github.com/dbt-labs/metricflow", "https://www.getdbt.com/blog/how-the-dbt-semantic-layer-works"],
+    sources: [V2_GA, "https://github.com/open-semantic-interchange/OSI", "https://github.com/dbt-labs/metricflow", "https://www.getdbt.com/blog/how-the-dbt-semantic-layer-works"],
   },
   {
     stem: "episodio-05-contratos-versoes",
@@ -193,9 +197,9 @@ const decks = [
     impact: ["Governança: migração explícita", "FinOps: falha antecipada", "IA: schema previsível"],
     case: { number: "v1 + v2", label: "coexistem durante a migração", caveat: "Evidência do laboratório; sem porcentagem comercial." },
     limitations: ["Constraints variam por adaptador", "Contrato não detecta toda lógica", "Versões duplicadas têm custo"],
-    radar: "Melhorias futuras não justificam migrar um contrato estável para runtime beta.",
+    radar: "O dbt v2 também valida contratos. Antes de migrar, reproduza os testes de quebra no seu adaptador.",
     cta: "Simule a remoção de uma coluna pública e verifique se a CI bloqueia.",
-    sources: ["https://docs.getdbt.com/docs/mesh/govern/model-contracts", "https://docs.getdbt.com/docs/mesh/govern/model-versions", "https://docs.getdbt.com/docs/mesh/govern/about-model-governance"],
+    sources: [V2_GA, "https://docs.getdbt.com/docs/mesh/govern/model-contracts", "https://docs.getdbt.com/docs/mesh/govern/model-versions", "https://docs.getdbt.com/docs/mesh/govern/about-model-governance"],
   },
   {
     stem: "episodio-06-piramide-qualidade",
@@ -296,9 +300,9 @@ const decks = [
     impact: ["Governança: impacto visível", "FinOps: menos recomputação", "IA: artifacts atualizados"],
     case: { number: "modified+", label: "mudança e descendentes", caveat: "A economia depende do tamanho e da topologia do projeto." },
     limitations: ["Estado velho seleciona errado", "Defer pode esconder divergência", "Full build continua necessário"],
-    radar: "dbt State gerenciado permanece fora; artifacts abertos sustentam a aula.",
+    radar: "O serviço dbt State está em GA e exige conta. A seleção state:modified usa um manifest local.",
     cta: "Salve um manifest e compare a seleção antes e depois de uma mudança.",
-    sources: ["https://docs.getdbt.com/reference/node-selection/defer", "https://docs.getdbt.com/reference/node-selection/methods#the-state-method"],
+    sources: [DBT_STATE, CORE_PATCH, "https://docs.getdbt.com/reference/node-selection/defer", "https://docs.getdbt.com/reference/node-selection/methods#the-state-method"],
   },
   {
     stem: "episodio-10-finops-pipeline",

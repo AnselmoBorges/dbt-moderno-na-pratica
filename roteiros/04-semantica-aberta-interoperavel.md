@@ -2,7 +2,7 @@
 
 **Duração alvo:** 20–23 minutos
 **Nível:** intermediário
-**Rótulos na tela:** `OPEN`, `MetricFlow 0.212.0`, `OSI`, `API gerenciada: temporada 2`
+**Rótulos na tela:** `OPEN`, `MetricFlow 0.214.0`, `OSI`, `API gerenciada: temporada 2`
 
 ## Gancho
 
@@ -100,13 +100,15 @@ No próximo episódio vamos tratar a interface Gold como API e provar uma quebra
 
 ## Radar — máximo de dois minutos
 
-“O formato semântico e OSI continuam evoluindo. Core 2.0/Fusion podem ampliar validação e experiência de desenvolvimento, mas ficam fora da execução. APIs, cache e integrações gerenciadas serão testadas somente com trial na segunda temporada.”
+“O formato semântico e OSI continuam evoluindo. O dbt v2 oferece artifacts Parquet. Na demonstração, vamos inspecionar o JSON OSI gerado pelo Core 1.12. APIs, cache e integrações gerenciadas serão testadas somente com trial na segunda temporada.”
 
 ## CTA
 
 “Escolha uma métrica e prove o mesmo valor via MetricFlow e SQL. Se precisar copiar a fórmula, sua interface ainda não está centralizada.”
 
 ## Fontes
+
+- [Artifacts Parquet e documentação no dbt v2](https://docs.getdbt.com/blog/dbt-v2-is-ga)
 
 - [Especificação recente de métricas](https://docs.getdbt.com/docs/build/latest-metrics-spec)
 - [MetricFlow](https://github.com/dbt-labs/metricflow)

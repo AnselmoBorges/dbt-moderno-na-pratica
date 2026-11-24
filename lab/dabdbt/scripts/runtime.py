@@ -37,5 +37,8 @@ def environment() -> dict[str, str]:
     return {
         **os.environ,
         "DBT_PROFILES_DIR": str(PROJECT / "dbt_profiles"),
+        # MetricFlow's progress output and dbt artifacts use Unicode.
+        "PYTHONUTF8": "1",
+        "PYTHONIOENCODING": "utf-8",
         "PATH": os.pathsep.join([bin_dir, os.environ.get("PATH", "")]),
     }

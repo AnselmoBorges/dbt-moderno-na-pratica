@@ -23,6 +23,8 @@ A proposta é simples: regras funcionais determinísticas pertencem ao pipeline 
 
 ## Temporadas
 
+A [revisão de novembro de 2026](pesquisa/dossie-tendencias.md#resumo-executivo) registra a atualização para Core 1.12.7 e o piloto com dbt OSS 2.0.11. Em um Codespace existente, atualize o repositório e rode `python course.py setup` na raiz antes do checkpoint.
+
 ### Temporada 1 — open source e estável
 
 1. Baseline suportado do dbt Core e revisão da série original
@@ -55,7 +57,7 @@ python course.py doctor
 python course.py checkpoint 01
 ```
 
-Não execute assistentes de instalação de extensões dbt: o curso fixa e usa o dbt Core 1.12.3 pelo próprio launcher. O dbt Power User é opcional e não faz parte do ambiente recomendado.
+Não execute assistentes de instalação de extensões dbt: o curso fixa e usa o dbt Core 1.12.7 pelo próprio launcher. O dbt Power User é opcional e não faz parte do ambiente recomendado.
 
 Depois do checkpoint 01, `python course.py data-ui` abre o explorador gráfico autoral do curso em uma porta privada do Codespaces. O comando usa uma cópia somente leitura do DuckDB para não interferir no pipeline. A DuckDB UI oficial não é usada porque seu servidor local ainda possui uma limitação conhecida com túneis e containers.
 

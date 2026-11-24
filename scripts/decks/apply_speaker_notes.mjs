@@ -187,6 +187,15 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
     ? `Encerre retomando a pergunta inicial e confirme que o aluno sabe qual ação executar depois ${episodeAfter}.`
     : `Com esse ponto estabelecido, avance para “${nextTitle}”.`;
 
+  if (episode === "EPISÓDIO 1" && role === "cta") {
+    talk = "Execute python course.py checkpoint 01 na raiz. No explorador, abra lab/dabdbt/target/manifest.json. No Codespaces, também dá para abrir pelo comando code seguido do caminho. Busque parent_map para ver as dependências e semantic_model.dabdbt.commerce_orders para encontrar a definição que descreve as dimensões e entidades dos pedidos.";
+    highlight = "Mostre o caminho na árvore de arquivos e abra a entrada de commerce_orders. Explique que o JSON descreve o projeto e que as linhas estão no DuckDB.";
+  }
+  if (episode === "EPISÓDIO 1" && title.startsWith("O mapa do projeto")) {
+    talk = "O manifest descreve modelos, testes e dependências. O run_results registra o resultado do último comando que escreveu o arquivo. Neste checkpoint, docs generate roda depois do build e grava o resultado da geração de documentação. Para acompanhar o resultado do build, observe o resumo no terminal.";
+    highlight = "Abra os dois JSON e mostre args.which em run_results.json.";
+  }
+
   return {
     timing: timings[role] || "01:00",
     talk,

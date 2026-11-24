@@ -48,7 +48,7 @@ No Codespaces, essas ações são iniciadas automaticamente pelo `postCreateComm
 
 > `^C` e `KeyboardInterrupt` significam que o processo foi interrompido pelo usuário. Na primeira preparação, aguarde as três etapas terminarem. Reexecutar `setup` depois disso apenas confirma o ambiente e pula instalações já concluídas.
 
-> O dbt Power User não é necessário. Se o editor abrir o assistente dessa extensão, feche-o e siga apenas os comandos `course.py`. O [guia de Codespaces](codespaces.md) explica por que o dbt 1.11 mostrado pelo assistente não é o dbt 1.12.3 do laboratório.
+> O dbt Power User não é necessário. Se o editor abrir o assistente dessa extensão, feche-o e siga apenas os comandos `course.py`. O [guia de Codespaces](codespaces.md) explica por que o dbt 1.11 mostrado pelo assistente não é o dbt 1.12.7 do laboratório.
 
 > O explorador DuckDB é uma interface autoral e opcional do curso. Ele opera sobre uma cópia somente leitura, não substitui os comandos dbt e não é necessário para concluir nenhum checkpoint. A DuckDB UI oficial não é usada no Codespaces por sua limitação documentada com túneis e containers.
 

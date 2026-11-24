@@ -33,7 +33,7 @@ python course.py checkpoint 01
 
 Execute `python course.py setup` entre esses dois comandos somente quando o diagnóstico não disser **Ambiente preparado**.
 
-O diagnóstico correto mostra `dbt Core do curso: 1.12.3`. Não use `--no-version-check` e não crie `~/.dbt/profiles.yml`: isso esconderia a divergência em vez de usar o perfil versionado do curso.
+O diagnóstico mostra `dbt Core do curso: 1.12.7` após o setup. Se você atualizou o repositório e ainda vê a versão anterior, rode `python course.py setup` na raiz para atualizar a `.venv` existente. Use o perfil versionado que o launcher seleciona.
 
 ## Python incorreto
 

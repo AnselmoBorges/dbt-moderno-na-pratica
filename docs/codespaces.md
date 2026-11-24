@@ -65,7 +65,7 @@ Não interrompa o primeiro `setup`. O terminal deve terminar com **Ambiente pron
 
 O curso **não precisa do dbt Power User**. Essa extensão de terceiros pode criar outro ambiente, executar um dbt global e procurar `profiles.yml` em `~/.dbt`, enquanto o laboratório usa:
 
-- `dbt-core 1.12.3` no ambiente isolado `lab/dabdbt/.venv`;
+- `dbt-core 1.12.7` no ambiente isolado `lab/dabdbt/.venv`;
 - o perfil versionado em `lab/dabdbt/dbt_profiles`;
 - o launcher `course.py`, que escolhe ambos automaticamente.
 
@@ -82,7 +82,7 @@ Os comandos do curso usam esses caminhos diretamente. Não é necessário ativar
 
 Se aparecer uma aba **Get Started with dbt Power User**, feche-a sem selecionar versão nem executar **Validate Setup**. Em um Codespace antigo, abra **Extensions**, procure **dbt Power User** e escolha **Disable (Workspace)** ou **Uninstall**. Novos Codespaces criados a partir da configuração atual não instalam essa extensão.
 
-A extensão oficial da dbt Labs também não é pré-requisito nesta temporada: sua experiência atual usa o Fusion em preview, enquanto as aulas executam o dbt Core 1.12 estável. O editor continua oferecendo terminal, SQL e YAML sem essas extensões.
+O terminal do Codespaces é suficiente para executar a temporada. A extensão oficial da dbt Labs é opcional e usa a geração v2. As aulas executam o `dbt-core` 1.12 instalado pelo `course.py`.
 
 ## Passo 4 — valide o primeiro checkpoint
 
@@ -101,7 +101,7 @@ OK  Git
 OK  Espaço livre
 OK  Permissões
 OK  Arquivos do curso
-OK  dbt Core do curso: 1.12.3
+OK  dbt Core do curso: 1.12.7
 Ambiente preparado. Você já pode executar o checkpoint.
 
 Checkpoint 01 OK
@@ -192,7 +192,7 @@ O Codespace preserva os arquivos enquanto existir. Como alunos não têm permiss
 - [Aproveitar melhor a franquia incluída](https://docs.github.com/en/codespaces/troubleshooting/troubleshooting-included-usage) — GitHub, documentação/EN; verificado em 2026-09-01.
 - [Parar e iniciar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/stopping-and-starting-a-codespace) — GitHub, documentação/EN; verificado em 2026-09-01.
 - [Extensão dbt Power User](https://marketplace.visualstudio.com/items?itemName=innoverio.vscode-dbt-power-user) — Altimate AI, marketplace/EN; extensão de terceiros e opcional, não utilizada pelo curso; verificado em 2026-09-01.
-- [Extensão oficial da dbt Labs](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) — dbt Labs, marketplace/EN; usa Fusion e está identificada como preview, portanto permanece fora do ambiente open/stable; verificado em 2026-09-01.
+- [Extensão oficial da dbt Labs](https://marketplace.visualstudio.com/items?itemName=dbtLabsInc.dbt) — dbt Labs, marketplace/EN. Referência para quem quiser explorar a extensão v2.
 - [DuckDB UI](https://duckdb.org/docs/current/core_extensions/ui) — DuckDB, documentação/EN; referência da extensão oficial não utilizada no Codespaces; verificado em 2026-09-02.
 - [Limitação da DuckDB UI em containers](https://github.com/duckdb/duckdb-ui/issues/22) — DuckDB, issue oficial/EN; servidor limitado a localhost; verificado em 2026-09-02.
 - [Erro DataView ao usar túnel](https://github.com/duckdb/duckdb-ui/issues/186) — DuckDB, issue oficial/EN; reprodução do erro observado; verificado em 2026-09-02.

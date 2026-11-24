@@ -135,13 +135,15 @@ Repare na escolha temporal. Uma área financeira pode preferir data de entrega. 
 
 ## Radar — máximo de dois minutos
 
-“Core 2.0/Fusion pode ampliar validação semântica, mas continua fora do laboratório enquanto beta/preview. O formato novo do Core 1.12 é a referência executável; capacidades gerenciadas só aparecem na segunda temporada.”
+“O dbt v2 está em disponibilidade geral. A demonstração usa a especificação semântica do Core 1.12 e as capacidades gerenciadas ficam para a segunda temporada.”
 
 ## CTA
 
 “Escolha três métricas do seu negócio e escreva, antes do SQL: nome, pergunta respondida, grão, filtro, data padrão e owner. Se duas pessoas discordarem, você encontrou a pauta do próximo refinement.”
 
 ## Fontes
+
+- [Lançamento do dbt v2](https://docs.getdbt.com/blog/dbt-v2-is-ga)
 
 - [Especificação recente de métricas do dbt](https://docs.getdbt.com/docs/build/latest-metrics-spec)
 - [MetricFlow](https://github.com/dbt-labs/metricflow)

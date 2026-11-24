@@ -1,6 +1,6 @@
 # Laboratório — dbt Moderno na Prática
 
-Projeto didático cumulativo da primeira temporada **Da Gold aos Agentes de IA**. O caminho executável fixa dbt Core 1.12 e usa apenas recursos abertos/estáveis; o caminho Databricks continua disponível como referência parametrizada, mas não é acionado pelos testes locais. Fusion, Core 2.0 e produtos preview aparecem somente nos quadros Radar dos roteiros.
+Projeto didático cumulativo da primeira temporada **Da Gold aos Agentes de IA**. O laboratório usa `dbt-core` 1.12.7 e `dbt-duckdb` 1.11.1. Os quadros Radar apresentam o dbt v2. A configuração Databricks serve de referência parametrizada e os testes locais usam DuckDB.
 
 ## Arquitetura
 
