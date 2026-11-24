@@ -1,5 +1,7 @@
 # Aula 0 — Prepare seu laboratório dbt sem sofrer com o ambiente
 
+Com **Anselmo Borges**, que trabalha com engenharia de dados e publica workshops práticos de dbt Core no canal Rescue Point. [Perfil profissional](https://br.linkedin.com/in/anselmoborges) · [Rescue Point](https://rescuepoint.com.br/)
+
 ## Resultado da aula
 
 Ao final, você terá criado o laboratório padronizado no GitHub Codespaces, validado o ambiente e executado o primeiro checkpoint sem conta cloud. A instalação local permanece como alternativa.

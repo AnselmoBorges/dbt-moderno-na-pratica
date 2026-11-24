@@ -54,9 +54,15 @@ const decks = [
     episode: "AULA 0",
     title: "Prepare seu laboratório dbt no Codespaces",
     subtitle: "Conheça os dados e prepare o laboratório no navegador",
-    slides: 24,
+    slides: 25,
     checkpoint: "01",
     script: "roteiros/aula-00-ambiente.md",
+    presenter: {
+      name: "Anselmo Borges",
+      channel: "Engenharia de dados · Rescue Point",
+      experience: ["Infraestrutura e bancos de dados", "Pipelines em Azure e Databricks", "Workshops práticos de dbt Core"],
+      sources: ["https://br.linkedin.com/in/anselmoborges", "https://rescuepoint.com.br/"],
+    },
     diagram: diagrams("episode-01-lifecycle.png"),
     hook: "Quanto dos pagamentos corresponde a pedidos entregues?",
     objective: ["Reconhecer as fontes do laboratório", "Validar o ambiente", "Consultar os primeiros pedidos"],
@@ -570,6 +576,29 @@ function addCover(p, layouts, deck, sources) {
   setNotes(slide, `Apresente o objetivo do ${deck.episode} e conecte-o ao checkpoint executável. ${deck.hook}`, sources);
 }
 
+async function addPresenter(p, layouts, deck, sources) {
+  const markdown = await fs.readFile(path.join(ROOT, deck.script), "utf8");
+  const bio = markdown.split(" — Quem apresenta\n\n")[1]?.split(/^### /m)[0].trim();
+  if (!bio) throw new Error(`${deck.script}: roteiro do instrutor ausente.`);
+  const { name, channel, experience } = deck.presenter;
+  const slide = p.slides.add();
+  slide.setLayout(layouts.dark);
+  dark(slide);
+  addChrome(slide, deck, p.slides.items.length, deck.slides, true);
+  addText(slide, "Quem apresenta", { left: 72, top: 110, width: 420, height: 44 },
+    { fontSize: 24, bold: true, color: C.cyan }, "presenter-label");
+  addText(slide, name, { left: 72, top: 174, width: 1128, height: 101 },
+    { fontSize: 62, bold: true, color: C.white }, "presenter-name");
+  addText(slide, channel, { left: 76, top: 273, width: 980, height: 55 },
+    { fontSize: 28, color: C.pale }, "presenter-channel");
+  addShape(slide, "rect", { left: 78, top: 375, width: 4, height: 179 }, C.cyan);
+  experience.forEach((item, index) => {
+    addText(slide, item, { left: 105, top: 375 + 63 * index, width: 1050, height: 53 },
+      { fontSize: 29, color: C.white }, `presenter-experience-${index + 1}`);
+  });
+  setNotes(slide, bio, [...deck.presenter.sources, ...sources]);
+}
+
 function addHook(p, layouts, deck, sources) {
   const slide = p.slides.add();
   slide.setLayout(layouts.light);
@@ -587,12 +616,13 @@ function addHook(p, layouts, deck, sources) {
     addShape(slide, "roundRect", { left: 690, top: 100, width: 500, height: 490 }, C.white, { style: "solid", fill: C.line, width: 1 }, "diagram-surface");
     slide.images.add({ blob: deck.diagramBytes, contentType: imageContentType(deck.diagram), alt: `Diagrama conceitual do ${deck.episode}`, fit: "contain", position: { left: 720, top: 132, width: 440, height: 410 } });
   }
-  addChrome(slide, deck, 2, deck.slides, false);
+  addChrome(slide, deck, p.slides.items.length, deck.slides, false);
   setNotes(slide, `${deck.hook} Use o diagrama para antecipar o problema que será comprovado no laboratório.`, sources);
 }
 
 const aulaZeroAgenda = [
-  ["00:00", "A pergunta da temporada e os dados"],
+  ["00:20", "Quem apresenta"],
+  ["01:00", "A pergunta da temporada e os dados"],
   ["03:30", "Criação do Codespace e franquia"],
   ["09:00", "Setup e diagnóstico do ambiente"],
   ["13:30", "Checkpoint 01 e explorador de dados"],
@@ -624,7 +654,7 @@ function addAgenda(p, layouts, deck, sources, agenda) {
     addText(slide, time, { left: 78, top, width: 140, height: 37 }, { fontSize: 24, bold: true, color: C.cyan }, `agenda-time-${index + 1}`);
     addText(slide, title, { left: 228, top, width: 945, height: 37 }, { fontSize: 24, color: C.white }, `agenda-topic-${index + 1}`);
   }
-  addChrome(slide, deck, 3, deck.slides, true);
+  addChrome(slide, deck, p.slides.items.length, deck.slides, true);
   setNotes(slide, `Objetivos da aula: ${deck.objective.join(", ")}.`, sources);
 }
 
@@ -884,12 +914,13 @@ async function buildDeck(deck) {
   ];
 
   addCover(p, layouts, deck, sources);
+  if (deck.presenter) await addPresenter(p, layouts, deck, sources);
   addHook(p, layouts, deck, sources);
   addAgenda(p, layouts, deck, sources, await loadAgenda(deck));
 
-  let current = 4;
+  let current = p.slides.items.length + 1;
   if (number === "00") current = addDataIntro(p, layouts, deck, sources, current);
-  const allPaired = deck.slides % 2 === 1;
+  const allPaired = (deck.slides - Number(Boolean(deck.presenter))) % 2 === 1;
   for (let i = 0; i < deck.sections.length; i++) {
     const section = deck.sections[i];
     const isDark = (i % 2) === 0;

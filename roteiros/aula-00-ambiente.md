@@ -14,7 +14,19 @@ Criar um Codespace de 2 núcleos, validar o laboratório preparado automaticamen
 
 ## Roteiro falado
 
-### 00:00–02:00 — A pergunta da temporada
+### 00:00–00:20 — Abertura
+
+“Bem-vindos ao dbt Moderno na Prática. Hoje vamos conhecer os dados do curso e preparar o ambiente para consultar os primeiros pedidos.”
+
+### 00:20–01:00 — Quem apresenta
+
+“Eu sou Anselmo Borges. Comecei trabalhando com infraestrutura e bancos de dados e passei a construir pipelines de dados em Azure e Databricks. Também ensino dbt Core na prática no canal Rescue Point. Montei este curso para juntar essas duas experiências. Vamos pegar dados de pedidos, transformar e testar uma regra de negócio e acompanhar como ela chega a um dashboard ou a um agente de IA.”
+
+**O que destacar:** Dê mais ênfase à ligação entre o trabalho com pipelines e os workshops de dbt. Aponte para o laboratório como o exemplo que todos vão conseguir executar.
+
+**Transição:** “Vamos começar pela pergunta que vai acompanhar a série. Quanto dos pagamentos corresponde a pedidos entregues?”
+
+### 01:00–02:00 — A pergunta da temporada
 
 “Quanto dos pagamentos corresponde a pedidos entregues? Essa pergunta volta no episódio final, em um gráfico e em uma consulta que um dashboard ou agente pode reutilizar. Primeiro entendemos cada linha do dado bruto. Depois padronizamos chaves, datas e status, somamos os pagamentos por pedido, definimos receita entregue e testamos a regra. O contrato e a documentação dão ao consumidor um lugar confiável de onde partir.”
 
@@ -172,6 +184,8 @@ Mostrar a captura oficial `03-parar-codespace.png` e esclarecer que ela é um ex
 
 ## Fontes
 
+- [Perfil profissional de Anselmo Borges](https://br.linkedin.com/in/anselmoborges)
+- [Rescue Point e workshops de dbt Core](https://rescuepoint.com.br/)
 - [Manual de instalação do dbt Core](https://docs.getdbt.com/guides/manual-install?step=1)
 - [Criar um Codespace](https://docs.github.com/en/codespaces/developing-in-a-codespace/creating-a-codespace-for-a-repository)
 - [Cobrança e franquia do Codespaces](https://docs.github.com/en/billing/concepts/product-billing/github-codespaces)

@@ -168,7 +168,7 @@ for entry in entries:
         raise SystemExit(f"Tipo visual não reconhecido em {asset_id}: {fields['kind']}")
 
 deck_specs = {
-    "aula-00-ambiente": 24,
+    "aula-00-ambiente": 25,
     "episodio-01-baseline-core-1-12": 20,
     "episodio-02-gold-nao-e-semantica": 20,
     "episodio-03-metricflow-local": 22,
@@ -245,9 +245,13 @@ for stem, expected_slides in {**deck_specs, bonus_deck: bonus_slide_count}.items
         if len(xml) < 750:
             raise SystemExit(f"Deck {stem}, slide {index}, possui notas curtas demais para roteiro recomendado.")
     slide_text = [native_slide_lines(xml) for xml in slide_xml]
-    agenda = slide_text[2]
+    if stem == "aula-00-ambiente":
+        if "Anselmo Borges" not in slide_text[1] or "Eu sou Anselmo Borges" not in note_xml[1]:
+            raise SystemExit("A Aula 0 precisa incluir a apresentação e a fala do instrutor no slide 2.")
+    agenda_index = 3 if stem == "aula-00-ambiente" else 2
+    agenda = slide_text[agenda_index]
     if "Roteiro da aula" not in agenda or sum(bool(re.fullmatch(r"\d{2}:\d{2}", line)) for line in agenda) < 2:
-        raise SystemExit(f"Deck {stem} precisa de um roteiro da aula com tempos em texto no slide 3.")
+        raise SystemExit(f"Deck {stem} precisa de um roteiro da aula com tempos em texto no slide {agenda_index + 1}.")
     if stem == bonus_deck:
         bonus_actions = ("setup", "compare", "docs")
         bonus_commands = {f"python course.py bonus-v2 {action}" for action in bonus_actions}
@@ -301,8 +305,8 @@ for stem, expected_slides in {**deck_specs, bonus_deck: bonus_slide_count}.items
     if pptx.stat().st_size > 15 * 1024 * 1024 or pdf.stat().st_size > 10 * 1024 * 1024:
         raise SystemExit(f"Deck {stem} ultrapassa o limite de tamanho editorial.")
 
-if total_slides != 271:
-    raise SystemExit(f"Temporada deveria conter 271 slides; contém {total_slides}.")
+if total_slides != 272:
+    raise SystemExit(f"Temporada deveria conter 272 slides; contém {total_slides}.")
 if list((ROOT / "assets/decks").glob("*-banana.pptx")) or list((ROOT / "assets/decks").glob("*-banana.pdf")):
     raise SystemExit("Há variantes -banana concorrendo com os arquivos canônicos.")
 

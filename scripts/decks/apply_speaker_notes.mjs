@@ -65,6 +65,7 @@ function getTexts(records, predicate) {
 function classify(records) {
   const names = new Set(records.map((record) => record.name));
   if (names.has("cover-title")) return "cover";
+  if (names.has("presenter-name")) return "presenter";
   if (names.has("hook")) return "hook";
   if (names.has("practice-sql")) return "practice-sql";
   if (names.has("practice-evidence")) return "practice-evidence";
@@ -86,6 +87,7 @@ function classify(records) {
 
 function slideContent(records, slideRecord, previous) {
   const title = getText(records, "cover-title")
+    || getText(records, "presenter-name")
     || getText(records, "slide-title")
     || getText(records, "hook")
     || getText(records, "result-label")
@@ -121,7 +123,7 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
   const episodeAfter = `${isLesson ? "da" : "do"} ${episode.toLocaleLowerCase("pt-BR")}`;
 
   const timings = {
-    cover: "00:45", hook: "01:00", objectives: "01:00", concept: "01:10", visual: "00:55",
+    cover: episode === "AULA 0" ? "00:20" : "00:45", presenter: "00:40", hook: "01:00", objectives: "01:00", concept: "01:10", visual: "00:55",
     "demo-command": "01:20", "demo-observe": "01:10", "demo-result": "00:45", impact: "01:00",
     "practice-sql": "01:10", "practice-evidence": "00:45", "data-intro": "00:40", "dbt-docs": "01:00",
     case: "00:55", limitations: "01:00", radar: "00:55", cta: "00:40",
@@ -129,11 +131,23 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
 
   let talk;
   let highlight;
+  let authoredTransition;
   switch (role) {
     case "cover":
       talk = `Bem-vindo ${episodeWelcome} do dbt Moderno na Prática. Hoje vamos trabalhar o tema “${title}”. ${sentence(subtitle)} O objetivo não é apenas conhecer o conceito: vamos conectá-lo ao laboratório e terminar com uma evidência que você consegue reproduzir no seu próprio ambiente. Ao longo da aula, separe sempre o que é recurso aberto e estável daquilo que aparecerá apenas no Radar.`;
       highlight = `Apresente o título, situe o checkpoint ${checkpoint} e deixe claro que a aula faz parte da trilha open/stable.`;
+      if (episode === "AULA 0") {
+        talk = "Bem-vindos ao dbt Moderno na Prática. Hoje vamos conhecer os dados do curso e preparar o ambiente para consultar os primeiros pedidos.";
+        highlight = "Mostre o nome da série e o objetivo prático da Aula 0.";
+        authoredTransition = "Antes de abrir o laboratório, deixa eu me apresentar.";
+      }
       break;
+    case "presenter": {
+      const match = authoredNote.match(/^“([^”]+)”\s+\*\*O que destacar:\*\* ([\s\S]+?)\s+\*\*Transição:\*\* “([^”]+)”$/);
+      if (!match) throw new Error("As notas do instrutor precisam de fala, destaque e transição.");
+      [, talk, highlight, authoredTransition] = match;
+      break;
+    }
     case "hook":
       talk = `Quero começar com uma provocação: ${sentence(title)} Essa pergunta orienta toda a aula. Em vez de aceitar uma afirmação porque ela parece correta, vamos procurar uma definição verificável e uma demonstração executável. Guarde essa tensão, porque voltaremos a ela quando compararmos o conceito com o resultado do laboratório.`;
       highlight = "Dê uma pausa depois da provocação e use o diagrama como mapa do problema, sem explicar todas as etapas ainda.";
@@ -215,9 +229,9 @@ function recommendedScript({ role, content, records, deckTitle, episode, checkpo
       highlight = "Destaque a afirmação principal e os elementos que sustentam a conclusão.";
   }
 
-  const transition = isLast
+  const transition = authoredTransition ?? (isLast
     ? `Encerre retomando a pergunta inicial e confirme que o aluno sabe qual ação executar depois ${episodeAfter}.`
-    : `Com esse ponto estabelecido, avance para “${nextTitle}”.`;
+    : `Com esse ponto estabelecido, avance para “${nextTitle}”.`);
 
   if (episode === "EPISÓDIO 1" && role === "cta") {
     talk = "Execute python course.py checkpoint 01 na raiz. No explorador, abra lab/dabdbt/target/manifest.json. No Codespaces, também dá para abrir pelo comando code seguido do caminho. Busque parent_map para ver as dependências e semantic_model.dabdbt.commerce_orders para encontrar a definição que descreve as dimensões e entidades dos pedidos.";
@@ -314,7 +328,7 @@ async function processDeck(stem) {
     slide.speakerNotes.setVisible(true);
     const imageAlt = role === "cover"
       ? `Ilustração conceitual autoral da capa: ${contents[index - 1].title}.`
-      : index === 2
+      : role === "hook"
         ? `Diagrama didático autoral que apresenta: ${contents[index - 1].title}.`
         : `Imagem de apoio usada para explicar: ${contents[index - 1].title}.`;
     for (const image of slide.images.items) {
