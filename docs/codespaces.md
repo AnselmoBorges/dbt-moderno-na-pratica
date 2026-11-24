@@ -15,7 +15,7 @@ Isso reduz diferenças entre Windows, macOS e Linux. A instalação local contin
 
 ## Franquia gratuita e escolha da máquina
 
-Em 1º de setembro de 2026, uma conta pessoal **GitHub Free** inclui 120 core-hours e 15 GB-mês de armazenamento para Codespaces. Como o curso usa uma máquina de **2 núcleos**, isso equivale a aproximadamente 60 horas ativas por ciclo mensal. Contas Pro e estudantes verificados possuem limites diferentes.
+Em 24 de novembro de 2026, a conta pessoal **GitHub Free** inclui 120 horas-núcleo e 15 GB-mês de armazenamento em Codespaces. Na máquina de **2 núcleos**, as 120 horas-núcleo equivalem a cerca de 60 horas de processamento por mês. O armazenamento tem uma franquia própria. [Tabela oficial de franquias](https://docs.github.com/en/billing/reference/product-usage-included)
 
 Regras para não consumir além do necessário:
 
@@ -107,16 +107,21 @@ Ambiente preparado. Você já pode executar o checkpoint.
 Checkpoint 01 OK
 ```
 
-No Codespaces, não repita `setup` quando o diagnóstico disser **Ambiente preparado**. Se a criação automática tiver sido interrompida, execute `python course.py setup` uma vez e aguarde todas as três etapas; não pressione `Ctrl+C` enquanto `dbt deps` estiver carregando.
+Se o diagnóstico disser **Ambiente preparado**, siga para o checkpoint. Se a criação automática tiver sido interrompida, execute `python course.py setup` e aguarde as três etapas.
 
-O setup instala separadamente o motor Python e a CLI oficial do DuckDB, ambos na versão fixada do curso. Depois de atualizar um Codespace criado anteriormente, execute novamente:
+### Atualize um Codespace existente
+
+No terminal da raiz na branch `main`, confira suas alterações com `git status`. Se estiver acompanhando a `main` do curso e o diretório estiver limpo, rode:
 
 ```bash
+git pull --ff-only
 python course.py setup
 python course.py paths
 ```
 
-O segundo comando deve mostrar `duckdb.executable`. Os comandos do curso usam o caminho completo da `.venv`, portanto não dependem do `PATH`. Se quiser abrir o terminal nativo manualmente, use o caminho exibido ou, com a `.venv ativa`, execute `duckdb`.
+Em um fork, sincronize sua `main` com o repositório original antes do `git pull`. Se o pull indicar divergência, preserve suas alterações e consulte o [guia de solução de problemas](solucao-de-problemas.md).
+
+O setup instala separadamente o pacote Python e a CLI oficial do DuckDB. `python course.py paths` mostra a entrada `duckdb.executable`. Os comandos do curso usam o caminho completo da `.venv`, portanto não dependem do `PATH`. Se quiser abrir o terminal nativo manualmente, use o caminho exibido ou, com a `.venv ativa`, execute `duckdb`.
 
 ## Explore as tabelas graficamente — opcional
 
@@ -149,13 +154,17 @@ gh auth refresh -h github.com -s codespace
 python course.py codespace-ui-tunnel
 ```
 
-A autorização é necessária apenas na primeira vez. Se houver mais de um Codespace, o GitHub CLI solicitará a escolha. Também é possível informar o nome explicitamente:
+Se o CLI ainda estiver desconectado, execute `gh auth login -h github.com` antes do `gh auth refresh`. A autorização do escopo `codespace` é necessária uma vez por sessão de autenticação que ainda não possua esse escopo. Se houver mais de um Codespace, o GitHub CLI solicitará a escolha. Também é possível informar o nome explicitamente:
 
 ```bash
 python course.py codespace-ui-tunnel --codespace NOME_DO_CODESPACE
 ```
 
 O navegador será aberto em `http://localhost:4213`. Mantenha os dois terminais abertos; `Ctrl+C` encerra cada processo. Essa alternativa é opcional e não substitui o explorador recomendado, pois requer preparação no computador local.
+
+### Catálogos das aulas
+
+A Aula 01 usa **8080** com `python course.py docs`. A aula bônus usa **8580** com `python course.py bonus-v2 docs`, depois da comparação. Abra cada porta como **Private** na guia **Ports**. Se ela não aparecer, use **Forward a Port** e digite o número. [Passos e práticas dos catálogos](praticas-duckdb.md#documentação-e-linhagem-geradas-pelo-dbt)
 
 ## Passo 5 — pare o ambiente ao terminar
 
@@ -178,7 +187,7 @@ Para continuar outra aula, volte à página de Codespaces e abra o mesmo ambient
 | O terminal mostra Python diferente de 3.12 | Confirme que o dev container selecionado é `dbt Moderno na Prática` e recrie o Codespace. |
 | O checkpoint falha | Execute `python course.py support-report` e use o [modelo para pedir ajuda](pedir-ajuda.md). |
 | O explorador não abre | Atualize o repositório, execute novamente `python course.py setup` e mantenha o terminal com `data-ui` aberto. Na guia **Ports**, abra a porta privada 4213. |
-| Aparece `Initialization Error` ou `DataView` | Você abriu a DuckDB UI oficial antiga. Encerre o processo, atualize o repositório e execute `python course.py data-ui`; a tela correta diz **interface autoral do curso**. |
+| Aparece `Initialization Error` ou `DataView` | Verifique se abriu a UI oficial pelo endereço encaminhado do Codespaces. Encerre o processo, atualize o repositório e execute `python course.py data-ui`; a tela correta diz **interface autoral do curso**. |
 | Quero usar a DuckDB UI oficial | Use `official-data-ui` no Codespaces e `codespace-ui-tunnel` no computador local; nunca abra a UI oficial pelo domínio `app.github.dev`. |
 
 ## Como salvar seu progresso

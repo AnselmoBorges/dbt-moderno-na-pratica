@@ -308,9 +308,11 @@ if list((ROOT / "assets/decks").glob("*-banana.pptx")) or list((ROOT / "assets/d
 
 provenance = (ROOT / "assets/decks/provenance.yml").read_text(encoding="utf-8")
 manifest = (ROOT / "assets/decks/manifest.yml").read_text(encoding="utf-8")
+provenance_entries = re.split(r"(?m)^  - id: ", provenance)[1:]
 for stem, slides in {**deck_specs, bonus_deck: bonus_slide_count}.items():
-    if f"id: {stem}" not in provenance:
-        raise SystemExit(f"Deck sem procedência registrada: {stem}")
+    entry = next((block for block in provenance_entries if block.splitlines()[0] == stem), "")
+    if not re.search(rf"(?m)^    slides: {slides}$", entry):
+        raise SystemExit(f"Deck ausente ou com contagem errada na procedência: {stem}")
     if not re.search(rf"id: {re.escape(stem)}[^\n]*slides: {slides}", manifest):
         raise SystemExit(f"Deck ausente ou com contagem errada no manifesto: {stem}")
 

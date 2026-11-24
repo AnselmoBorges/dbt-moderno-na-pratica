@@ -14,18 +14,19 @@ A proposta é simples: regras funcionais determinísticas pertencem ao pipeline 
 | Área | Conteúdo |
 |---|---|
 | [Pesquisa](pesquisa/dossie-tendencias.md) | Dossiê de tendências, auditoria da playlist, auditoria anonimizada de projeto real e matriz de evidências |
-| [Roteiros](roteiros/README.md) | 12 episódios open source/estáveis e 4 episódios posteriores sobre dbt Platform |
+| [Roteiros](roteiros/README.md) | Aula 0, 12 episódios open source, bônus v2 e quatro roteiros sobre dbt Platform |
 | [Laboratório](lab/dabdbt/README.md) | Projeto cumulativo com dbt Core, DuckDB, MetricFlow, contratos, testes, governança, CI, FinOps e MCP |
 | [Checkpoints](lab/dabdbt/checkpoints/README.md) | Uma validação executável para cada episódio da primeira temporada |
 | [Resultados no Codespaces](docs/resultados-dos-checkpoints.md) | Capturas reais do terminal e o que conferir em cada aula |
 | [Práticas no DuckDB e no dbt Docs](docs/praticas-duckdb.md) | Origem dos dados, SQL por aula, catálogo, linhagem e gráfico final |
 | [Acesso à Platform](pesquisa/guia-acesso-dbt-platform.md) | Trial, comunidade, preparação editorial e mensagens de contato em português e inglês |
 | [Guia do aluno](docs/README.md) | Instalação multiplataforma, Aula 0, glossário, comandos e suporte |
-| [Apresentações](assets/decks/README.md) | Aula 0 e episódios 1–12 em PPTX/PDF, com roteiro e comandos copiáveis |
+| [Apresentações](assets/decks/README.md) | 14 pares PPTX/PDF com comandos copiáveis e notas no PowerPoint |
+| [Validação](docs/validacao-do-curso.md) | O que foi testado, como repetir e quais resultados pertencem à amostra |
 
 ## Temporadas
 
-A [revisão de novembro de 2026](pesquisa/dossie-tendencias.md#resumo-executivo) registra a atualização para Core 1.12.7 e o piloto com dbt OSS 2.0.11. Em um Codespace existente, atualize o repositório e rode `python course.py setup` na raiz antes do checkpoint.
+A temporada principal usa **dbt Core 1.12.7**. O bônus usa **dbt OSS 2.0.11** em um ambiente separado. Veja as versões e evidências no [dossiê](pesquisa/dossie-tendencias.md#resumo-executivo). Para aproveitar um Codespace existente, siga o [passo a passo de atualização](docs/codespaces.md#atualize-um-codespace-existente).
 
 ### Temporada 1 — open source e estável
 
@@ -90,12 +91,7 @@ No Windows, se `python` abrir a Microsoft Store ou não for encontrado, use `py 
 
 O fluxo funcional é o mesmo no Codespaces e localmente.
 
-Para acompanhar somente uma aula:
-
-```bash
-python course.py checkpoint 03
-python course.py validate
-```
+Depois que o checkpoint 01 gerar o banco e os artefatos, você pode ir direto à aula de interesse. Por exemplo, rode `python course.py checkpoint 03` para praticar MetricFlow. Para repetir a suíte inteira, siga o [guia de validação](docs/validacao-do-curso.md).
 
 O resultado funcional esperado da amostra Olist é documentado e testado: 8 pedidos, receita bruta de 740, receita entregue de 630, ticket médio de 92,50 e prazo médio de entrega de 5 dias.
 

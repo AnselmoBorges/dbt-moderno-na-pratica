@@ -12,9 +12,9 @@ Este é o projeto DuckDB do curso **dbt Moderno na Prática**. A pergunta que ac
 
 ## Leitura da documentação
 
-Procure **commerce_orders** para ver a descrição, as colunas, os tipos, os testes associados e o SQL do modelo. Abra **View Lineage Graph** para seguir as dependências. O grafo mostra quais recursos se conectam, e o SQL do modelo mostra como a transformação ocorre.
+Procure **commerce_orders** para consultar a ficha da interface, as colunas e as dependências. No catálogo da temporada, clique em **View Lineage Graph**. No catálogo do bônus v2, use **General → Lineage → Expand** na ficha de um modelo. O grafo indica quais recursos se conectam. Abra o SQL para entender como cada transformação ocorre.
 
-O arquivo `manifest.json` descreve recursos e linhagem. O `catalog.json` registra as relações e os tipos consultados no DuckDB na última geração. As linhas de negócio ficam no banco. Para acompanhar os resultados dos testes, consulte o terminal do checkpoint.
+A temporada usa `manifest.json` para recursos e dependências e `catalog.json` para relações e tipos. A edição v2 gera seu catálogo a partir da Information Schema em Parquet, além de artefatos JSON de compatibilidade. As linhas de negócio ficam no DuckDB. Consulte o terminal ou o relatório do build para ver o resultado dos testes.
 
 ## A regra que chega ao consumidor
 

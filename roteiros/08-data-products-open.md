@@ -25,6 +25,8 @@ flowchart LR
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–04:00 — Produto não é pasta Gold
 
 “Um data product precisa responder: quem consome, quem responde, qual interface, quais garantias e como a mudança é comunicada? Uma pasta `gold` sem isso é um conjunto de tabelas.

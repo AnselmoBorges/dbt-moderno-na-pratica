@@ -16,7 +16,7 @@ python course.py setup
 python course.py checkpoint 01
 ```
 
-O curso cria e usa `.venv` automaticamente. Não ative o ambiente virtual manualmente.
+O curso cria e usa `lab/dabdbt/.venv` automaticamente. Os comandos `course.py` escolhem o Python, o dbt e o perfil do laboratório sem ativação manual. Após o primeiro checkpoint, consulte a [cola de comandos](../cola-de-comandos.md) para navegar pelas demais aulas.
 
 ## Material complementar
 

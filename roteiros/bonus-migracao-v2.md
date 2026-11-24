@@ -142,7 +142,7 @@
 
 **Fala sugerida:** “Aqui está o catálogo v2 da execução. General mostra a descrição e a linhagem. Columns abre os campos. Leia o DAG no nível dos modelos: orders_s e order_payments_s alimentam a Gold. Para escrever SQL, confira o nome em Metadata → Relation, que aqui termina em g.order_fulfillment.”
 
-**O que destacar:** A descrição herdada contém um nome do outro perfil. A relação do DuckDB aparece nos metadados da execução. A captura mostra o início da linhagem; use Expand na prática.
+**O que destacar:** Na captura original, a descrição ainda mostra o nome de outro perfil. A versão atual do catálogo descreve a relação local, que também aparece nos metadados da execução. A captura mostra o início da linhagem; use Expand na prática.
 
 **Transição:** “Com a documentação e o resultado guardados, podemos decidir quais testes faltam.”
 
@@ -192,6 +192,8 @@ Use o primeiro comando somente se o laboratório principal ainda estiver pendent
 | Linhas comparadas | 8 equivalentes em cinco campos |
 | Receita bruta / receita entregue | 740 / 630 em ambos |
 | Decisão | Leia `resultado_migracao` e compare com os logs da sua execução |
+
+Em Ubuntu e Windows, o build do recorte e o build com comentários físicos desativados passaram na CI. Veja [as evidências da comparação](../docs/validacao-do-curso.md#evidência-do-bônus).
 
 O relatório usa `bloqueada` quando reproduz a falha de instruções múltiplas nos modelos com contrato. Se o build v2 terminar com sucesso, registra `build_aprovado_aguarda_paridade_completa`. O sucesso do build e a paridade da Gold são evidências para seguir a avaliação.
 

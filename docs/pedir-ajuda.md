@@ -7,7 +7,8 @@ Título: [sistema] Falha no checkpoint [NN]
 
 Objetivo:
 Comando executado:
-Mensagem de erro completa:
+Versão do repositório (git rev-parse --short HEAD):
+Mensagem de erro com dados sensíveis removidos:
 O que já tentei:
 O problema se repete? sim/não
 

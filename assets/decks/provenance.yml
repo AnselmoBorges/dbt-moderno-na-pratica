@@ -29,7 +29,7 @@ decks:
     image_version: v2
     editorial_source: roteiros/aula-00-ambiente.md
     checkpoint: "01"
-    slides: 22
+    slides: 24
     official_assets: []
     screenshots: [codespaces-create-from-repository, codespaces-two-core-configuration, codespaces-stop-environment]
   - id: episodio-01-baseline-core-1-12
@@ -37,7 +37,7 @@ decks:
     image_version: v2
     editorial_source: roteiros/01-playlist-core-1-12.md
     checkpoint: "01"
-    slides: 18
+    slides: 20
     official_assets: []
   - id: episodio-02-gold-nao-e-semantica
     page_id: 575c7fb1-db39-4fdb-8e4a-6d9f407accac
@@ -114,7 +114,7 @@ decks:
     image_version: v3
     editorial_source: roteiros/12-gold-governada-agente-solto.md
     checkpoint: "12"
-    slides: 22
+    slides: 24
     official_assets: [dbt-agent-recommendation]
 publication_rules:
   composition: native-editable-plus-reviewed-illustrations

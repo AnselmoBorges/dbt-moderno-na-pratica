@@ -9,7 +9,8 @@ A temporada começa com uma pergunta: **quanto dos pagamentos corresponde a pedi
 ```mermaid
 flowchart LR
     A[GitHub Codespaces recomendado] --> B[setup automático]
-    L[Instalação local alternativa] --> B
+    L[Instalação local alternativa] --> M[course.py setup]
+    M --> C
     B --> C[course.py doctor]
     C --> D[DuckDB local]
     D --> E[checkpoint 01]
@@ -22,7 +23,7 @@ flowchart LR
 
 ![Configuração do Codespaces para o curso com máquina 2-core](../assets/screenshots/codespaces/02-configuracao-2-core.png)
 
-Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuração do VS Code e as mesmas dependências. Em contas pessoais GitHub Free, a franquia informada pelo GitHub em 2026-09-01 é de 120 core-hours e 15 GB-mês; com 2 núcleos, são aproximadamente 60 horas ativas por ciclo mensal.
+Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuração do VS Code e as mesmas dependências. Veja os [limites da conta gratuita e como interromper o consumo](codespaces.md#franquia-gratuita-e-escolha-da-máquina).
 
 ## Passo a passo
 
@@ -32,8 +33,8 @@ Essa rota é recomendada porque todos recebem Python 3.12, a mesma configuraçã
 4. Execute `python course.py paths` para conferir os caminhos detectados do dbt, DuckDB, profile, banco e artifacts.
 5. Execute `python course.py checkpoint 01`.
 6. Procure a mensagem `Checkpoint 01 OK`.
-7. Execute `python course.py data-ui` e abra a porta privada 4213. Selecione **00 · Primeiras linhas dos pedidos** e clique em **Executar consulta**. Pelo terminal, use `python course.py sql 00`.
-8. Como bônus avançado, use `official-data-ui` no Codespaces e `codespace-ui-tunnel` no computador local para abrir a DuckDB UI oficial em `localhost`.
+7. Execute `python course.py data-ui`. No Codespaces, abra a porta privada 4213. Em instalação local, abra `http://localhost:4213`. Selecione **00 · Primeiras linhas dos pedidos** e clique em **Executar consulta**. Pelo terminal, use `python course.py sql 00`.
+8. Se quiser usar a DuckDB UI oficial, siga a [rota opcional por túnel](codespaces.md#alternativa-avançada--duckdb-ui-oficial-por-túnel).
 9. Ao terminar no Codespaces, pare o ambiente para interromper o consumo de processamento.
 10. Se falhar, execute `python course.py support-report` e use o [modelo de ajuda](pedir-ajuda.md).
 

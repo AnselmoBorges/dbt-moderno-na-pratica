@@ -28,6 +28,8 @@ flowchart LR
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–03:30 — Artifact não é lixo de build
 
 “`manifest.json` descreve modelos, fontes, testes, métricas, exposures, dependências e configurações. `run_results.json` registra execução. Se a CI apaga esses arquivos sem armazená-los, perde a base de comparação.
@@ -43,7 +45,7 @@ State compara o projeto atual com um manifest anterior. `state:modified` encontr
 Ainda precisamos pensar em mudanças indiretas: macro, var, package ou source podem afetar muitos nós. O dbt tem subseletores de estado e regras específicas. A política de CI deve começar conservadora e ser ajustada com evidência.”
 
 ```bash
-dbt ls --select state:modified+ --state target/state-baseline
+dbt ls --profiles-dir dbt_profiles --target local --select "state:modified+" --state target/state-baseline
 ```
 
 ### 07:00–11:00 — O que defer faz
@@ -51,6 +53,8 @@ dbt ls --select state:modified+ --state target/state-baseline
 “Imagine que a CI cria um schema temporário apenas para modelos alterados. Seus pais não existem ali. Com `--defer --state manifest-de-producao`, refs não selecionados podem apontar para relações já materializadas no estado anterior.
 
 Isso economiza construção de upstream, mas mistura ambientes. Um teste de relacionamento pode comparar uma tabela nova de CI com uma tabela de produção. Limites de desenvolvimento e dados sensíveis também exigem cuidado. A documentação recomenda entender exatamente as duas condições de resolução.
+
+O comando isolado pressupõe um manifest anterior em `target/state-baseline`. O checkpoint 09 cria esse baseline e faz a alteração em uma cópia temporária.
 
 State responde ‘o que mudou’. Defer responde ‘onde encontrar o que não vou construir’. São relacionados, não sinônimos.”
 

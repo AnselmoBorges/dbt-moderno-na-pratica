@@ -67,6 +67,22 @@ Execute `python course.py paths`. O resultado também fica em `build/environment
 
 Execute novamente `python course.py setup`. O processo é idempotente e reaproveita downloads válidos.
 
+## A aula não encontrou uma tabela, um manifesto ou um JSON
+
+Em uma instalação nova, rode `python course.py checkpoint 01` antes das aulas 02–12. Se a consulta lê um relatório de state, FinOps, MCP ou benchmark, execute também o checkpoint da própria aula. Se o Explorador estiver aberto durante o build, feche e abra de novo para renovar a cópia dos dados.
+
+## A interface não abre ou a porta está em uso
+
+Confira a [tabela de comandos e portas](cola-de-comandos.md#interfaces-no-navegador) e mantenha o terminal do servidor aberto. Na aba **Ports** do Codespaces, encaminhe a porta correspondente com visibilidade **Private**. Para uma porta já ocupada, pare o servidor anterior ou escolha outra com `--port`. No túnel oficial, use o mesmo número no Codespaces e no computador local.
+
+## O bônus v2 mostrou erro de instruções múltiplas
+
+Confira `resultado_migracao` em `build/bonus-v2/resultado.json`. Quando o relatório existe e diz `bloqueada`, a comparação terminou e registrou uma falha do build v2. Os logs dessa execução mostram em quais modelos ocorreu. Se o comando terminou antes de gravar um novo relatório, leia o log apontado no terminal. O JSON na raiz de `build/bonus-v2/` guarda a última comparação concluída. [Roteiro do bônus](../roteiros/bonus-migracao-v2.md#checkpoint-executável) · [Resultados por ambiente](validacao-do-curso.md#evidência-do-bônus)
+
+## Não consegui atualizar um Codespace existente
+
+Se `git pull --ff-only` apontar divergência, use `git status` para entender a branch e os arquivos locais. Salve seu trabalho em uma branch ou fork antes de juntar as mudanças. Você também pode abrir um Codespace novo a partir da `main` do curso e manter o anterior para consulta. [Guia do Codespaces](codespaces.md#atualize-um-codespace-existente)
+
 ## Ainda não resolveu
 
 Execute `python course.py support-report` e abra uma issue usando o [modelo de pedido de ajuda](pedir-ajuda.md). Nunca cole `.env`, tokens, profiles privados ou variáveis de ambiente.

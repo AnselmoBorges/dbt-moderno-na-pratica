@@ -2,7 +2,7 @@
 
 **Duração alvo:** 18–22 minutos
 **Temporada:** dbt Platform
-**Rótulos na tela:** `PROPRIETÁRIO`, `Developer: gratuito`, `Starter: trial/pago`, `limites em 01/09/2026`
+**Rótulos na tela:** `PROPRIETÁRIO`, `Developer: gratuito`, `Starter: trial/pago`, `limites verificados em 24/11/2026`
 
 ## Gancho
 
@@ -18,7 +18,7 @@ Pré-requisitos: temporada open concluída, projeto Olist verde, agenda de grava
 
 ### 00:00–04:00 — Open, gratuito e pago
 
-“dbt Core é software Apache 2.0 que executamos localmente. Developer é um serviço proprietário gratuito com limites. Starter é um serviço pago e, na data desta gravação, novos usuários recebem 14 dias de trial. Gratuito não significa open source; pago não significa automaticamente melhor para todo caso.
+“dbt Core é software Apache 2.0 que executamos localmente. Developer é um serviço proprietário gratuito com limites. Starter é um serviço pago e, na revisão do material em 24/11/2026, novos usuários recebem 14 dias de trial. Gratuito não significa open source; pago não significa automaticamente melhor para todo caso.
 
 A página oficial informava uma seat e um projeto no Developer, com 3.000 modelos bem-sucedidos por mês. Starter informava cinco seats, 15.000 modelos, 5.000 métricas consultadas e API. Coloque a data ao lado de cada número e confira a página no dia da gravação.”
 

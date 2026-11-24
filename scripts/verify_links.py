@@ -19,22 +19,22 @@ LINK_RE = re.compile(r"!?(?:\[[^]]*\])\(([^)]+)\)")
 GENERATED_URL_SUFFIXES = ("/badge.svg",)
 
 
-def external_status(url: str) -> tuple[str, bool, str]:
+def external_status(url: str) -> tuple[str, int | None, str]:
     request = urllib.request.Request(url, headers={"User-Agent": "dbt-moderno-na-pratica-link-check/1.0"})
     for attempt in range(2):
         try:
             with urllib.request.urlopen(request, timeout=20) as response:
-                return url, 200 <= response.status < 400, str(response.status)
+                return url, response.status, str(response.status)
         except urllib.error.HTTPError as exc:
             if exc.code in {401, 403, 405, 429}:
-                return url, True, f"{exc.code} (servidor restringe automação)"
+                return url, exc.code, str(exc.code)
             if attempt == 1:
-                return url, False, str(exc.code)
+                return url, exc.code, str(exc.code)
         except (urllib.error.URLError, TimeoutError) as exc:
             if attempt == 1:
-                return url, False, exc.__class__.__name__
+                return url, None, exc.__class__.__name__
         time.sleep(1)
-    return url, False, "erro desconhecido"
+    return url, None, "erro desconhecido"
 
 
 def main() -> int:
@@ -64,18 +64,26 @@ def main() -> int:
             if url.startswith(("https://", "http://")):
                 external.add(url)
 
+    restricted: list[str] = []
     if args.external:
         with ThreadPoolExecutor(max_workers=8) as pool:
             futures = [pool.submit(external_status, url) for url in sorted(external)]
             for future in as_completed(futures):
-                url, ok, detail = future.result()
-                if not ok:
+                url, status, detail = future.result()
+                if status in {401, 403, 405, 429}:
+                    restricted.append(f"Checagem automatizada restrita ({detail}): {url}")
+                elif status is None or not 200 <= status < 400:
                     failures.append(f"Link externo indisponível ({detail}): {url}")
 
+    for line in sorted(restricted):
+        print(line)
     if failures:
-        raise SystemExit("\n".join(failures))
-    scope = f"{len(external)} externos" if args.external else "links locais"
-    print(f"Links OK: {len(MARKDOWN)} arquivos; {scope}.")
+        raise SystemExit("\n".join(sorted(failures)))
+    summary = (
+        f"{len(external) - len(restricted)} URLs responderam, {len(restricted)} restringiram a checagem"
+        if args.external else "links locais"
+    )
+    print(f"Links: {len(MARKDOWN)} arquivos; {summary}.")
     return 0
 
 

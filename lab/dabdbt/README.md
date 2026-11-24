@@ -1,6 +1,6 @@
 # Laboratório — dbt Moderno na Prática
 
-Projeto didático cumulativo da primeira temporada **Da Gold aos Agentes de IA**. O laboratório usa `dbt-core` 1.12.7 e `dbt-duckdb` 1.11.1. Os quadros Radar apresentam o dbt v2. A configuração Databricks serve de referência parametrizada e os testes locais usam DuckDB.
+Projeto didático cumulativo da primeira temporada **Da Gold aos Agentes de IA**. O laboratório usa `dbt-core` 1.12.7 e `dbt-duckdb` 1.11.1. A [aula bônus](../../roteiros/bonus-migracao-v2.md) compara o dbt OSS v2 em uma cópia isolada. A configuração Databricks serve de referência parametrizada e os testes locais usam DuckDB.
 
 ## Arquitetura
 
@@ -24,7 +24,7 @@ Use Python 3.12 ou 3.13. As versões fixadas em `requirements-local.txt` ainda n
 
 Na raiz do repositório, use `python course.py setup` e depois `python course.py validate`. O launcher chama os executáveis corretos em Windows, macOS e Linux; não é necessário ativar `.venv`.
 
-Também é possível executar um episódio isolado:
+Execute `python course.py checkpoint 01` antes das outras aulas em um ambiente novo. Com o banco e os artefatos prontos, você pode repetir um episódio específico:
 
 ```bash
 python course.py checkpoint 03
@@ -32,7 +32,9 @@ python course.py checkpoint 03
 
 Os checkpoints são cumulativos: o checkpoint 12 pressupõe as interfaces introduzidas nos anteriores, mas cada comando valida somente a capacidade focal do episódio.
 
-## Comandos essenciais
+## Comandos internos do dbt e do MetricFlow
+
+Os exemplos abaixo usam Bash e partem de `lab/dabdbt`. Veja [como chamar as mesmas ferramentas no PowerShell ou fora do PATH](../../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
 
 ```bash
 dbt deps --profiles-dir dbt_profiles --target local
@@ -61,11 +63,13 @@ Resultado funcional esperado da amostra: 8 pedidos, receita bruta de 740, receit
 - `benchmarks/benchmark.schema.json`: contrato de traces, incluindo tokens, tool calls, latência e custo normalizado.
 - `benchmarks/benchmark-report.schema.json`: contrato do relatório combinado com pergunta, ground truth, SQL, resultado e custo por item.
 
-Os três arquivos `*.fixture.json` são fixtures sintéticas para testar o avaliador em CI. Eles não representam medições reais de um modelo de IA. Para um experimento real, grave um trace compatível com o schema e rode:
+Os três arquivos `*.fixture.json` são fixtures sintéticas para testar o avaliador em CI. Eles não representam medições reais de um modelo de IA. Para um experimento real, grave um trace compatível com o schema. No Bash, execute de `lab/dabdbt`:
 
 ```bash
-python scripts/score_agent_benchmark.py caminho/do/trace.json
+./.venv/bin/python scripts/score_agent_benchmark.py caminho/do/trace.json
 ```
+
+No PowerShell, substitua o executável Python pelo caminho indicado na [cola de comandos](../../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
 
 ## Portabilidade
 
@@ -76,7 +80,7 @@ Antes de usar o bundle, substitua os valores de exemplo de `databricks.yml` por 
 ## Limites do laboratório
 
 - DuckDB mede correção e duração, não créditos reais de warehouse.
-- O benchmark FinOps usa duração e quantidade de recursos como proxies; custos cloud precisam ser lidos do billing do provedor.
+- O benchmark FinOps registra duração e quantidade de linhas candidatas. Consulte a cobrança do provedor para medir custos cloud.
 - Microbatch não é executado no DuckDB deste laboratório porque o suporte precisa ser confirmado por adapter; o roteiro mostra os requisitos `event_time`, lote, lookback e late data sem fingir uma medição.
 - Semantic Layer gerenciada, cache, APIs hospedadas e cross-project refs exigem produto/plano compatível e são tratados conceitualmente.
 - A pasta `platform/` contém somente runbooks opcionais e placeholders; não participa da CI e não armazena credenciais.

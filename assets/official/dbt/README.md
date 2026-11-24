@@ -10,5 +10,5 @@ Esta pasta contém cópias locais de figuras da documentação pública `dbt-lab
 
 Referências:
 
-- [Licença do repositório](https://github.com/dbt-labs/docs.getdbt.com/blob/8249c7c904848efa786831381ca1d53b4157e392/License.md)
+- [Licença do repositório](https://raw.githubusercontent.com/dbt-labs/docs.getdbt.com/8249c7c904848efa786831381ca1d53b4157e392/License.md)
 - [Política de marcas dbt Labs](https://www.getdbt.com/dbt-assets/dbt-trademark-guidelines)

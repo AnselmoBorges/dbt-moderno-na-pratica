@@ -121,7 +121,7 @@ Por fim, o agente deve saber recusar: se a pergunta exige uma métrica não publ
 - [Sobre dbt MCP](https://docs.getdbt.com/docs/dbt-ai/about-mcp)
 - [Variáveis e allowlist do MCP](https://docs.getdbt.com/docs/dbt-ai/mcp-environment-variables)
 - [Ferramentas disponíveis e alerta sobre mutação](https://docs.getdbt.com/docs/dbt-ai/mcp-available-tools)
-- [Setup self-hosted e fronteira de toolsets](https://github.com/dbt-labs/docs.getdbt.com/blob/current/website/docs/docs/dbt-ai/setup-local-mcp.md)
+- [Setup self-hosted e fronteira de toolsets](https://docs.getdbt.com/docs/dbt-ai/setup-local-mcp)
 - [Case impact.com — resultado reportado pelo fornecedor](https://www.getdbt.com/case-studies/impact.com)
 - [M1 Finance e dbt MCP — relato do fornecedor](https://www.getdbt.com/blog/dbt-mcp-server-reliable-ai)
 - [Checkpoint executável](../lab/dabdbt/checkpoints/11-mcp.md)

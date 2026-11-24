@@ -8,6 +8,8 @@ python3.12 --version
 git --version
 ```
 
+Se instalou o Python 3.13, use `python3.13` em todos os comandos abaixo.
+
 3. Baixe e prepare o curso:
 
 ```bash
@@ -18,7 +20,7 @@ python3.12 course.py setup
 python3.12 course.py checkpoint 01
 ```
 
-Se a criação do ambiente reclamar de `ensurepip`, instale o pacote `python3.12-venv` equivalente da sua distribuição.
+Se a criação do ambiente reclamar de `ensurepip`, instale o pacote de suporte a venv da sua versão, como `python3.12-venv` ou `python3.13-venv`, quando a distribuição separa esse componente.
 
 ## Material complementar
 

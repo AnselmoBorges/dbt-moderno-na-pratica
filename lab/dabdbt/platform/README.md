@@ -11,4 +11,4 @@ Esta pasta não participa da CI e não contém credenciais. Ela serve como runbo
 - revogar tokens e pausar jobs ao final do trial;
 - não ativar SQL/Admin tools no MCP sem necessidade explícita.
 
-Consulte `pesquisa/guia-acesso-dbt-platform.md` na raiz do material para o calendário e os textos de contato.
+Consulte o [guia de acesso à dbt Platform](../../../pesquisa/guia-acesso-dbt-platform.md) para o calendário e os textos de contato.

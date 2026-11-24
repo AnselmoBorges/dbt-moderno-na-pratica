@@ -27,6 +27,8 @@ flowchart TB
 
 ## Roteiro falado
 
+Os blocos com `course.py` partem da raiz. Para os comandos dbt, MetricFlow ou scripts internos, siga a sintaxe do seu terminal em [Comandos internos para demonstração](../docs/cola-de-comandos.md#comandos-internos-do-laboratório-para-demonstração).
+
 ### 00:00–03:30 — Governança que produz uma ação
 
 “Governança como código significa que decisões sobre responsabilidade, exposição e classificação são versionadas e consultáveis. Mas cada campo precisa disparar uma ação.
